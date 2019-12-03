@@ -11,22 +11,22 @@ class ModelVisites extends Model {
      */
     public function addVisite($url,$titre,$adresse_ip,$id_usager)
     {
-        # code...
+        $this->db->query("INSERT INTO " . DB_PREFIX . "visites SET id = '" . (int)$data['id'] . "', url_page = '" . $data['url_page'] . "', titre = '" . $data['titre'] . "', date_visite = '" . $data['date_visite'] . "', id_usager = '" . $data['id_usager'] . "', adresse_IP = '" . $data['adresse_IP'] . "', id_usager = '" . (int)$data['id_usager'] . "'");
     }
 
     public function getAllVisites()
     {
-        # code...
+        $this->db->query("SELECT * FROM " . DB_PREFIX . "visites");
     }
     
     public function getVisite($id_visite)
     {
-        # code...
+        $this->db->query("SELECT * FROM " . DB_PREFIX . "visites WHERE id = '" . (int)$data['id'] . "' ORDER BY date DESC");
     }
-
-    public function getVisitesParDates($date_debut,$date_fin)
+    
+    public function getPlusVisite($id_visite)
     {
-        # code...
+        $this->db->query("SELECT * FROM " . DB_PREFIX . "visites WHERE id = '" . (int)$data['id'] . "' ORDER BY date DESC");
     }
 }
 

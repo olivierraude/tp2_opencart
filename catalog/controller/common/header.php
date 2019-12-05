@@ -77,6 +77,23 @@ class ControllerCommonHeader extends Controller {
 		$data['cart'] = $this->load->controller('common/cart');
 		$data['menu'] = $this->load->controller('common/menu');
 
+
+		var_dump($_SERVER);
+		/**
+		 * dans la cadre du tp2,
+		 * l'enregistrement de l'activité de l'utilisateur sera faites ici. Le fichier header étant appelé à chaque chargement, il est une bonne place pour 'surveiller' son activité
+		 * enregistrement :
+		 * 	- URL (adresse sans le nom de domaine)
+		 * 	- Titre : titre de la page
+		 * 	- Date : Date et heure de la visite
+		 * 	- adresse_ip : ip de l'utilisateur
+		 *  - user_id : id de l'utilisateur si il est connecté , null sinon
+		 */
+
+		 $url = $_SERVER['REQUEST_URI'];
+		 $titre = $_SERVER['QUERY_STRING']; // A RETRAVAILLER
+
+
 		return $this->load->view('common/header', $data);
 	}
 }

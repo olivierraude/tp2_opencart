@@ -1,6 +1,29 @@
 <?php
 class ControllerCommonHeader extends Controller {
 	public function index() {
+		
+		/**
+		 * dans la cadre du tp2,
+		 * l'enregistrement de l'activité de l'utilisateur sera faites ici. Le fichier header étant appelé à chaque chargement, il est une bonne place pour 'surveiller' son activité
+		 * enregistrement :
+		 * 	- URL (adresse sans le nom de domaine)
+		 * 	- Titre : titre de la page
+		 * 	- Date : Date et heure de la visite
+		 * 	- adresse_ip : ip de l'utilisateur
+		 *  - user_id : id de l'utilisateur si il est connecté , null sinon
+		 */
+		
+		 $donnees_navigation['url_page'] = $_SERVER['REQUEST_URI'];
+		 $donnees_navigation['titre'] = $this->document->getTitle();
+		 $donnees_navigation['date_visite'] = date("Y-m-d H:i:s");	// ou définir la date directement dans la requete SQL ???
+		 $donnees_navigation['adresse_ip'] = $_SERVER['REMOTE_ADDR'];
+		 $donnees_navigation['id_usager'] = ($this->customer->isLogged()) ? $this->customer->getId() : null; // $user_id = $this->customer->getId() si utilisateur connecté sinon null
+			 
+		 var_dump($donnees_navigation); // A EFFACER
+
+		 $this->load->model('report/statistics');
+		 $visite_id = $this->model_report_statistics->addVisite($donnees_navigation);
+		 var_dump($visite_id);
 		// Analytics
 		$this->load->model('setting/extension');
 
@@ -76,29 +99,6 @@ class ControllerCommonHeader extends Controller {
 		$data['search'] = $this->load->controller('common/search');
 		$data['cart'] = $this->load->controller('common/cart');
 		$data['menu'] = $this->load->controller('common/menu');
-		
-		/**
-		 * dans la cadre du tp2,
-		 * l'enregistrement de l'activité de l'utilisateur sera faites ici. Le fichier header étant appelé à chaque chargement, il est une bonne place pour 'surveiller' son activité
-		 * enregistrement :
-		 * 	- URL (adresse sans le nom de domaine)
-		 * 	- Titre : titre de la page
-		 * 	- Date : Date et heure de la visite
-		 * 	- adresse_ip : ip de l'utilisateur
-		 *  - user_id : id de l'utilisateur si il est connecté , null sinon
-		 */
-
-		 $url = $_SERVER['REQUEST_URI'];
-		 $titre = $this->document->getTitle();
-		 $date = date("Y-m-d H:i:s");	// ou définir la date directement dans la requete SQL ???
-		 $adresse_ip = $_SERVER['REMOTE_ADDR'];
-		 $user_id = ($this->customer->isLogged()) ? $this->customer->getId() : null; // $user_id = $this->customer->getId() si utilisateur connecté sinon null
-			 
-		 var_dump($url);
-		 var_dump($titre);
-		 var_dump($date);
-		 var_dump($adresse_ip);
-		 var_dump($user_id);
  
 		return $this->load->view('common/header', $data);
 	}

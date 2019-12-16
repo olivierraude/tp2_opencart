@@ -23,5 +23,6 @@ prefixe db = _tp2
     conserver un controleur  dans admin pour afficher différents rapports ??? dans visites ou dans rapports ???
     admin/controller/visites/visites.php
 
-    le controleur pour le 'add' (ajout des adresses visités par l'utilisateur) est placé dans common/header (quelque soit la page visitée par l'utilisateur le header est toujours chargé):
+    le controleur pour le 'add' (ajout des adresses visités par l'utilisateur) est placé dans common/header 
+    (quelque soit la page visitée par l'utilisateur le header est toujours chargé):
     catalog/controller/common/header.php

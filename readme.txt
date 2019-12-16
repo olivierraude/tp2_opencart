@@ -13,14 +13,12 @@ prefixe db = _tp2
 1_ création d'une base de données
 
 2_ création du model 
-    !!! A MODIFIER , LE MODEL DOIT SE TROUVER DANS LE CATALOG (dans un fichier existant ???) !!! 
-    conserver un modèle dans admin pour afficher différents rapports ???
-    le modèle 'add' doit être dans le catalog ???
-    admin/model/visites/visites.php
+    !!! A MODIFIER , LE MODEL DOIT SE TROUVER DANS LE CATALOG (dans un fichier existant) !!! 
+    un modèle est conserver dans admin pour afficher différents rapports
+    le modèle 'add' est dans le catalog/model/reports/statistics.php
 
 3_ création du controleur
     !!! A MODIFIER , LE CONTROLLER DOIT ÊTRE DANS UN FICHIER EXISTANT !!! 
-    conserver un controleur  dans admin pour afficher différents rapports ??? dans visites ou dans rapports ???
     admin/controller/visites/visites.php
 
     le controleur pour le 'add' (ajout des adresses visités par l'utilisateur) est placé dans common/header 

@@ -92,7 +92,6 @@ class ControllerCommonHeader extends Controller {
 		 $titre = $this->document->getTitle();
 		 $date = date("Y-m-d H:i:s");	// ou définir la date directement dans la requete SQL ???
 		 $adresse_ip = $_SERVER['REMOTE_ADDR'];
-		 $this->load->model('account/customer');
 		 if ($this->customer->isLogged())
 			 $user_id = $this->customer->getId();
 		 else

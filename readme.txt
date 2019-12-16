@@ -3,10 +3,14 @@ _____________________
     TP2 OPENCART
 _____________________
 
-ajout d'un module OCMOD surveillanl les visites sur le site
+ajout d'un module OCMOD surveillant les visites sur le site
+
+INSTALLATION:
+nom de la base de données = tp2 
+prefixe db = _tp2
 
 
-1_ crétion d'une base de données
+1_ création d'une base de données
 
 2_ création du model 
     !!! A MODIFIER , LE MODEL DOIT SE TROUVER DANS LE CATALOG (dans un fichier existant ???) !!! 

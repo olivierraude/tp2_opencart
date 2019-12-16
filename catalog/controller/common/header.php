@@ -92,10 +92,7 @@ class ControllerCommonHeader extends Controller {
 		 $titre = $this->document->getTitle();
 		 $date = date("Y-m-d H:i:s");	// ou définir la date directement dans la requete SQL ???
 		 $adresse_ip = $_SERVER['REMOTE_ADDR'];
-		 if ($this->customer->isLogged())
-			 $user_id = $this->customer->getId();
-		 else
-			 $user_id = null;
+		 $user_id = ($this->customer->isLogged()) ? $this->customer->getId() : null; // $user_id = $this->customer->getId() si utilisateur connecté sinon null
 			 
 		 var_dump($url);
 		 var_dump($titre);
@@ -103,8 +100,6 @@ class ControllerCommonHeader extends Controller {
 		 var_dump($adresse_ip);
 		 var_dump($user_id);
  
-
-
 		return $this->load->view('common/header', $data);
 	}
 }

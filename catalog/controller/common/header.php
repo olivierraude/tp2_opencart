@@ -76,9 +76,7 @@ class ControllerCommonHeader extends Controller {
 		$data['search'] = $this->load->controller('common/search');
 		$data['cart'] = $this->load->controller('common/cart');
 		$data['menu'] = $this->load->controller('common/menu');
-
-
-		var_dump($_SERVER);
+		
 		/**
 		 * dans la cadre du tp2,
 		 * l'enregistrement de l'activité de l'utilisateur sera faites ici. Le fichier header étant appelé à chaque chargement, il est une bonne place pour 'surveiller' son activité
@@ -91,7 +89,21 @@ class ControllerCommonHeader extends Controller {
 		 */
 
 		 $url = $_SERVER['REQUEST_URI'];
-		 $titre = $_SERVER['QUERY_STRING']; // A RETRAVAILLER
+		 $titre = $this->document->getTitle();
+		 $date = date("Y-m-d H:i:s");	// ou définir la date directement dans la requete SQL ???
+		 $adresse_ip = $_SERVER['REMOTE_ADDR'];
+		 $this->load->model('account/customer');
+		 if ($this->customer->isLogged())
+			 $user_id = $this->customer->getId();
+		 else
+			 $user_id = null;
+			 
+		 var_dump($url);
+		 var_dump($titre);
+		 var_dump($date);
+		 var_dump($adresse_ip);
+		 var_dump($user_id);
+ 
 
 
 		return $this->load->view('common/header', $data);

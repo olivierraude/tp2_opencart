@@ -69,11 +69,17 @@ class ControllerReportReport extends Controller {
 			$sort_order[$key] = $value['sort_order'];
 		}
 
-		array_multisort($sort_order, SORT_ASC, $data['reports']);	
+		array_multisort($sort_order, SORT_ASC, $data['reports']);
+		
+		// tp2 : ajout du model statistics
+		$this->load->model('report/statistics');
 		
 		if (isset($this->request->get['code'])) {
 			$data['report'] = $this->load->controller('extension/report/' . $this->request->get['code'] . '/report');
-		} elseif (isset($data['reports'][0])) {
+		} elseif (isset($data['reports'][1])) { // tp2 : la 2e ligne = rapport de toutes les pages visitées
+			$data['report'] = $this->model_report_statistics->getAllVisites();
+			var_dump($data['report']);
+		} elseif (isset($data['reports'][2])) { // tp2 : index modifié de 0 a 2 
 			$data['report'] = $this->load->controller('extension/report/' . $data['reports'][0]['code'] . '/report');
 		} else {
 			$data['report'] = '';

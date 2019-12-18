@@ -3592,7 +3592,7 @@ CREATE TABLE `tp2_visites` (
   `id` int(10) UNSIGNED NOT NULL,
   `url_page` varchar(150) DEFAULT NULL,
   `titre` varchar(35) DEFAULT NULL,
-  `date_visite` datetime DEFAULT NULL,
+  `date_visite` datetime DEFAULT NULL CURRENT_TIMESTAMP,
   `adresse_ip` varchar(50) DEFAULT NULL,
   `id_usager` int(11) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;

@@ -18,9 +18,6 @@ prefixe db = _tp2
     le modèle 'add' est dans le catalog/model/reports/statistics.php
 
 3_ création du controleur
-    !!! A MODIFIER , LE CONTROLLER DOIT ÊTRE DANS UN FICHIER EXISTANT !!! 
-    admin/controller/visites/visites.php
-
-    le controleur pour le 'add' (ajout des adresses visitées par l'utilisateur) est placé dans common/header 
-    (quelque soit la page visitée par l'utilisateur le header est toujours chargé):
-    catalog/controller/common/header.php
+    !!! A MODIFIER , LE CONTROLLER DOIT ÊTRE DANS UN FICHIER EXISTANT !!!     
+    admin/controller/report/report.php
+    catalog/controller/common/header.php  (appel de methode addVisites())

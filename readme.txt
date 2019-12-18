@@ -13,9 +13,7 @@ prefixe db = _tp2
 1_ création d'une base de données
 
 2_ création du model 
-    !!! A MODIFIER , LE MODEL DOIT SE TROUVER DANS LE CATALOG (dans un fichier existant) !!! 
-    un modèle est conservé dans admin pour afficher différents rapports
-    le modèle 'add' est dans le catalog/model/reports/statistics.php
+    le modèle 'add' est dans le catalog/model/reports/visites.php
 
 3_ création du controleur
     !!! A MODIFIER , LE CONTROLLER DOIT ÊTRE DANS UN FICHIER EXISTANT !!!     

@@ -15,7 +15,6 @@ class ControllerCommonHeader extends Controller {
 		
 		 $donnees_navigation['url_page'] = $_SERVER['REQUEST_URI'];
 		 $donnees_navigation['titre'] = $this->document->getTitle();
-		 $donnees_navigation['date_visite'] = date("Y-m-d H:i:s");	// ou définir la date directement dans la requete SQL ???
 		 $donnees_navigation['adresse_ip'] = $_SERVER['REMOTE_ADDR'];
 		 $donnees_navigation['id_usager'] = ($this->customer->isLogged()) ? $this->customer->getId() : null; // $user_id = $this->customer->getId() si utilisateur connecté sinon null
 			 

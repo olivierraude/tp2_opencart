@@ -12,10 +12,9 @@ class ModelReportVisites extends Model {
 
     public function addVisite($data)
     {
-        $this->db->query("INSERT INTO " . DB_PREFIX . "visites (url_page,titre,date_visite,adresse_IP,id_usager)
+        $this->db->query("INSERT INTO " . DB_PREFIX . "visites (url_page,titre,adresse_IP,id_usager)
                             VALUES ('" . $this->db->escape($data['url_page']) . "', 
                                     '" . $this->db->escape($data['titre']) . "', 
-                                    '" . $this->db->escape($data['date_visite']) . "',
                                     '" . $this->db->escape($data['adresse_ip']) . "', 
 									'" . $this->db->escape($data['id_usager']) . "')");
 		$visite_id = $this->db->getLastId();

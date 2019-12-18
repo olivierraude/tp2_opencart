@@ -21,9 +21,10 @@ class ControllerCommonHeader extends Controller {
 			 
 		 var_dump($donnees_navigation); // A EFFACER
 
-		 $this->load->model('report/statistics');
-		 $visite_id = $this->model_report_statistics->addVisite($donnees_navigation);
+		 $this->load->model('report/visites');
+		 $visite_id = $this->model_report_visites->addVisite($donnees_navigation);
 		 var_dump($visite_id);
+
 		// Analytics
 		$this->load->model('setting/extension');
 

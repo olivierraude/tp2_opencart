@@ -1,26 +1,21 @@
 <?php
-    class ControllerVisites extends Controller {
+    class ControllerVisitesVisites extends Controller {
+
         /**
          * index = affiche les 15 pages les plus visitées
          */
-        public function index(){
+        public function voir_olivier(){
             # code
         }
-
-
-        /**
-         * ajoute une visite
-         */
-        public function add(){
-            # code ...
-        }
-
-
-        /**
-         * affiche toutes les visites
-         */
-        public function afficherLesVisites(){
-            # code ...
+        
+        public function ajaxAfficherLesVisites(){
+            $this->load->model('visites/visites');
+            $lesVisites = $this->model_visites_visites->getAllVisites();
+            //var_dump($lesVisites);
+            $this->reponse->set(Output(json_encode($lesVisites)));
+            
         }
 
     }
+
+?>

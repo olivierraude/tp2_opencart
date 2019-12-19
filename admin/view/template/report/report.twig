@@ -16,7 +16,8 @@
   <div class="container-fluid">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-bar-chart"></i> {{ text_type }}</h3>
+        <h3 class="panel-title"><i class="fa fa-bar-chart"></i> {{ text_type }} </h3>
+        je suis le twig modifié
       </div>
       <div class="panel-body">
         <div class="well">
@@ -44,3 +45,26 @@
   </div>
 </div>
 {{ footer }} 
+{% raw %}
+
+{# TP2 - AJOUT DU RAPPORT #}
+<script>
+  $(document).ready(function(){
+    //selection de l'option qui contient le texte 'toutes les pages visitées'
+    console.log('je suis dans jquery');
+    $('.input_group option:contains("toutes les pages visitées")'.click(function(){
+      console.log('je clique toutes les pages visitées');
+      $.ajax({
+        url: 'index.php?route=visites/visites/ajaxAfficherLesVisites';
+        success:function(data)
+        {
+          var json = JSON.parse(data);
+          echo(data);
+        }
+      })
+    }))
+
+  })
+</script>
+{% endraw %}
+{# fin TP2 - AJOUT DU RAPPORT #}

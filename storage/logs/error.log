@@ -1,0 +1,6 @@
+2019-12-21 1:28:21 - PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in /Applications/MAMP/htdocs/tp2_opencart/system/library/db/mysqli.php on line 7
+2019-12-21 1:28:21 - PHP Warning:  DB\MySQLi::__construct(): Couldn't fetch mysqli in /Applications/MAMP/htdocs/tp2_opencart/system/library/db/mysqli.php on line 10
+2019-12-21 1:28:21 - PHP Warning:  DB\MySQLi::__construct(): Couldn't fetch mysqli in /Applications/MAMP/htdocs/tp2_opencart/system/library/db/mysqli.php on line 10
+2019-12-21 1:28:22 - PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in /Applications/MAMP/htdocs/tp2_opencart/system/library/db/mysqli.php on line 7
+2019-12-21 1:28:22 - PHP Warning:  DB\MySQLi::__construct(): Couldn't fetch mysqli in /Applications/MAMP/htdocs/tp2_opencart/system/library/db/mysqli.php on line 10
+2019-12-21 1:28:22 - PHP Warning:  DB\MySQLi::__construct(): Couldn't fetch mysqli in /Applications/MAMP/htdocs/tp2_opencart/system/library/db/mysqli.php on line 10

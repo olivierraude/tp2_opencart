@@ -8,11 +8,11 @@ define('HTTPS_SERVER', 'http://localhost/tp2_opencart/admin/');
 define('HTTPS_CATALOG', 'http://localhost/tp2_opencart/');
 
 // DIR
-define('DIR_APPLICATION', 'C:/wamp64/www/tp2_opencart/admin/');
-define('DIR_SYSTEM', 'C:/wamp64/www/tp2_opencart/system/');
-define('DIR_IMAGE', 'C:/wamp64/www/tp2_opencart/image/');
-define('DIR_STORAGE', 'C:/wamp64/www/tp2_opencart/storage/');
-define('DIR_CATALOG', 'C:/wamp64/www/tp2_opencart/catalog/');
+define('DIR_APPLICATION', '/Applications/MAMP/htdocs/tp2_opencart/admin/');
+define('DIR_SYSTEM', '/Applications/MAMP/htdocs/tp2_opencart/system/');
+define('DIR_IMAGE', '/Applications/MAMP/htdocs/tp2_opencart/image/');
+define('DIR_STORAGE', '/Applications/MAMP/htdocs/tp2_opencart/storage/');
+define('DIR_CATALOG', '/Applications/MAMP/htdocs/tp2_opencart/catalog/');
 define('DIR_LANGUAGE', DIR_APPLICATION . 'language/');
 define('DIR_TEMPLATE', DIR_APPLICATION . 'view/template/');
 define('DIR_CONFIG', DIR_SYSTEM . 'config/');

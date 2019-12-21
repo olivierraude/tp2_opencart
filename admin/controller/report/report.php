@@ -30,18 +30,19 @@ class ControllerReportReport extends Controller {
 
 		// ajout des rapports du tp2 dans la barre de sélection des rapports
 		$data['reports'][] = array(
-			'text'       => '15 pages les plus visitées',
+			'text'       => '01 - 15 pages les plus visitées',
 			'code'       => '15_pages_plus_visitees',
 			//'sort_order' => $this->config->get('report_' . $code . '_sort_order'),
+			'sort_order' => null, //si null, se place en-tête de liste (par ordre alphabétique si plusieurs entrée a null)
 			'href'       => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'] /*. '&code=' . $code*/, true)
 		);
 
 		$data['reports'][] = array(
-			'text'       => 'toutes les pages visitées',
+			'text'       => '02 - toutes les pages visitées',
 			'code'       => 'toutes_pages_visitees',
 			//'sort_order' => $this->config->get('report_' . $code . '_sort_order'),
-			//'sort_order' => null,
-			//'href'       => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'] . '&code=' . $code, true)
+			'sort_order' => null,
+			//'href'       => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'], true)
 			//'href'       => $this->url->link('visites/visites/ajaxAfficherLesVisites')  // lien vers http://localhost/tp2_opencart/admin/index.php?route=visites/visites/ajaxAfficherLesVisites
 			//'href'       => 'ajaxAfficherLesVisites'  // identifiant pour une selection avec JQuery dans le fichier twig
 		);
@@ -65,7 +66,6 @@ class ControllerReportReport extends Controller {
 				);
 			}
 		}
-		
 		$sort_order = array();
 
 		foreach ($data['reports'] as $key => $value) {
@@ -74,15 +74,11 @@ class ControllerReportReport extends Controller {
 
 		array_multisort($sort_order, SORT_ASC, $data['reports']);
 		
-		// tp2 : ajout du model statistics
-		$this->load->model('report/statistics');
-		
 		if (isset($this->request->get['code'])) {
 			$data['report'] = $this->load->controller('extension/report/' . $this->request->get['code'] . '/report');
 		// } elseif (isset($data['reports'][1])) { // tp2 : la 2e ligne = rapport de toutes les pages visitées
 		// 	$data['report'] = $this->model_report_statistics->getAllVisites();
-		// 	var_dump($data['report']);
-		} elseif (isset($data['reports'][2])) { // tp2 : index modifié de 0 a 2 
+		} elseif (isset($data['reports'][0])) { // tp2 : index modifié de 0 a 2 
 			$data['report'] = $this->load->controller('extension/report/' . $data['reports'][0]['code'] . '/report');
 		} else {
 			$data['report'] = '';
@@ -91,6 +87,9 @@ class ControllerReportReport extends Controller {
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
+
+		var_dump($data['report']);
+		//die();
 
 		$this->response->setOutput($this->load->view('report/report', $data));
 	}

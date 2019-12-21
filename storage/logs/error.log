@@ -4,3 +4,7 @@
 2019-12-21 1:28:22 - PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in /Applications/MAMP/htdocs/tp2_opencart/system/library/db/mysqli.php on line 7
 2019-12-21 1:28:22 - PHP Warning:  DB\MySQLi::__construct(): Couldn't fetch mysqli in /Applications/MAMP/htdocs/tp2_opencart/system/library/db/mysqli.php on line 10
 2019-12-21 1:28:22 - PHP Warning:  DB\MySQLi::__construct(): Couldn't fetch mysqli in /Applications/MAMP/htdocs/tp2_opencart/system/library/db/mysqli.php on line 10
+2019-12-21 16:32:55 - PHP Notice:  Undefined index: sort_order in /Applications/MAMP/htdocs/tp2_opencart/admin/controller/report/report.php on line 69
+2019-12-21 16:32:55 - PHP Notice:  Undefined index: sort_order in /Applications/MAMP/htdocs/tp2_opencart/admin/controller/report/report.php on line 69
+2019-12-21 16:38:03 - PHP Notice:  Undefined index: sort_order in /Applications/MAMP/htdocs/tp2_opencart/admin/controller/report/report.php on line 69
+2019-12-21 16:38:03 - PHP Notice:  Undefined index: sort_order in /Applications/MAMP/htdocs/tp2_opencart/admin/controller/report/report.php on line 69

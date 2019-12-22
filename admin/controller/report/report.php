@@ -32,19 +32,15 @@ class ControllerReportReport extends Controller {
 		$data['reports'][] = array(
 			'text'       => '01 - 15 pages les plus visitées',
 			'code'       => '15_pages_plus_visitees',
-			//'sort_order' => $this->config->get('report_' . $code . '_sort_order'),
 			'sort_order' => null, //si null, se place en-tête de liste (par ordre alphabétique si plusieurs entrée a null)
-			'href'       => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'] /*. '&code=' . $code*/, true)
+			//'href'       => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'] /*. '&code=' . $code*/, true)
 		);
 
 		$data['reports'][] = array(
 			'text'       => '02 - toutes les pages visitées',
 			'code'       => 'toutes_pages_visitees',
-			//'sort_order' => $this->config->get('report_' . $code . '_sort_order'),
 			'sort_order' => null,
-			//'href'       => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'], true)
-			//'href'       => $this->url->link('visites/visites/ajaxAfficherLesVisites')  // lien vers http://localhost/tp2_opencart/admin/index.php?route=visites/visites/ajaxAfficherLesVisites
-			//'href'       => 'ajaxAfficherLesVisites'  // identifiant pour une selection avec JQuery dans le fichier twig
+			'href'       => $this->url->link('visites/visites/ajaxAfficherLesVisites', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		
@@ -76,9 +72,7 @@ class ControllerReportReport extends Controller {
 		
 		if (isset($this->request->get['code'])) {
 			$data['report'] = $this->load->controller('extension/report/' . $this->request->get['code'] . '/report');
-		// } elseif (isset($data['reports'][1])) { // tp2 : la 2e ligne = rapport de toutes les pages visitées
-		// 	$data['report'] = $this->model_report_statistics->getAllVisites();
-		} elseif (isset($data['reports'][0])) { // tp2 : index modifié de 0 a 2 
+		} elseif (isset($data['reports'][0])) {
 			$data['report'] = $this->load->controller('extension/report/' . $data['reports'][0]['code'] . '/report');
 		} else {
 			$data['report'] = '';
@@ -87,9 +81,6 @@ class ControllerReportReport extends Controller {
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
-
-		var_dump($data['report']);
-		//die();
 
 		$this->response->setOutput($this->load->view('report/report', $data));
 	}

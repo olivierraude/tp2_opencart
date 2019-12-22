@@ -17,12 +17,16 @@ class ControllerCommonHeader extends Controller {
 		 $donnees_navigation['titre'] = $this->document->getTitle();
 		 $donnees_navigation['adresse_ip'] = $_SERVER['REMOTE_ADDR'];
 		 $donnees_navigation['id_usager'] = ($this->customer->isLogged()) ? $this->customer->getId() : null; // $user_id = $this->customer->getId() si utilisateur connecté sinon null
-			 
-		 var_dump($donnees_navigation); // A EFFACER
 
 		 $this->load->model('report/visites');
 		 $visite_id = $this->model_report_visites->addVisite($donnees_navigation);
-		 var_dump($visite_id);
+		 $distinctUris = $this->model_report_visites->getDistinctURIs($donnees_navigation);
+		 $uris = $this->model_report_visites->getAllURIs($donnees_navigation);
+
+		 $array = json_decode(json_encode($uris), true);
+		 //var_dump($uris);
+		 //var_dump($array);
+		 print_r(array_count_values($array));
 
 		// Analytics
 		$this->load->model('setting/extension');

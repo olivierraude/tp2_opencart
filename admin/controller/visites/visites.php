@@ -11,8 +11,7 @@
         public function ajaxAfficherLesVisites(){
             $this->load->model('visites/visites');
             $lesVisites = $this->model_visites_visites->getAllVisites();
-            //var_dump($lesVisites);
-            $this->reponse->set(Output(json_encode($lesVisites)));
+            $this->response->setOutput(json_encode($lesVisites));
             
         }
 

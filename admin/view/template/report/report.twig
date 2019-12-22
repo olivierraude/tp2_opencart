@@ -1,3 +1,8 @@
+{# modification tp2
+  - suppression de onchange dans le select report.
+  - le onchange est réattribué dans le jquery pour tous les options différentes de nos options
+ #}
+
 {{ header }}{{ column_left }}
 <div id="content">
   <div class="page-header">
@@ -14,15 +19,15 @@
     </div>
   </div>
   <div class="container-fluid">
-    <div>je suis le twig modifié</div>
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-bar-chart"></i> {#{{ text_type }}#} je suis le </h3>
+        <h3 class="panel-title"><i class="fa fa-bar-chart"></i> {{ text_type }}</h3>
       </div>
       <div class="panel-body">
         <div class="well">
           <div class="input-group">
-            <select name="report" onchange="location = this.value;" class="form-control">
+          {# suppression de onchange - a remettre pour le ocmod #}
+            <select name="report" {#onchange="location = this.value;"#} class="form-control">
               
               {% for report in reports %}
               {% if code == report.code %}
@@ -41,32 +46,51 @@
         </div>
       </div>
     </div>
-    <div>{{ report }}</div>
+    {# tp2 ajout de report #}
+    <div id="report">{{ report }}</div>
   </div>
 </div>
 {{ footer }} 
 
 {# TP2 - AJOUT DU RAPPORT #}
+{#
+  le script :
+    - appel les requetes ajax pour nos rapports
+    - réaffecte l'événement onchange pour les autres rapports
+#}
 {% raw %}
-<script type="text/javascript">
-  document.addEventlistener('load',function{
-    console.log('js')
-  })
-  /*$(document).ready(function(){
-    //selection de l'option qui contient le texte 'toutes les pages visitées'
-    console.log('je suis dans jquery');
-    $('.input_group option:contains("toutes les pages visitées")'.click(function(){
-      console.log('je clique toutes les pages visitées');
+<script>
+  $(document).ready(function(){
+    console.log($('#ajaxAfficherLesVisites').get(0));
+    $('.form-control').change(function(){
+      let page_a_afficher = $(".form-control option:selected").val();
+      if(page_a_afficher.includes("ajaxAfficherLesVisites")){ // verifie si la string 'page_a_afficher' contient 'ajaxAff...'
+        afficher_les_visites(page_a_afficher);
+      }else if(page_a_afficher == 'voir_olivier'){
+        //code olivier
+      }else{
+        window.open(page_a_afficher,"_self");
+      }
+    });
+  });
+
+  let afficher_les_visites = (requete_ajax) =>{
+    $('#report').empty();
       $.ajax({
-        url: 'index.php?route=visites/visites/ajaxAfficherLesVisites';
-        success:function(data)
+        url: requete_ajax,
+        success:function(donnees)
         {
-          var json = JSON.parse(data);
-          echo(data);
+          var json = JSON.parse(donnees);
+          console.log(json);
+          for(let ligne of json){
+            for(let elt in ligne){
+              $('#report').append(ligne[elt]);
+            }
+            $('#report').append("<br>");
+          }
         }
       });
-    }));
-  });*/
+  }
 </script>
 {% endraw %}
 {# fin TP2 - AJOUT DU RAPPORT #}

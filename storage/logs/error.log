@@ -4,71 +4,7 @@
 2019-12-21 1:28:22 - PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in /Applications/MAMP/htdocs/tp2_opencart/system/library/db/mysqli.php on line 7
 2019-12-21 1:28:22 - PHP Warning:  DB\MySQLi::__construct(): Couldn't fetch mysqli in /Applications/MAMP/htdocs/tp2_opencart/system/library/db/mysqli.php on line 10
 2019-12-21 1:28:22 - PHP Warning:  DB\MySQLi::__construct(): Couldn't fetch mysqli in /Applications/MAMP/htdocs/tp2_opencart/system/library/db/mysqli.php on line 10
-2019-12-21 3:21:39 - PHP Notice:  Undefined index: sort_order in /Applications/MAMP/htdocs/tp2_opencart/admin/controller/report/report.php on line 69
-2019-12-21 3:21:39 - PHP Notice:  Undefined index: sort_order in /Applications/MAMP/htdocs/tp2_opencart/admin/controller/report/report.php on line 69
-2019-12-21 14:01:23 - PHP Notice:  Undefined index: sort_order in /Applications/MAMP/htdocs/tp2_opencart/admin/controller/report/report.php on line 61
-2019-12-21 14:01:49 - PHP Notice:  Undefined index: sort_order in /Applications/MAMP/htdocs/tp2_opencart/admin/controller/report/report.php on line 61
-2019-12-21 15:09:57 - PHP Notice:  Undefined index: sort_order in /Applications/MAMP/htdocs/tp2_opencart/admin/controller/report/report.php on line 61
-2019-12-21 15:10:08 - PHP Notice:  Undefined variable: url in /Applications/MAMP/htdocs/tp2_opencart/admin/controller/extension/report/product_viewed.php on line 147
-2019-12-21 15:10:10 - PHP Notice:  Undefined index: sort_order in /Applications/MAMP/htdocs/tp2_opencart/admin/controller/report/report.php on line 61
-2019-12-21 15:11:40 - PHP Notice:  Undefined index: sort_order in /Applications/MAMP/htdocs/tp2_opencart/admin/controller/report/report.php on line 61
-2019-12-21 19:01:24 - PHP Warning:  mysqli::__construct(): (HY000/1049): Unknown database 'tp2' in /Applications/MAMP/htdocs/tp2_opencart/system/library/db/mysqli.php on line 7
-2019-12-21 19:01:24 - PHP Warning:  DB\MySQLi::__construct(): Couldn't fetch mysqli in /Applications/MAMP/htdocs/tp2_opencart/system/library/db/mysqli.php on line 10
-2019-12-21 19:01:24 - PHP Warning:  DB\MySQLi::__construct(): Couldn't fetch mysqli in /Applications/MAMP/htdocs/tp2_opencart/system/library/db/mysqli.php on line 10
-2019-12-22 2:53:48 - PHP Notice:  Undefined index: sort_order in /Applications/MAMP/htdocs/tp2_opencart/admin/controller/report/report.php on line 61
-2019-12-22 2:54:10 - PHP Notice:  Undefined index: sort_order in /Applications/MAMP/htdocs/tp2_opencart/admin/controller/report/report.php on line 61
-2019-12-22 2:54:17 - PHP Notice:  Undefined index: sort_order in /Applications/MAMP/htdocs/tp2_opencart/admin/controller/report/report.php on line 61
-2019-12-22 3:54:10 - PHP Notice:  Undefined index: sort_order in /Applications/MAMP/htdocs/tp2_opencart/admin/controller/report/report.php on line 61
-2019-12-22 3:54:17 - PHP Notice:  Undefined index: sort_order in /Applications/MAMP/htdocs/tp2_opencart/admin/controller/report/report.php on line 61
-2019-12-22 4:05:43 - PHP Notice:  Undefined index: sort_order in /Applications/MAMP/htdocs/tp2_opencart/admin/controller/report/report.php on line 62
-2019-12-22 4:07:49 - PHP Notice:  Undefined variable: query in /Applications/MAMP/htdocs/tp2_opencart/catalog/controller/common/header.php on line 26
-2019-12-22 4:08:39 - PHP Warning:  Use of undefined constant row - assumed 'row' (this will throw an Error in a future version of PHP) in /Applications/MAMP/htdocs/tp2_opencart/catalog/controller/common/header.php on line 26
-2019-12-22 4:08:39 - PHP Warning:  Illegal string offset 'total' in /Applications/MAMP/htdocs/tp2_opencart/catalog/controller/common/header.php on line 26
-2019-12-22 4:09:47 - PHP Warning:  Use of undefined constant row - assumed 'row' (this will throw an Error in a future version of PHP) in /Applications/MAMP/htdocs/tp2_opencart/catalog/controller/common/header.php on line 26
-2019-12-22 4:09:47 - PHP Warning:  Illegal string offset 'total' in /Applications/MAMP/htdocs/tp2_opencart/catalog/controller/common/header.php on line 26
-2019-12-22 4:09:48 - PHP Warning:  Use of undefined constant row - assumed 'row' (this will throw an Error in a future version of PHP) in /Applications/MAMP/htdocs/tp2_opencart/catalog/controller/common/header.php on line 26
-2019-12-22 4:09:48 - PHP Warning:  Illegal string offset 'total' in /Applications/MAMP/htdocs/tp2_opencart/catalog/controller/common/header.php on line 26
-2019-12-22 4:10:01 - PHP Warning:  Use of undefined constant row - assumed 'row' (this will throw an Error in a future version of PHP) in /Applications/MAMP/htdocs/tp2_opencart/catalog/controller/common/header.php on line 26
-2019-12-22 4:10:01 - PHP Warning:  Illegal string offset 'total' in /Applications/MAMP/htdocs/tp2_opencart/catalog/controller/common/header.php on line 26
-2019-12-22 4:10:45 - PHP Warning:  Use of undefined constant row - assumed 'row' (this will throw an Error in a future version of PHP) in /Applications/MAMP/htdocs/tp2_opencart/catalog/controller/common/header.php on line 26
-2019-12-22 4:10:45 - PHP Warning:  Illegal string offset 'total' in /Applications/MAMP/htdocs/tp2_opencart/catalog/controller/common/header.php on line 26
-2019-12-22 4:13:35 - PHP Warning:  Use of undefined constant row - assumed 'row' (this will throw an Error in a future version of PHP) in /Applications/MAMP/htdocs/tp2_opencart/catalog/controller/common/header.php on line 26
-2019-12-22 4:13:35 - PHP Warning:  Illegal string offset 'total' in /Applications/MAMP/htdocs/tp2_opencart/catalog/controller/common/header.php on line 26
-2019-12-22 4:14:14 - PHP Notice:  Undefined variable: URIs in /Applications/MAMP/htdocs/tp2_opencart/catalog/controller/common/header.php on line 26
-2019-12-22 4:20:37 - PHP Notice:  Undefined variable: URIs in /Applications/MAMP/htdocs/tp2_opencart/catalog/controller/common/header.php on line 26
-2019-12-22 4:20:41 - PHP Notice:  Undefined variable: URIs in /Applications/MAMP/htdocs/tp2_opencart/catalog/controller/common/header.php on line 26
-2019-12-22 4:21:35 - PHP Notice:  Undefined variable: URIs in /Applications/MAMP/htdocs/tp2_opencart/catalog/controller/common/header.php on line 26
-2019-12-22 4:22:00 - PHP Notice:  Undefined variable: URIs in /Applications/MAMP/htdocs/tp2_opencart/catalog/controller/common/header.php on line 26
-2019-12-22 4:22:02 - PHP Notice:  Undefined variable: URIs in /Applications/MAMP/htdocs/tp2_opencart/catalog/controller/common/header.php on line 26
-2019-12-22 4:22:05 - PHP Notice:  Undefined variable: URIs in /Applications/MAMP/htdocs/tp2_opencart/catalog/controller/common/header.php on line 26
-2019-12-22 4:24:13 - PHP Notice:  Undefined variable: URIs in /Applications/MAMP/htdocs/tp2_opencart/catalog/controller/common/header.php on line 26
-2019-12-22 4:24:43 - PHP Notice:  Undefined variable: sql in /Applications/MAMP/htdocs/tp2_opencart/catalog/controller/common/header.php on line 26
-2019-12-22 4:24:43 - PHP Warning:  mysqli::query(): Empty query in /Applications/MAMP/htdocs/tp2_opencart/system/library/db/mysqli.php on line 18
-2019-12-22 4:59:37 - PHP Warning:  array_count_values() expects parameter 1 to be array, object given in /Applications/MAMP/htdocs/tp2_opencart/catalog/controller/common/header.php on line 27
-2019-12-22 5:07:38 - PHP Warning:  array_count_values() expects parameter 1 to be array, object given in /Applications/MAMP/htdocs/tp2_opencart/catalog/controller/common/header.php on line 30
-2019-12-22 5:08:38 - PHP Warning:  array_count_values(): Can only count STRING and INTEGER values! in /Applications/MAMP/htdocs/tp2_opencart/catalog/controller/common/header.php on line 30
-2019-12-22 5:09:32 - PHP Warning:  array_count_values(): Can only count STRING and INTEGER values! in /Applications/MAMP/htdocs/tp2_opencart/catalog/controller/common/header.php on line 31
-2019-12-22 5:10:09 - PHP Warning:  array_count_values() expects parameter 1 to be array, object given in /Applications/MAMP/htdocs/tp2_opencart/catalog/controller/common/header.php on line 31
-2019-12-22 5:10:39 - PHP Warning:  Use of undefined constant url_page - assumed 'url_page' (this will throw an Error in a future version of PHP) in /Applications/MAMP/htdocs/tp2_opencart/catalog/controller/common/header.php on line 30
-2019-12-22 5:13:05 - PHP Warning:  array_count_values() expects parameter 1 to be array, null given in /Applications/MAMP/htdocs/tp2_opencart/catalog/controller/common/header.php on line 31
-2019-12-22 5:15:52 - PHP Warning:  array_count_values() expects parameter 1 to be array, object given in /Applications/MAMP/htdocs/tp2_opencart/catalog/controller/common/header.php on line 29
-2019-12-22 5:18:22 - PHP Warning:  array_count_values() expects parameter 1 to be array, object given in /Applications/MAMP/htdocs/tp2_opencart/catalog/controller/common/header.php on line 28
-2019-12-22 5:18:45 - PHP Warning:  array_count_values() expects parameter 1 to be array, object given in /Applications/MAMP/htdocs/tp2_opencart/catalog/controller/common/header.php on line 28
-2019-12-22 5:37:41 - PHP Warning:  array_count_values() expects parameter 1 to be array, object given in /Applications/MAMP/htdocs/tp2_opencart/catalog/controller/common/header.php on line 28
-2019-12-22 5:39:29 - PHP Warning:  array_count_values() expects parameter 1 to be array, object given in /Applications/MAMP/htdocs/tp2_opencart/catalog/controller/common/header.php on line 28
-2019-12-22 5:40:03 - PHP Warning:  array_count_values() expects parameter 1 to be array, object given in /Applications/MAMP/htdocs/tp2_opencart/catalog/controller/common/header.php on line 28
-2019-12-22 5:43:44 - PHP Warning:  array_count_values(): Can only count STRING and INTEGER values! in /Applications/MAMP/htdocs/tp2_opencart/catalog/controller/common/header.php on line 28
-2019-12-22 5:45:37 - PHP Warning:  array_count_values() expects parameter 1 to be array, object given in /Applications/MAMP/htdocs/tp2_opencart/catalog/controller/common/header.php on line 28
-2019-12-22 5:46:00 - PHP Warning:  array_count_values() expects parameter 1 to be array, object given in /Applications/MAMP/htdocs/tp2_opencart/catalog/controller/common/header.php on line 28
-2019-12-22 5:46:16 - PHP Warning:  array_count_values() expects parameter 1 to be array, object given in /Applications/MAMP/htdocs/tp2_opencart/catalog/controller/common/header.php on line 28
-2019-12-22 5:46:22 - PHP Warning:  array_count_values() expects parameter 1 to be array, object given in /Applications/MAMP/htdocs/tp2_opencart/catalog/controller/common/header.php on line 28
-2019-12-22 5:53:53 - PHP Warning:  array_count_values() expects parameter 1 to be array, object given in /Applications/MAMP/htdocs/tp2_opencart/catalog/model/report/visites.php on line 37
-2019-12-22 5:55:45 - PHP Warning:  array_count_values() expects parameter 1 to be array, object given in /Applications/MAMP/htdocs/tp2_opencart/catalog/model/report/visites.php on line 37
-2019-12-22 5:56:23 - PHP Warning:  array_count_values() expects parameter 1 to be array, object given in /Applications/MAMP/htdocs/tp2_opencart/catalog/model/report/visites.php on line 37
-2019-12-22 5:56:53 - PHP Warning:  array_count_values() expects parameter 1 to be array, object given in /Applications/MAMP/htdocs/tp2_opencart/catalog/model/report/visites.php on line 37
-2019-12-22 5:57:43 - PHP Warning:  array_count_values() expects parameter 1 to be array, object given in /Applications/MAMP/htdocs/tp2_opencart/catalog/model/report/visites.php on line 37
-2019-12-22 5:57:43 - PHP Notice:  Undefined variable: uris in /Applications/MAMP/htdocs/tp2_opencart/catalog/controller/common/header.php on line 30
-2019-12-22 5:58:37 - PHP Warning:  array_count_values() expects parameter 1 to be array, object given in /Applications/MAMP/htdocs/tp2_opencart/catalog/model/report/visites.php on line 37
-2019-12-22 6:03:02 - PHP Warning:  array_count_values() expects parameter 1 to be array, object given in /Applications/MAMP/htdocs/tp2_opencart/catalog/model/report/visites.php on line 37
-2019-12-22 6:04:22 - PHP Warning:  array_count_values(): Can only count STRING and INTEGER values! in /Applications/MAMP/htdocs/tp2_opencart/catalog/controller/common/header.php on line 29
-2019-12-22 6:04:22 - PHP Warning:  array_count_values(): Can only count STRING and INTEGER values! in /Applications/MAMP/htdocs/tp2_opencart/catalog/controller/common/header.php on line 29
+2019-12-21 16:32:55 - PHP Notice:  Undefined index: sort_order in /Applications/MAMP/htdocs/tp2_opencart/admin/controller/report/report.php on line 69
+2019-12-21 16:32:55 - PHP Notice:  Undefined index: sort_order in /Applications/MAMP/htdocs/tp2_opencart/admin/controller/report/report.php on line 69
+2019-12-21 16:38:03 - PHP Notice:  Undefined index: sort_order in /Applications/MAMP/htdocs/tp2_opencart/admin/controller/report/report.php on line 69
+2019-12-21 16:38:03 - PHP Notice:  Undefined index: sort_order in /Applications/MAMP/htdocs/tp2_opencart/admin/controller/report/report.php on line 69

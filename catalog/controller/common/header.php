@@ -20,13 +20,6 @@ class ControllerCommonHeader extends Controller {
 
 		 $this->load->model('report/visites');
 		 $visite_id = $this->model_report_visites->addVisite($donnees_navigation);
-		 $distinctUris = $this->model_report_visites->getDistinctURIs($donnees_navigation);
-		 $uris = $this->model_report_visites->getAllURIs($donnees_navigation);
-
-		 $array = json_decode(json_encode($uris), true);
-		 //var_dump($uris);
-		 //var_dump($array);
-		 print_r(array_count_values($array));
 
 		// Analytics
 		$this->load->model('setting/extension');

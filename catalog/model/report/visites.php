@@ -31,7 +31,7 @@ class ModelReportVisites extends Model {
     
     public function getAllURIs($data)
     {
-        $sql = "SELECT url_page FROM " . DB_PREFIX . "visites";
+        $sql = "SELECT url_page, COUNT(*)AS nombreURL FROM " . DB_PREFIX . "visites GROUP BY url_page ORDER BY nombreURL DESC";
         $uris = $this->db->query($sql);
 
         //$arUri = array_count_values($uris);

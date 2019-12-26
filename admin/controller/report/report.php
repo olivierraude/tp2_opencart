@@ -29,18 +29,24 @@ class ControllerReportReport extends Controller {
 		$data['reports'] = array();
 
 		// ajout des rapports du tp2 dans la barre de sélection des rapports
+		$code = '15_pages_plus_visitees';
 		$data['reports'][] = array(
-			'text'       => '15 pages les plus visitées',
-			'code'       => '15_pages_plus_visitees'//,
+			'text'       => '01 - 15 pages les plus visitées',
+			'code'       => $code,
 			//'sort_order' => $this->config->get('report_' . $code . '_sort_order'),
-			//'href'       => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'] . '&code=' . $code, true)
+			'sort_order' => null,
+			'href'       => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'] . '&code=' . $code, true)
+			//'href'       => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'], true)
 		);
-
+		
+		$code = 'pages_visitees';
 		$data['reports'][] = array(
-			'text'       => 'toutes les pages visitées',
-			'code'       => 'toutes_pages_visitees'//,
+			'text'       => '02 - toutes les pages visitées',
+			'code'       => $code,
 			//'sort_order' => $this->config->get('report_' . $code . '_sort_order'),
-			//'href'       => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'] . '&code=' . $code, true)
+			'sort_order' => null,
+			'href'       => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'] . '&code=' . $code, true)
+			//'href'       => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		

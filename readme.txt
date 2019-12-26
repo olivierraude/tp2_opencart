@@ -12,12 +12,16 @@ nom de la base de données = tp2
 prefixe db = _tp2
 
 
-1_ création d'une base de données
+1_ BD
 
-2_ création du model 
-    le modèle 'add' est dans le catalog/model/reports/visites.php (nouveau fichier)
+2_ CRÉATION DE FICHIER 
+    catalog/model/reports/visites.php
+    admin/model/visites.php (emplacement correcte ?)
+    admin/controller/extension/report/pages_visites.php
+    admin/view/template/extension/report/pages_visites.twig
+    
 
-3_ création du controleur
-    À AJOUTER DANS LE OCMOD:    
+
+3_ À AJOUTER DANS LE OCMOD:    
     admin/controller/report/report.php  (ajout des liens vers les rapports)
     catalog/controller/common/header.php  (appel de methode addVisites())

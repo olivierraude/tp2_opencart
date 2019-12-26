@@ -1,6 +1,8 @@
 _____________________
 
     TP2 OPENCART
+
+    branche gael_v2
 _____________________
 
 ajout d'un module OCMOD surveillant les visites sur le site

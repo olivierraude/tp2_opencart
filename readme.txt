@@ -14,8 +14,10 @@ prefixe db = _tp2
 
 2_ création du model 
     le modèle 'add' est dans le catalog/model/reports/visites.php
+    ajout du model visites dans admin
 
 3_ création du controleur
-    !!! A MODIFIER , LE CONTROLLER DOIT ÊTRE DANS UN FICHIER EXISTANT !!!     
-    admin/controller/report/report.php
-    catalog/controller/common/header.php  (appel de methode addVisites())
+    modification du controleur report.php dans admin
+    modification du controleur common/header.php dans le catalogs  (appel de methode addVisites())
+    ajout du controleur visites.php dans admin
+    modification de la vue report.twig dans admin

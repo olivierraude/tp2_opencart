@@ -31,7 +31,7 @@ class ControllerReportReport extends Controller {
 		// ajout des rapports du tp2 dans la barre de sélection des rapports
 		$code = '15_pages_plus_visitees';
 		$data['reports'][] = array(
-			'text'       => '01 - 15 pages les plus visitées',
+			'text'       => $this->language->get('extension')->get('heading_title'),
 			'code'       => $code,
 			//'sort_order' => $this->config->get('report_' . $code . '_sort_order'),
 			'sort_order' => null,
@@ -41,7 +41,7 @@ class ControllerReportReport extends Controller {
 		
 		$code = 'pages_visitees';
 		$data['reports'][] = array(
-			'text'       => '02 - toutes les pages visitées',
+			'text'       => $this->language->get('extension')->get('heading_title'),
 			'code'       => $code,
 			//'sort_order' => $this->config->get('report_' . $code . '_sort_order'),
 			'sort_order' => null,

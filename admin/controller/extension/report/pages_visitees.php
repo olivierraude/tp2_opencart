@@ -70,7 +70,7 @@ class ControllerExtensionReportPagesVisitees extends Controller {
 	// }
 		
 	public function report() {
-		$this->load->language('extension/report/visites');
+		$this->load->language('extension/report/pages_visitees');
 
 		// if (isset($this->request->get['page'])) {
 		// 	$page = $this->request->get['page'];

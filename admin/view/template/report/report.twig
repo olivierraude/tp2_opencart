@@ -59,12 +59,15 @@
     - réaffecte l'événement onchange pour les autres rapports
 #}
 {% raw %}
+{# <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">  
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script> #}
 <script>
   $(document).ready(function(){
+    $('#table_id').DataTable();
     console.log($('#ajaxAfficherLesVisites').get(0));
     $('.form-control').change(function(){
       let page_a_afficher = $(".form-control option:selected").val();
-      if(page_a_afficher.includes("ajaxAfficherLesVisites")){ // verifie si la string 'page_a_afficher' contient 'ajaxAff...'
+      if(page_a_afficher.includes("ajaxAfficherLesVisites")){ 
         afficher_les_visites(page_a_afficher);
       }else if(page_a_afficher == 'voir_olivier'){
         //code olivier
@@ -81,13 +84,36 @@
         success:function(donnees)
         {
           var json = JSON.parse(donnees);
-          console.log(json);
-          for(let ligne of json){
-            for(let elt in ligne){
-              $('#report').append(ligne[elt]);
-            }
-            $('#report').append("<br>");
+          //console.log(json);
+          $('#report').append(`
+            <table id="table_id" class="display">
+              <thead>
+                <tr>
+                  <th>date visite</th>
+                  <th>titre</th>
+                  <th>url page</th>
+                  <th>id usager</th>
+                  <th>adresse ip</th>
+                </tr>
+              </thead>
+              <tbody>
+          `);
+          for(let d of json){
+            console.log(d);
+            $('#report').append(`
+                <tr>
+                  <td>${ d['date_visite'] }</td>
+                  <td>${ d['titre'] }</td>
+                  <td>${ d['url_page'] }</td>
+                  <td>${ d['id_usager'] }</td>
+                  <td>${ d['adresse_ip'] }</td>
+                </tr>
+            `);
           }
+         $('#report').append(`
+              </tbody>
+            </table>
+          `);
         }
       });
   }

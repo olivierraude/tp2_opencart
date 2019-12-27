@@ -15,11 +15,16 @@ prefixe db = _tp2
 1_ BD
 
 2_ CRÉATION DE FICHIER 
-    catalog/model/reports/visites.php
-    admin/model/visites.php (emplacement correcte ?)
-    admin/controller/extension/report/pages_visites.php
-    admin/view/template/extension/report/pages_visites.twig
-    
+    modèle : 
+        catalog/model/reports/visites.php
+        admin/model/visites.php (emplacement correcte ?)
+    controleur:
+        admin/controller/extension/report/pages_visitees.php
+    vue:
+        admin/view/template/extension/report/pages_visitees.twig
+    langage:
+        admin/langage/en-gb/extension/report/pages_visitees.php
+        admin/langage/fr-fr/extension/report/pages_visitees.php   
 
 
 3_ À AJOUTER DANS LE OCMOD:    

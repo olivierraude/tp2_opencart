@@ -1,20 +1,33 @@
+{% raw %}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+
+<script>
+  $(document).ready( function () {
+      $('#table_id').DataTable();
+  } );
+</script>
+{% endraw %}
+
 <div class="panel panel-default">
   <div class="panel-heading">
-    {# <div class="pull-right">
-      <a href="{{ reset }}" class="btn btn-danger btn-xs"><i class="fa fa-refresh"></i> {{ button_reset }}</a>
-    </div> #}
     <h3 class="panel-title"><i class="fa fa-filter"></i> {{ heading_title }}</h3>
   </div>
   <div class="panel-body">
     <div class="table-responsive">
-      <table class="table table-bordered">
+      <table id="table_id" class="display">
         <thead>
           <tr>
-            <td class="text-left">{{ column_titre }}</td>
-            <td class="text-left">{{ column_date_visite }}</td>
-            <td class="text-left">{{ column_url_page }}</td>
-            <td class="text-left">{{ column_id_usager }}</td>
-            <td class="text-left">{{ column_adresse_ip }}</td>
+            <td>{{ column_titre }}</td>
+            <td>{{ column_date_visite }}</td>
+            <td>{{ column_url_page }}</td>
+            <td>{{ column_id_usager }}</td>
+            <td>{{ column_adresse_ip }}</td>
           </tr>
         </thead>
         <tbody>
@@ -22,11 +35,11 @@
         {% if pages %}
         {% for page in pages %}
         <tr>
-          <td class="text-left">{{ page.titre }}</td>
-          <td class="text-left">{{ page.date_visite }}</td>
-          <td class="text-left">{{ page.url_page }}</td>
-          <td class="text-left">{{ page.id_usager }}</td>
-          <td class="text-left">{{ page.adresse_ip }}</td>
+          <td>{{ page.titre }}</td>
+          <td>{{ page.date_visite }}</td>
+          <td>{{ page.url_page }}</td>
+          <td>{{ page.id_usager }}</td>
+          <td>{{ page.adresse_ip }}</td>
         </tr>
         {% endfor %}
         {% else %}

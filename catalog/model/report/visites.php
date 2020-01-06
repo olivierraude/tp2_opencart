@@ -20,21 +20,4 @@ class ModelReportVisites extends Model {
 		$visite_id = $this->db->getLastId();
 		return $visite_id;
     }
-    
-    public function getDistinctURIs($data)
-    {
-        $sql = "SELECT COUNT(DISTINCT url_page) FROM " . DB_PREFIX . "visites";
-        $distinctUris = $this->db->query($sql);
-
-		return $distinctUris;
-    }
-    
-    public function getAllURIs($data)
-    {
-        $sql = "SELECT url_page, COUNT(*)AS nombreURL FROM " . DB_PREFIX . "visites GROUP BY url_page ORDER BY nombreURL DESC";
-        $uris = $this->db->query($sql);
-
-        //$arUri = array_count_values($uris);
-		return $uris;
-    }
 }

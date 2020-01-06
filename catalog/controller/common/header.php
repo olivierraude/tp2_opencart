@@ -21,6 +21,8 @@ class ControllerCommonHeader extends Controller {
 		 $this->load->model('report/visites');
 		 $visite_id = $this->model_report_visites->addVisite($donnees_navigation);
 
+		//var_dump($donnees_navigation['titre']);
+		
 		// Analytics
 		$this->load->model('setting/extension');
 

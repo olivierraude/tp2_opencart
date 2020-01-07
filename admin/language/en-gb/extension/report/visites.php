@@ -8,10 +8,10 @@ $_['text_edit']        = 'Edit Most Visited Report';
 $_['text_success']     = 'Success: You have reset the most visited report!';
 
 // Column
-$_['url_page']         = 'URL Page';
-$_['titre']            = 'Title';
-$_['adresse_ip']       = 'IP Address';
-$_['id_usager']        = 'User ID';
+$_['column_url_page']         = 'URL Page';
+$_['column_titre']            = 'Title';
+$_['column_adresse_ip']       = 'IP Address';
+$_['column_id_usager']        = 'User ID';
 
 // Entry
 $_['entry_status']     = 'Status';

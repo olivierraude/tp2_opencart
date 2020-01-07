@@ -34,8 +34,8 @@ class ControllerReportReport extends Controller {
 		$data['reports'][] = array(
 			'text'       => '15 pages les plus visitées',
 			'code'       => '15_pages_plus_visitees',
-			'sort_order' => $this->config->get('report_15_pages_plus_visitees_sort_order'),
-			'href'       => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'] . '&code', true)
+			'sort_order' => $this->config->get('report_visites_sort_order'),
+			'href'       => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'] . '&code=visites', true)
 		);
 		
 		$this->load->model('setting/extension');

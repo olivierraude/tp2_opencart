@@ -1,5 +1,5 @@
 <?php
-class ModelVisites extends Model {
+class ModelExtensionReportVisites extends Model {
 
     public function getAllVisites()
     {
@@ -19,7 +19,7 @@ class ModelVisites extends Model {
     public function getDistinctURIs($data)
     {
         $sql = "SELECT COUNT(DISTINCT url_page) FROM " . DB_PREFIX . "visites";
-        $distinctUris = $this->db->query($sql);
+        $query = $this->db->query($sql);
 
 		return $distinctUris;
     }
@@ -30,9 +30,21 @@ class ModelVisites extends Model {
                     GROUP BY url_page 
                     ORDER BY nombreURL DESC";
         
+        if (isset($data['start']) || isset($data['limit'])) {
+            if ($data['start'] < 0) {
+                $data['start'] = 0;
+            }
+
+            if ($data['limit'] < 1) {
+                $data['limit'] = 20;
+            }
+
+            $sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
+        }
+
         $query = $this->db->query($sql);
 
-        return $query;
+        return $query->rows;
     }
 }
 

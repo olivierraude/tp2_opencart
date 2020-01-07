@@ -3,7 +3,7 @@ class ControllerCommonHeader extends Controller {
 	public function index() {
 		
 		/**
-		 * dans la cadre du tp2,
+		 * dans le cadre du tp2,
 		 * l'enregistrement de l'activité de l'utilisateur sera faites ici. Le fichier header étant appelé à chaque chargement, il est une bonne place pour 'surveiller' son activité
 		 * enregistrement :
 		 * 	- URL (adresse sans le nom de domaine)

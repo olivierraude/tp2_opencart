@@ -1,6 +1,6 @@
 <?php
 // Heading
-$_['heading_title']    = 'Most Visited Report';
+$_['heading_title']    = '15 Most Visited Pages Report';
 
 // Text
 $_['text_extension']   = 'Extensions';
@@ -10,8 +10,7 @@ $_['text_success']     = 'Success: You have reset the most visited report!';
 // Column
 $_['column_url_page']         = 'URL Page';
 $_['column_titre']            = 'Title';
-$_['column_adresse_ip']       = 'IP Address';
-$_['column_id_usager']        = 'User ID';
+$_['column_views']            = 'Views';
 
 // Entry
 $_['entry_status']     = 'Status';

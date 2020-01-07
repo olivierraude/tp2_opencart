@@ -10,10 +10,9 @@
       <table class="table table-bordered">
         <thead>
           <tr>
-            <td class="text-left">{{ column_url_page }}</td>
             <td class="text-left">{{ column_titre }}</td>
-            <td class="text-right">{{ column_adresse_ip }}</td>
-            <td class="text-right">{{ column_id_usager }}</td>
+            <td class="text-left">{{ column_url_page }}</td>
+            <td class="text-left">{{ column_views }}</td>
           </tr>
         </thead>
         <tbody>
@@ -21,10 +20,9 @@
         {% if visites %}
         {% for visite in visites %}
         <tr>
+          <td class="text-left">{{ visite.titre }}</td> 
           <td class="text-left">{{ visite.url_page }}</td>
-          <td class="text-left">{{ visite.titre }}</td>
-          <td class="text-right">{{ visite.adresse_ip }}</td>
-          <td class="text-right">{{ visite.id_usager }}</td>
+          <td class="text-left">{{ visite.vues }}</td>
         </tr>
         {% endfor %}
         {% else %}

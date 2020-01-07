@@ -26,9 +26,11 @@ class ModelExtensionReportVisites extends Model {
     
     public function getAllURIs($data = array())
     {
-        $sql = "SELECT url_page, COUNT(*)AS nombreURL FROM " . DB_PREFIX . "visites 
-                    GROUP BY url_page 
-                    ORDER BY nombreURL DESC";
+        //set global sql_mode='';
+
+        $sql = "SELECT titre, url_page, COUNT(*) AS nombreURL FROM " . DB_PREFIX . "visites 
+        GROUP BY url_page 
+        ORDER BY nombreURL DESC";
         
         if (isset($data['start']) || isset($data['limit'])) {
             if ($data['start'] < 0) {

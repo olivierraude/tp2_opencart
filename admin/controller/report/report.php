@@ -32,37 +32,23 @@ class ControllerReportReport extends Controller {
 		$code = '15_pages_plus_visitees';
 		$this->load->language('extension/report/' . $code, 'extension');
 		$data['reports'][] = array(
-<<<<<<< HEAD
 			'text'       => $this->language->get('extension')->get('heading_title'),
 			'code'       => $code,
 			//'sort_order' => $this->config->get('report_' . $code . '_sort_order'),
 			'sort_order' => null,
 			'href'       => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'] . '&code=' . $code, true)
 			//'href'       => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'], true)
-=======
-			'text'       => '01 - 15 pages les plus visitées',
-			'code'       => '15_pages_plus_visitees',
-			'sort_order' => null, //si null, se place en-tête de liste (par ordre alphabétique si plusieurs entrée a null)
-			//'href'       => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'] /*. '&code=' . $code*/, true)
->>>>>>> gael
 		);
 		
 		$code = 'pages_visitees';
 		$this->load->language('extension/report/' . $code, 'extension');
 		$data['reports'][] = array(
-<<<<<<< HEAD
 			'text'       => $this->language->get('extension')->get('heading_title'),
 			'code'       => $code,
 			//'sort_order' => $this->config->get('report_' . $code . '_sort_order'),
 			'sort_order' => null,
 			'href'       => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'] . '&code=' . $code, true)
 			//'href'       => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'], true)
-=======
-			'text'       => '02 - toutes les pages visitées',
-			'code'       => 'toutes_pages_visitees',
-			'sort_order' => null,
-			'href'       => $this->url->link('visites/visites/ajaxAfficherLesVisites', 'user_token=' . $this->session->data['user_token'], true)
->>>>>>> gael
 		);
 
 		

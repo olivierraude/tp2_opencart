@@ -29,10 +29,12 @@ class ControllerReportReport extends Controller {
 		// Reports
 		$data['reports'] = array();
 
+		$this->load->language('extension/report/visites');
+
 	// ajout des rapports du tp2 dans la barre de sélection des rapports
 	// => Suivre la méthode d'insertion des modules
 		$data['reports'][] = array(
-			'text'       => '15 pages les plus visitées',
+			'text'       => $this->language->get('heading_title'),
 			'code'       => '15_pages_plus_visitees',
 			'sort_order' => $this->config->get('report_visites_sort_order'),
 			'href'       => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'] . '&code=visites', true)

@@ -26,7 +26,19 @@ prefixe db = _tp2
         admin/langage/en-gb/extension/report/pages_visitees.php
         admin/langage/fr-fr/extension/report/pages_visitees.php   
 
+<<<<<<< HEAD
 
 3_ À AJOUTER DANS LE OCMOD:    
     admin/controller/report/report.php  (ajout des liens vers les rapports)
     catalog/controller/common/header.php  (appel de methode addVisites())
+=======
+2_ création du model 
+    le modèle 'add' est dans le catalog/model/reports/visites.php
+    ajout du model visites dans admin
+
+3_ création du controleur
+    modification du controleur report.php dans admin
+    modification du controleur common/header.php dans le catalogs  (appel de methode addVisites())
+    ajout du controleur visites.php dans admin
+    modification de la vue report.twig dans admin
+>>>>>>> gael

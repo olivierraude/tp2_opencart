@@ -32,23 +32,37 @@ class ControllerReportReport extends Controller {
 		$code = '15_pages_plus_visitees';
 		$this->load->language('extension/report/' . $code, 'extension');
 		$data['reports'][] = array(
+<<<<<<< HEAD
 			'text'       => $this->language->get('extension')->get('heading_title'),
 			'code'       => $code,
 			//'sort_order' => $this->config->get('report_' . $code . '_sort_order'),
 			'sort_order' => null,
 			'href'       => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'] . '&code=' . $code, true)
 			//'href'       => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'], true)
+=======
+			'text'       => '01 - 15 pages les plus visitées',
+			'code'       => '15_pages_plus_visitees',
+			'sort_order' => null, //si null, se place en-tête de liste (par ordre alphabétique si plusieurs entrée a null)
+			//'href'       => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'] /*. '&code=' . $code*/, true)
+>>>>>>> gael
 		);
 		
 		$code = 'pages_visitees';
 		$this->load->language('extension/report/' . $code, 'extension');
 		$data['reports'][] = array(
+<<<<<<< HEAD
 			'text'       => $this->language->get('extension')->get('heading_title'),
 			'code'       => $code,
 			//'sort_order' => $this->config->get('report_' . $code . '_sort_order'),
 			'sort_order' => null,
 			'href'       => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'] . '&code=' . $code, true)
 			//'href'       => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'], true)
+=======
+			'text'       => '02 - toutes les pages visitées',
+			'code'       => 'toutes_pages_visitees',
+			'sort_order' => null,
+			'href'       => $this->url->link('visites/visites/ajaxAfficherLesVisites', 'user_token=' . $this->session->data['user_token'], true)
+>>>>>>> gael
 		);
 
 		
@@ -70,14 +84,13 @@ class ControllerReportReport extends Controller {
 				);
 			}
 		}
-		
 		$sort_order = array();
 
 		foreach ($data['reports'] as $key => $value) {
 			$sort_order[$key] = $value['sort_order'];
 		}
 
-		array_multisort($sort_order, SORT_ASC, $data['reports']);	
+		array_multisort($sort_order, SORT_ASC, $data['reports']);
 		
 		if (isset($this->request->get['code'])) {
 			$data['report'] = $this->load->controller('extension/report/' . $this->request->get['code'] . '/report');

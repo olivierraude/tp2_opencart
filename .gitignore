@@ -1,2 +1,3 @@
-storage
+storage/logs
+storage/cache
 image/cache

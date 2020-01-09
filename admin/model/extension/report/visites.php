@@ -1,5 +1,5 @@
 <?php
-class ModelVisitesVisites extends Model {
+class ModelExtensionReportVisites extends Model {
 
     public function getAllVisites()
     {
@@ -15,17 +15,6 @@ class ModelVisitesVisites extends Model {
 
 		return $query->row['total'];
     }
-
-    
-    // public function getVisite($id_visite)
-    // {
-    //     $this->db->query("SELECT * FROM " . DB_PREFIX . "visites WHERE id = '" . (int)$data['id'] . "' ORDER BY date DESC");
-    // }
-    
-    // public function getPlusVisite($id_visite)
-    // {
-    //     $this->db->query("SELECT * FROM " . DB_PREFIX . "visites WHERE id = '" . (int)$data['id'] . "' ORDER BY date DESC");
-    // }
 
 
 }

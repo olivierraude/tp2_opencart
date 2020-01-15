@@ -25,6 +25,7 @@ class ControllerReportReport extends Controller {
 			$data['code'] = '';
 		}
 
+//À intégrer dans le fichier language
 		// Reports
 		$data['reports'] = array();
 
@@ -40,18 +41,16 @@ class ControllerReportReport extends Controller {
 			//'href'       => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'], true)
 		);
 		
-		$code = 'pages_visitees';
+		$code = 'visites';
 		$this->load->language('extension/report/' . $code, 'extension');
 		$data['reports'][] = array(
 			'text'       => $this->language->get('extension')->get('heading_title'),
 			'code'       => $code,
-			//'sort_order' => $this->config->get('report_' . $code . '_sort_order'),
-			'sort_order' => null,
+			'sort_order' => $this->config->get('report_' . $code . '_sort_order'),
+			//'sort_order' => null,
 			'href'       => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'] . '&code=' . $code, true)
-			//'href'       => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
-		
 		$this->load->model('setting/extension');
 
 		// Get a list of installed modules

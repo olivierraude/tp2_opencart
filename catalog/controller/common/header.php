@@ -3,7 +3,7 @@ class ControllerCommonHeader extends Controller {
 	public function index() {
 		
 		/**
-		 * dans la cadre du tp2,
+		 * dans le cadre du tp2,
 		 * l'enregistrement de l'activité de l'utilisateur sera faites ici. Le fichier header étant appelé à chaque chargement, il est une bonne place pour 'surveiller' son activité
 		 * enregistrement :
 		 * 	- URL (adresse sans le nom de domaine)
@@ -17,13 +17,12 @@ class ControllerCommonHeader extends Controller {
 		 $donnees_navigation['titre'] = $this->document->getTitle();
 		 $donnees_navigation['adresse_ip'] = $_SERVER['REMOTE_ADDR'];
 		 $donnees_navigation['id_usager'] = ($this->customer->isLogged()) ? $this->customer->getId() : null; // $user_id = $this->customer->getId() si utilisateur connecté sinon null
-			 
-		 var_dump($donnees_navigation); // A EFFACER
 
 		 $this->load->model('report/visites');
 		 $visite_id = $this->model_report_visites->addVisite($donnees_navigation);
-		 var_dump($visite_id);
 
+		//var_dump($donnees_navigation['titre']);
+		
 		// Analytics
 		$this->load->model('setting/extension');
 

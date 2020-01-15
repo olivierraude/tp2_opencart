@@ -1,9 +1,10 @@
-CREATE TABLE tp2_visites(
-    id INT UNSIGNED AUTO_INCREMENT,
-    url_page VARCHAR(150),
-    titre VARCHAR(35),
-    date_visite DATETIME CURRENT_TIMESTAMP,
-    adresse_ip VARCHAR(50),
-    id_usager INT,
+CREATE TABLE `tp2_visites` (
+    `id` int(10) UNSIGNED NOT NULL,
+    `url_page` varchar(150) DEFAULT NULL,
+    `titre` varchar(35) DEFAULT NULL,
+    `date_visite` datetime DEFAULT NULL,
+    `adresse_ip` varchar(50) DEFAULT NULL,
+    `vues` int(5) NOT NULL DEFAULT '0',
+    `id_usager` int(11) DEFAULT NULL,
     PRIMARY KEY(id)
 );

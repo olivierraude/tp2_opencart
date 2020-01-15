@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.4
+-- version 4.8.4
 -- https://www.phpmyadmin.net/
 --
--- Client :  127.0.0.1
--- Généré le :  Jeu 05 Décembre 2019 à 18:28
--- Version du serveur :  5.7.14
--- Version de PHP :  5.6.25
+-- Hôte : 127.0.0.1:3306
+-- Généré le :  mer. 15 jan. 2020 à 01:31
+-- Version du serveur :  5.7.24
+-- Version de PHP :  7.2.14
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -26,8 +28,9 @@ SET time_zone = "+00:00";
 -- Structure de la table `tp2_address`
 --
 
-CREATE TABLE `tp2_address` (
-  `address_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_address`;
+CREATE TABLE IF NOT EXISTS `tp2_address` (
+  `address_id` int(11) NOT NULL AUTO_INCREMENT,
   `customer_id` int(11) NOT NULL,
   `firstname` varchar(32) NOT NULL,
   `lastname` varchar(32) NOT NULL,
@@ -38,7 +41,9 @@ CREATE TABLE `tp2_address` (
   `postcode` varchar(10) NOT NULL,
   `country_id` int(11) NOT NULL DEFAULT '0',
   `zone_id` int(11) NOT NULL DEFAULT '0',
-  `custom_field` text NOT NULL
+  `custom_field` text NOT NULL,
+  PRIMARY KEY (`address_id`),
+  KEY `customer_id` (`customer_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -47,17 +52,19 @@ CREATE TABLE `tp2_address` (
 -- Structure de la table `tp2_api`
 --
 
-CREATE TABLE `tp2_api` (
-  `api_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_api`;
+CREATE TABLE IF NOT EXISTS `tp2_api` (
+  `api_id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(64) NOT NULL,
   `key` text NOT NULL,
   `status` tinyint(1) NOT NULL,
   `date_added` datetime NOT NULL,
-  `date_modified` datetime NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `date_modified` datetime NOT NULL,
+  PRIMARY KEY (`api_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_api`
+-- Déchargement des données de la table `tp2_api`
 --
 
 INSERT INTO `tp2_api` (`api_id`, `username`, `key`, `status`, `date_added`, `date_modified`) VALUES
@@ -69,11 +76,20 @@ INSERT INTO `tp2_api` (`api_id`, `username`, `key`, `status`, `date_added`, `dat
 -- Structure de la table `tp2_api_ip`
 --
 
-CREATE TABLE `tp2_api_ip` (
-  `api_ip_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_api_ip`;
+CREATE TABLE IF NOT EXISTS `tp2_api_ip` (
+  `api_ip_id` int(11) NOT NULL AUTO_INCREMENT,
   `api_id` int(11) NOT NULL,
-  `ip` varchar(40) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `ip` varchar(40) NOT NULL,
+  PRIMARY KEY (`api_ip_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `tp2_api_ip`
+--
+
+INSERT INTO `tp2_api_ip` (`api_ip_id`, `api_id`, `ip`) VALUES
+(1, 1, '::1');
 
 -- --------------------------------------------------------
 
@@ -81,14 +97,23 @@ CREATE TABLE `tp2_api_ip` (
 -- Structure de la table `tp2_api_session`
 --
 
-CREATE TABLE `tp2_api_session` (
-  `api_session_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_api_session`;
+CREATE TABLE IF NOT EXISTS `tp2_api_session` (
+  `api_session_id` int(11) NOT NULL AUTO_INCREMENT,
   `api_id` int(11) NOT NULL,
   `session_id` varchar(32) NOT NULL,
   `ip` varchar(40) NOT NULL,
   `date_added` datetime NOT NULL,
-  `date_modified` datetime NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `date_modified` datetime NOT NULL,
+  PRIMARY KEY (`api_session_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `tp2_api_session`
+--
+
+INSERT INTO `tp2_api_session` (`api_session_id`, `api_id`, `session_id`, `ip`, `date_added`, `date_modified`) VALUES
+(1, 1, 'b58f87098234f1c1f1291b14f2', '::1', '2019-12-22 12:03:01', '2019-12-22 12:03:01');
 
 -- --------------------------------------------------------
 
@@ -96,14 +121,16 @@ CREATE TABLE `tp2_api_session` (
 -- Structure de la table `tp2_attribute`
 --
 
-CREATE TABLE `tp2_attribute` (
-  `attribute_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_attribute`;
+CREATE TABLE IF NOT EXISTS `tp2_attribute` (
+  `attribute_id` int(11) NOT NULL AUTO_INCREMENT,
   `attribute_group_id` int(11) NOT NULL,
-  `sort_order` int(3) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `sort_order` int(3) NOT NULL,
+  PRIMARY KEY (`attribute_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_attribute`
+-- Déchargement des données de la table `tp2_attribute`
 --
 
 INSERT INTO `tp2_attribute` (`attribute_id`, `attribute_group_id`, `sort_order`) VALUES
@@ -125,14 +152,16 @@ INSERT INTO `tp2_attribute` (`attribute_id`, `attribute_group_id`, `sort_order`)
 -- Structure de la table `tp2_attribute_description`
 --
 
-CREATE TABLE `tp2_attribute_description` (
+DROP TABLE IF EXISTS `tp2_attribute_description`;
+CREATE TABLE IF NOT EXISTS `tp2_attribute_description` (
   `attribute_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
-  `name` varchar(64) NOT NULL
+  `name` varchar(64) NOT NULL,
+  PRIMARY KEY (`attribute_id`,`language_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_attribute_description`
+-- Déchargement des données de la table `tp2_attribute_description`
 --
 
 INSERT INTO `tp2_attribute_description` (`attribute_id`, `language_id`, `name`) VALUES
@@ -146,7 +175,18 @@ INSERT INTO `tp2_attribute_description` (`attribute_id`, `language_id`, `name`) 
 (9, 1, 'test 6'),
 (10, 1, 'test 7'),
 (11, 1, 'test 8'),
-(3, 1, 'Clockspeed');
+(3, 1, 'Clockspeed'),
+(1, 2, 'Description'),
+(2, 2, 'No. of Cores'),
+(4, 2, 'test 1'),
+(5, 2, 'test 2'),
+(6, 2, 'test 3'),
+(7, 2, 'test 4'),
+(8, 2, 'test 5'),
+(9, 2, 'test 6'),
+(10, 2, 'test 7'),
+(11, 2, 'test 8'),
+(3, 2, 'Clockspeed');
 
 -- --------------------------------------------------------
 
@@ -154,13 +194,15 @@ INSERT INTO `tp2_attribute_description` (`attribute_id`, `language_id`, `name`) 
 -- Structure de la table `tp2_attribute_group`
 --
 
-CREATE TABLE `tp2_attribute_group` (
-  `attribute_group_id` int(11) NOT NULL,
-  `sort_order` int(3) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+DROP TABLE IF EXISTS `tp2_attribute_group`;
+CREATE TABLE IF NOT EXISTS `tp2_attribute_group` (
+  `attribute_group_id` int(11) NOT NULL AUTO_INCREMENT,
+  `sort_order` int(3) NOT NULL,
+  PRIMARY KEY (`attribute_group_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_attribute_group`
+-- Déchargement des données de la table `tp2_attribute_group`
 --
 
 INSERT INTO `tp2_attribute_group` (`attribute_group_id`, `sort_order`) VALUES
@@ -175,21 +217,27 @@ INSERT INTO `tp2_attribute_group` (`attribute_group_id`, `sort_order`) VALUES
 -- Structure de la table `tp2_attribute_group_description`
 --
 
-CREATE TABLE `tp2_attribute_group_description` (
+DROP TABLE IF EXISTS `tp2_attribute_group_description`;
+CREATE TABLE IF NOT EXISTS `tp2_attribute_group_description` (
   `attribute_group_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
-  `name` varchar(64) NOT NULL
+  `name` varchar(64) NOT NULL,
+  PRIMARY KEY (`attribute_group_id`,`language_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_attribute_group_description`
+-- Déchargement des données de la table `tp2_attribute_group_description`
 --
 
 INSERT INTO `tp2_attribute_group_description` (`attribute_group_id`, `language_id`, `name`) VALUES
 (3, 1, 'Memory'),
 (4, 1, 'Technical'),
 (5, 1, 'Motherboard'),
-(6, 1, 'Processor');
+(6, 1, 'Processor'),
+(3, 2, 'Memory'),
+(4, 2, 'Technical'),
+(5, 2, 'Motherboard'),
+(6, 2, 'Processor');
 
 -- --------------------------------------------------------
 
@@ -197,14 +245,16 @@ INSERT INTO `tp2_attribute_group_description` (`attribute_group_id`, `language_i
 -- Structure de la table `tp2_banner`
 --
 
-CREATE TABLE `tp2_banner` (
-  `banner_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_banner`;
+CREATE TABLE IF NOT EXISTS `tp2_banner` (
+  `banner_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(64) NOT NULL,
-  `status` tinyint(1) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `status` tinyint(1) NOT NULL,
+  PRIMARY KEY (`banner_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_banner`
+-- Déchargement des données de la table `tp2_banner`
 --
 
 INSERT INTO `tp2_banner` (`banner_id`, `name`, `status`) VALUES
@@ -218,18 +268,20 @@ INSERT INTO `tp2_banner` (`banner_id`, `name`, `status`) VALUES
 -- Structure de la table `tp2_banner_image`
 --
 
-CREATE TABLE `tp2_banner_image` (
-  `banner_image_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_banner_image`;
+CREATE TABLE IF NOT EXISTS `tp2_banner_image` (
+  `banner_image_id` int(11) NOT NULL AUTO_INCREMENT,
   `banner_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
   `title` varchar(64) NOT NULL,
   `link` varchar(255) NOT NULL,
   `image` varchar(255) NOT NULL,
-  `sort_order` int(3) NOT NULL DEFAULT '0'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `sort_order` int(3) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`banner_image_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=113 DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_banner_image`
+-- Déchargement des données de la table `tp2_banner_image`
 --
 
 INSERT INTO `tp2_banner_image` (`banner_image_id`, `banner_id`, `language_id`, `title`, `link`, `image`, `sort_order`) VALUES
@@ -246,7 +298,21 @@ INSERT INTO `tp2_banner_image` (`banner_image_id`, `banner_id`, `language_id`, `
 (90, 8, 1, 'Disney', '', 'catalog/demo/manufacturer/disney.png', 0),
 (80, 7, 1, 'MacBookAir', '', 'catalog/demo/banners/MacBookAir.jpg', 0),
 (97, 8, 1, 'Starbucks', '', 'catalog/demo/manufacturer/starbucks.png', 0),
-(98, 8, 1, 'Nintendo', '', 'catalog/demo/manufacturer/nintendo.png', 0);
+(98, 8, 1, 'Nintendo', '', 'catalog/demo/manufacturer/nintendo.png', 0),
+(99, 7, 2, 'iPhone 6', 'index.php?route=product/product&amp;path=57&amp;product_id=49', 'catalog/demo/banners/iPhone6.jpg', 0),
+(100, 6, 2, 'HP Banner', 'index.php?route=product/manufacturer/info&amp;manufacturer_id=7', 'catalog/demo/compaq_presario.jpg', 0),
+(101, 8, 2, 'NFL', '', 'catalog/demo/manufacturer/nfl.png', 0),
+(102, 8, 2, 'RedBull', '', 'catalog/demo/manufacturer/redbull.png', 0),
+(103, 8, 2, 'Sony', '', 'catalog/demo/manufacturer/sony.png', 0),
+(104, 8, 2, 'Coca Cola', '', 'catalog/demo/manufacturer/cocacola.png', 0),
+(105, 8, 2, 'Burger King', '', 'catalog/demo/manufacturer/burgerking.png', 0),
+(106, 8, 2, 'Canon', '', 'catalog/demo/manufacturer/canon.png', 0),
+(107, 8, 2, 'Harley Davidson', '', 'catalog/demo/manufacturer/harley.png', 0),
+(108, 8, 2, 'Dell', '', 'catalog/demo/manufacturer/dell.png', 0),
+(109, 8, 2, 'Disney', '', 'catalog/demo/manufacturer/disney.png', 0),
+(110, 7, 2, 'MacBookAir', '', 'catalog/demo/banners/MacBookAir.jpg', 0),
+(111, 8, 2, 'Starbucks', '', 'catalog/demo/manufacturer/starbucks.png', 0),
+(112, 8, 2, 'Nintendo', '', 'catalog/demo/manufacturer/nintendo.png', 0);
 
 -- --------------------------------------------------------
 
@@ -254,8 +320,9 @@ INSERT INTO `tp2_banner_image` (`banner_image_id`, `banner_id`, `language_id`, `
 -- Structure de la table `tp2_cart`
 --
 
-CREATE TABLE `tp2_cart` (
-  `cart_id` int(11) UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `tp2_cart`;
+CREATE TABLE IF NOT EXISTS `tp2_cart` (
+  `cart_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `api_id` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL,
   `session_id` varchar(32) NOT NULL,
@@ -263,8 +330,10 @@ CREATE TABLE `tp2_cart` (
   `recurring_id` int(11) NOT NULL,
   `option` text NOT NULL,
   `quantity` int(5) NOT NULL,
-  `date_added` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `date_added` datetime NOT NULL,
+  PRIMARY KEY (`cart_id`),
+  KEY `cart_id` (`api_id`,`customer_id`,`session_id`,`product_id`,`recurring_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -272,8 +341,9 @@ CREATE TABLE `tp2_cart` (
 -- Structure de la table `tp2_category`
 --
 
-CREATE TABLE `tp2_category` (
-  `category_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_category`;
+CREATE TABLE IF NOT EXISTS `tp2_category` (
+  `category_id` int(11) NOT NULL AUTO_INCREMENT,
   `image` varchar(255) DEFAULT NULL,
   `parent_id` int(11) NOT NULL DEFAULT '0',
   `top` tinyint(1) NOT NULL,
@@ -281,11 +351,13 @@ CREATE TABLE `tp2_category` (
   `sort_order` int(3) NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL,
   `date_added` datetime NOT NULL,
-  `date_modified` datetime NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `date_modified` datetime NOT NULL,
+  PRIMARY KEY (`category_id`),
+  KEY `parent_id` (`parent_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=59 DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_category`
+-- Déchargement des données de la table `tp2_category`
 --
 
 INSERT INTO `tp2_category` (`category_id`, `image`, `parent_id`, `top`, `column`, `sort_order`, `status`, `date_added`, `date_modified`) VALUES
@@ -334,18 +406,21 @@ INSERT INTO `tp2_category` (`category_id`, `image`, `parent_id`, `top`, `column`
 -- Structure de la table `tp2_category_description`
 --
 
-CREATE TABLE `tp2_category_description` (
+DROP TABLE IF EXISTS `tp2_category_description`;
+CREATE TABLE IF NOT EXISTS `tp2_category_description` (
   `category_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `description` text NOT NULL,
   `meta_title` varchar(255) NOT NULL,
   `meta_description` varchar(255) NOT NULL,
-  `meta_keyword` varchar(255) NOT NULL
+  `meta_keyword` varchar(255) NOT NULL,
+  PRIMARY KEY (`category_id`,`language_id`),
+  KEY `name` (`name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_category_description`
+-- Déchargement des données de la table `tp2_category_description`
 --
 
 INSERT INTO `tp2_category_description` (`category_id`, `language_id`, `name`, `description`, `meta_title`, `meta_description`, `meta_keyword`) VALUES
@@ -386,7 +461,45 @@ INSERT INTO `tp2_category_description` (`category_id`, `language_id`, `name`, `d
 (55, 1, 'test 23', '', 'test 23', '', ''),
 (56, 1, 'test 24', '', 'test 24', '', ''),
 (57, 1, 'Tablets', '', 'Tablets', '', ''),
-(58, 1, 'test 25', '', 'test 25', '', '');
+(58, 1, 'test 25', '', 'test 25', '', ''),
+(28, 2, 'Monitors', '', 'Monitors', '', ''),
+(33, 2, 'Cameras', '', 'Cameras', '', ''),
+(32, 2, 'Web Cameras', '', 'Web Cameras', '', ''),
+(31, 2, 'Scanners', '', 'Scanners', '', ''),
+(30, 2, 'Printers', '', 'Printers', '', ''),
+(29, 2, 'Mice and Trackballs', '', 'Mice and Trackballs', '', ''),
+(27, 2, 'Mac', '', 'Mac', '', ''),
+(26, 2, 'PC', '', 'PC', '', ''),
+(17, 2, 'Software', '', 'Software', '', ''),
+(25, 2, 'Components', '', 'Components', '', ''),
+(24, 2, 'Phones &amp; PDAs', '', 'Phones &amp; PDAs', '', ''),
+(20, 2, 'Desktops', '&lt;p&gt;\r\n	Example of category description text&lt;/p&gt;\r\n', 'Desktops', 'Example of category description', ''),
+(35, 2, 'test 1', '', 'test 1', '', ''),
+(36, 2, 'test 2', '', 'test 2', '', ''),
+(37, 2, 'test 5', '', 'test 5', '', ''),
+(38, 2, 'test 4', '', 'test 4', '', ''),
+(39, 2, 'test 6', '', 'test 6', '', ''),
+(40, 2, 'test 7', '', 'test 7', '', ''),
+(41, 2, 'test 8', '', 'test 8', '', ''),
+(42, 2, 'test 9', '', 'test 9', '', ''),
+(43, 2, 'test 11', '', 'test 11', '', ''),
+(34, 2, 'MP3 Players', '&lt;p&gt;\r\n	Shop Laptop feature only the best laptop deals on the market. By comparing laptop deals from the likes of PC World, Comet, Dixons, The Link and Carphone Warehouse, Shop Laptop has the most comprehensive selection of laptops on the internet. At Shop Laptop, we pride ourselves on offering customers the very best laptop deals. From refurbished laptops to netbooks, Shop Laptop ensures that every laptop - in every colour, style, size and technical spec - is featured on the site at the lowest possible price.&lt;/p&gt;\r\n', 'MP3 Players', '', ''),
+(18, 2, 'Laptops &amp; Notebooks', '&lt;p&gt;\r\n	Shop Laptop feature only the best laptop deals on the market. By comparing laptop deals from the likes of PC World, Comet, Dixons, The Link and Carphone Warehouse, Shop Laptop has the most comprehensive selection of laptops on the internet. At Shop Laptop, we pride ourselves on offering customers the very best laptop deals. From refurbished laptops to netbooks, Shop Laptop ensures that every laptop - in every colour, style, size and technical spec - is featured on the site at the lowest possible price.&lt;/p&gt;\r\n', 'Laptops &amp; Notebooks', '', ''),
+(44, 2, 'test 12', '', 'test 12', '', ''),
+(45, 2, 'Windows', '', 'Windows', '', ''),
+(46, 2, 'Macs', '', 'Macs', '', ''),
+(47, 2, 'test 15', '', 'test 15', '', ''),
+(48, 2, 'test 16', '', 'test 16', '', ''),
+(49, 2, 'test 17', '', 'test 17', '', ''),
+(50, 2, 'test 18', '', 'test 18', '', ''),
+(51, 2, 'test 19', '', 'test 19', '', ''),
+(52, 2, 'test 20', '', 'test 20', '', ''),
+(53, 2, 'test 21', '', 'test 21', '', ''),
+(54, 2, 'test 22', '', 'test 22', '', ''),
+(55, 2, 'test 23', '', 'test 23', '', ''),
+(56, 2, 'test 24', '', 'test 24', '', ''),
+(57, 2, 'Tablets', '', 'Tablets', '', ''),
+(58, 2, 'test 25', '', 'test 25', '', '');
 
 -- --------------------------------------------------------
 
@@ -394,9 +507,11 @@ INSERT INTO `tp2_category_description` (`category_id`, `language_id`, `name`, `d
 -- Structure de la table `tp2_category_filter`
 --
 
-CREATE TABLE `tp2_category_filter` (
+DROP TABLE IF EXISTS `tp2_category_filter`;
+CREATE TABLE IF NOT EXISTS `tp2_category_filter` (
   `category_id` int(11) NOT NULL,
-  `filter_id` int(11) NOT NULL
+  `filter_id` int(11) NOT NULL,
+  PRIMARY KEY (`category_id`,`filter_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -405,14 +520,16 @@ CREATE TABLE `tp2_category_filter` (
 -- Structure de la table `tp2_category_path`
 --
 
-CREATE TABLE `tp2_category_path` (
+DROP TABLE IF EXISTS `tp2_category_path`;
+CREATE TABLE IF NOT EXISTS `tp2_category_path` (
   `category_id` int(11) NOT NULL,
   `path_id` int(11) NOT NULL,
-  `level` int(11) NOT NULL
+  `level` int(11) NOT NULL,
+  PRIMARY KEY (`category_id`,`path_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_category_path`
+-- Déchargement des données de la table `tp2_category_path`
 --
 
 INSERT INTO `tp2_category_path` (`category_id`, `path_id`, `level`) VALUES
@@ -494,10 +611,12 @@ INSERT INTO `tp2_category_path` (`category_id`, `path_id`, `level`) VALUES
 -- Structure de la table `tp2_category_to_layout`
 --
 
-CREATE TABLE `tp2_category_to_layout` (
+DROP TABLE IF EXISTS `tp2_category_to_layout`;
+CREATE TABLE IF NOT EXISTS `tp2_category_to_layout` (
   `category_id` int(11) NOT NULL,
   `store_id` int(11) NOT NULL,
-  `layout_id` int(11) NOT NULL
+  `layout_id` int(11) NOT NULL,
+  PRIMARY KEY (`category_id`,`store_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -506,13 +625,15 @@ CREATE TABLE `tp2_category_to_layout` (
 -- Structure de la table `tp2_category_to_store`
 --
 
-CREATE TABLE `tp2_category_to_store` (
+DROP TABLE IF EXISTS `tp2_category_to_store`;
+CREATE TABLE IF NOT EXISTS `tp2_category_to_store` (
   `category_id` int(11) NOT NULL,
-  `store_id` int(11) NOT NULL
+  `store_id` int(11) NOT NULL,
+  PRIMARY KEY (`category_id`,`store_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_category_to_store`
+-- Déchargement des données de la table `tp2_category_to_store`
 --
 
 INSERT INTO `tp2_category_to_store` (`category_id`, `store_id`) VALUES
@@ -561,18 +682,20 @@ INSERT INTO `tp2_category_to_store` (`category_id`, `store_id`) VALUES
 -- Structure de la table `tp2_country`
 --
 
-CREATE TABLE `tp2_country` (
-  `country_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_country`;
+CREATE TABLE IF NOT EXISTS `tp2_country` (
+  `country_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(128) NOT NULL,
   `iso_code_2` varchar(2) NOT NULL,
   `iso_code_3` varchar(3) NOT NULL,
   `address_format` text NOT NULL,
   `postcode_required` tinyint(1) NOT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT '1'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `status` tinyint(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`country_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=258 DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_country`
+-- Déchargement des données de la table `tp2_country`
 --
 
 INSERT INTO `tp2_country` (`country_id`, `name`, `iso_code_2`, `iso_code_3`, `address_format`, `postcode_required`, `status`) VALUES
@@ -836,8 +959,9 @@ INSERT INTO `tp2_country` (`country_id`, `name`, `iso_code_2`, `iso_code_3`, `ad
 -- Structure de la table `tp2_coupon`
 --
 
-CREATE TABLE `tp2_coupon` (
-  `coupon_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_coupon`;
+CREATE TABLE IF NOT EXISTS `tp2_coupon` (
+  `coupon_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(128) NOT NULL,
   `code` varchar(20) NOT NULL,
   `type` char(1) NOT NULL,
@@ -850,11 +974,12 @@ CREATE TABLE `tp2_coupon` (
   `uses_total` int(11) NOT NULL,
   `uses_customer` varchar(11) NOT NULL,
   `status` tinyint(1) NOT NULL,
-  `date_added` datetime NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `date_added` datetime NOT NULL,
+  PRIMARY KEY (`coupon_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_coupon`
+-- Déchargement des données de la table `tp2_coupon`
 --
 
 INSERT INTO `tp2_coupon` (`coupon_id`, `name`, `code`, `type`, `discount`, `logged`, `shipping`, `total`, `date_start`, `date_end`, `uses_total`, `uses_customer`, `status`, `date_added`) VALUES
@@ -868,9 +993,11 @@ INSERT INTO `tp2_coupon` (`coupon_id`, `name`, `code`, `type`, `discount`, `logg
 -- Structure de la table `tp2_coupon_category`
 --
 
-CREATE TABLE `tp2_coupon_category` (
+DROP TABLE IF EXISTS `tp2_coupon_category`;
+CREATE TABLE IF NOT EXISTS `tp2_coupon_category` (
   `coupon_id` int(11) NOT NULL,
-  `category_id` int(11) NOT NULL
+  `category_id` int(11) NOT NULL,
+  PRIMARY KEY (`coupon_id`,`category_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -879,13 +1006,15 @@ CREATE TABLE `tp2_coupon_category` (
 -- Structure de la table `tp2_coupon_history`
 --
 
-CREATE TABLE `tp2_coupon_history` (
-  `coupon_history_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_coupon_history`;
+CREATE TABLE IF NOT EXISTS `tp2_coupon_history` (
+  `coupon_history_id` int(11) NOT NULL AUTO_INCREMENT,
   `coupon_id` int(11) NOT NULL,
   `order_id` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL,
   `amount` decimal(15,4) NOT NULL,
-  `date_added` datetime NOT NULL
+  `date_added` datetime NOT NULL,
+  PRIMARY KEY (`coupon_history_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -894,10 +1023,12 @@ CREATE TABLE `tp2_coupon_history` (
 -- Structure de la table `tp2_coupon_product`
 --
 
-CREATE TABLE `tp2_coupon_product` (
-  `coupon_product_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_coupon_product`;
+CREATE TABLE IF NOT EXISTS `tp2_coupon_product` (
+  `coupon_product_id` int(11) NOT NULL AUTO_INCREMENT,
   `coupon_id` int(11) NOT NULL,
-  `product_id` int(11) NOT NULL
+  `product_id` int(11) NOT NULL,
+  PRIMARY KEY (`coupon_product_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -906,8 +1037,9 @@ CREATE TABLE `tp2_coupon_product` (
 -- Structure de la table `tp2_currency`
 --
 
-CREATE TABLE `tp2_currency` (
-  `currency_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_currency`;
+CREATE TABLE IF NOT EXISTS `tp2_currency` (
+  `currency_id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(32) NOT NULL,
   `code` varchar(3) NOT NULL,
   `symbol_left` varchar(12) NOT NULL,
@@ -915,16 +1047,17 @@ CREATE TABLE `tp2_currency` (
   `decimal_place` char(1) NOT NULL,
   `value` double(15,8) NOT NULL,
   `status` tinyint(1) NOT NULL,
-  `date_modified` datetime NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `date_modified` datetime NOT NULL,
+  PRIMARY KEY (`currency_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_currency`
+-- Déchargement des données de la table `tp2_currency`
 --
 
 INSERT INTO `tp2_currency` (`currency_id`, `title`, `code`, `symbol_left`, `symbol_right`, `decimal_place`, `value`, `status`, `date_modified`) VALUES
 (1, 'Pound Sterling', 'GBP', '£', '', '2', 0.61250001, 1, '2014-09-25 14:40:00'),
-(2, 'US Dollar', 'USD', '$', '', '2', 1.00000000, 1, '2019-12-05 18:26:52'),
+(2, 'US Dollar', 'USD', '$', '', '2', 1.00000000, 1, '2020-01-15 01:14:10'),
 (3, 'Euro', 'EUR', '', '€', '2', 0.78460002, 1, '2014-09-25 14:40:00');
 
 -- --------------------------------------------------------
@@ -933,8 +1066,9 @@ INSERT INTO `tp2_currency` (`currency_id`, `title`, `code`, `symbol_left`, `symb
 -- Structure de la table `tp2_customer`
 --
 
-CREATE TABLE `tp2_customer` (
-  `customer_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_customer`;
+CREATE TABLE IF NOT EXISTS `tp2_customer` (
+  `customer_id` int(11) NOT NULL AUTO_INCREMENT,
   `customer_group_id` int(11) NOT NULL,
   `store_id` int(11) NOT NULL DEFAULT '0',
   `language_id` int(11) NOT NULL,
@@ -955,8 +1089,16 @@ CREATE TABLE `tp2_customer` (
   `safe` tinyint(1) NOT NULL,
   `token` text NOT NULL,
   `code` varchar(40) NOT NULL,
-  `date_added` datetime NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `date_added` datetime NOT NULL,
+  PRIMARY KEY (`customer_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `tp2_customer`
+--
+
+INSERT INTO `tp2_customer` (`customer_id`, `customer_group_id`, `store_id`, `language_id`, `firstname`, `lastname`, `email`, `telephone`, `fax`, `password`, `salt`, `cart`, `wishlist`, `newsletter`, `address_id`, `custom_field`, `ip`, `status`, `safe`, `token`, `code`, `date_added`) VALUES
+(1, 1, 0, 1, 'Comeau', 'Gael', 'gaelsurgoog@gmail.com', '14383473701', '', 'a8f951c43de3e26fea0fa757bc0561016df52733', 'iNtjcFb1p', NULL, NULL, 0, 0, '', '::1', 1, 0, '', '', '2019-12-16 09:12:38');
 
 -- --------------------------------------------------------
 
@@ -964,13 +1106,15 @@ CREATE TABLE `tp2_customer` (
 -- Structure de la table `tp2_customer_activity`
 --
 
-CREATE TABLE `tp2_customer_activity` (
-  `customer_activity_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_customer_activity`;
+CREATE TABLE IF NOT EXISTS `tp2_customer_activity` (
+  `customer_activity_id` int(11) NOT NULL AUTO_INCREMENT,
   `customer_id` int(11) NOT NULL,
   `key` varchar(64) NOT NULL,
   `data` text NOT NULL,
   `ip` varchar(40) NOT NULL,
-  `date_added` datetime NOT NULL
+  `date_added` datetime NOT NULL,
+  PRIMARY KEY (`customer_activity_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -979,7 +1123,8 @@ CREATE TABLE `tp2_customer_activity` (
 -- Structure de la table `tp2_customer_affiliate`
 --
 
-CREATE TABLE `tp2_customer_affiliate` (
+DROP TABLE IF EXISTS `tp2_customer_affiliate`;
+CREATE TABLE IF NOT EXISTS `tp2_customer_affiliate` (
   `customer_id` int(11) NOT NULL,
   `company` varchar(40) NOT NULL,
   `website` varchar(255) NOT NULL,
@@ -996,7 +1141,8 @@ CREATE TABLE `tp2_customer_affiliate` (
   `bank_account_number` varchar(64) NOT NULL,
   `custom_field` text NOT NULL,
   `status` tinyint(1) NOT NULL,
-  `date_added` datetime NOT NULL
+  `date_added` datetime NOT NULL,
+  PRIMARY KEY (`customer_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1005,11 +1151,13 @@ CREATE TABLE `tp2_customer_affiliate` (
 -- Structure de la table `tp2_customer_approval`
 --
 
-CREATE TABLE `tp2_customer_approval` (
-  `customer_approval_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_customer_approval`;
+CREATE TABLE IF NOT EXISTS `tp2_customer_approval` (
+  `customer_approval_id` int(11) NOT NULL AUTO_INCREMENT,
   `customer_id` int(11) NOT NULL,
   `type` varchar(9) NOT NULL,
-  `date_added` datetime NOT NULL
+  `date_added` datetime NOT NULL,
+  PRIMARY KEY (`customer_approval_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1018,14 +1166,16 @@ CREATE TABLE `tp2_customer_approval` (
 -- Structure de la table `tp2_customer_group`
 --
 
-CREATE TABLE `tp2_customer_group` (
-  `customer_group_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_customer_group`;
+CREATE TABLE IF NOT EXISTS `tp2_customer_group` (
+  `customer_group_id` int(11) NOT NULL AUTO_INCREMENT,
   `approval` int(1) NOT NULL,
-  `sort_order` int(3) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `sort_order` int(3) NOT NULL,
+  PRIMARY KEY (`customer_group_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_customer_group`
+-- Déchargement des données de la table `tp2_customer_group`
 --
 
 INSERT INTO `tp2_customer_group` (`customer_group_id`, `approval`, `sort_order`) VALUES
@@ -1037,19 +1187,22 @@ INSERT INTO `tp2_customer_group` (`customer_group_id`, `approval`, `sort_order`)
 -- Structure de la table `tp2_customer_group_description`
 --
 
-CREATE TABLE `tp2_customer_group_description` (
+DROP TABLE IF EXISTS `tp2_customer_group_description`;
+CREATE TABLE IF NOT EXISTS `tp2_customer_group_description` (
   `customer_group_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
   `name` varchar(32) NOT NULL,
-  `description` text NOT NULL
+  `description` text NOT NULL,
+  PRIMARY KEY (`customer_group_id`,`language_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_customer_group_description`
+-- Déchargement des données de la table `tp2_customer_group_description`
 --
 
 INSERT INTO `tp2_customer_group_description` (`customer_group_id`, `language_id`, `name`, `description`) VALUES
-(1, 1, 'Default', 'test');
+(1, 1, 'Default', 'test'),
+(1, 2, 'Default', 'test');
 
 -- --------------------------------------------------------
 
@@ -1057,11 +1210,13 @@ INSERT INTO `tp2_customer_group_description` (`customer_group_id`, `language_id`
 -- Structure de la table `tp2_customer_history`
 --
 
-CREATE TABLE `tp2_customer_history` (
-  `customer_history_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_customer_history`;
+CREATE TABLE IF NOT EXISTS `tp2_customer_history` (
+  `customer_history_id` int(11) NOT NULL AUTO_INCREMENT,
   `customer_id` int(11) NOT NULL,
   `comment` text NOT NULL,
-  `date_added` datetime NOT NULL
+  `date_added` datetime NOT NULL,
+  PRIMARY KEY (`customer_history_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1070,12 +1225,22 @@ CREATE TABLE `tp2_customer_history` (
 -- Structure de la table `tp2_customer_ip`
 --
 
-CREATE TABLE `tp2_customer_ip` (
-  `customer_ip_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_customer_ip`;
+CREATE TABLE IF NOT EXISTS `tp2_customer_ip` (
+  `customer_ip_id` int(11) NOT NULL AUTO_INCREMENT,
   `customer_id` int(11) NOT NULL,
   `ip` varchar(40) NOT NULL,
-  `date_added` datetime NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `date_added` datetime NOT NULL,
+  PRIMARY KEY (`customer_ip_id`),
+  KEY `ip` (`ip`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `tp2_customer_ip`
+--
+
+INSERT INTO `tp2_customer_ip` (`customer_ip_id`, `customer_id`, `ip`, `date_added`) VALUES
+(1, 1, '::1', '2019-12-16 09:12:41');
 
 -- --------------------------------------------------------
 
@@ -1083,14 +1248,25 @@ CREATE TABLE `tp2_customer_ip` (
 -- Structure de la table `tp2_customer_login`
 --
 
-CREATE TABLE `tp2_customer_login` (
-  `customer_login_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_customer_login`;
+CREATE TABLE IF NOT EXISTS `tp2_customer_login` (
+  `customer_login_id` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(96) NOT NULL,
   `ip` varchar(40) NOT NULL,
   `total` int(4) NOT NULL,
   `date_added` datetime NOT NULL,
-  `date_modified` datetime NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `date_modified` datetime NOT NULL,
+  PRIMARY KEY (`customer_login_id`),
+  KEY `email` (`email`),
+  KEY `ip` (`ip`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `tp2_customer_login`
+--
+
+INSERT INTO `tp2_customer_login` (`customer_login_id`, `email`, `ip`, `total`, `date_added`, `date_modified`) VALUES
+(2, 'master', '::1', 1, '2019-12-16 14:10:59', '2019-12-16 14:10:59');
 
 -- --------------------------------------------------------
 
@@ -1098,12 +1274,14 @@ CREATE TABLE `tp2_customer_login` (
 -- Structure de la table `tp2_customer_online`
 --
 
-CREATE TABLE `tp2_customer_online` (
+DROP TABLE IF EXISTS `tp2_customer_online`;
+CREATE TABLE IF NOT EXISTS `tp2_customer_online` (
   `ip` varchar(40) NOT NULL,
   `customer_id` int(11) NOT NULL,
   `url` text NOT NULL,
   `referer` text NOT NULL,
-  `date_added` datetime NOT NULL
+  `date_added` datetime NOT NULL,
+  PRIMARY KEY (`ip`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1112,13 +1290,15 @@ CREATE TABLE `tp2_customer_online` (
 -- Structure de la table `tp2_customer_reward`
 --
 
-CREATE TABLE `tp2_customer_reward` (
-  `customer_reward_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_customer_reward`;
+CREATE TABLE IF NOT EXISTS `tp2_customer_reward` (
+  `customer_reward_id` int(11) NOT NULL AUTO_INCREMENT,
   `customer_id` int(11) NOT NULL DEFAULT '0',
   `order_id` int(11) NOT NULL DEFAULT '0',
   `description` text NOT NULL,
   `points` int(8) NOT NULL DEFAULT '0',
-  `date_added` datetime NOT NULL
+  `date_added` datetime NOT NULL,
+  PRIMARY KEY (`customer_reward_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1127,8 +1307,9 @@ CREATE TABLE `tp2_customer_reward` (
 -- Structure de la table `tp2_customer_search`
 --
 
-CREATE TABLE `tp2_customer_search` (
-  `customer_search_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_customer_search`;
+CREATE TABLE IF NOT EXISTS `tp2_customer_search` (
+  `customer_search_id` int(11) NOT NULL AUTO_INCREMENT,
   `store_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL,
@@ -1138,7 +1319,8 @@ CREATE TABLE `tp2_customer_search` (
   `description` tinyint(1) NOT NULL,
   `products` int(11) NOT NULL,
   `ip` varchar(40) NOT NULL,
-  `date_added` datetime NOT NULL
+  `date_added` datetime NOT NULL,
+  PRIMARY KEY (`customer_search_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1147,13 +1329,15 @@ CREATE TABLE `tp2_customer_search` (
 -- Structure de la table `tp2_customer_transaction`
 --
 
-CREATE TABLE `tp2_customer_transaction` (
-  `customer_transaction_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_customer_transaction`;
+CREATE TABLE IF NOT EXISTS `tp2_customer_transaction` (
+  `customer_transaction_id` int(11) NOT NULL AUTO_INCREMENT,
   `customer_id` int(11) NOT NULL,
   `order_id` int(11) NOT NULL,
   `description` text NOT NULL,
   `amount` decimal(15,4) NOT NULL,
-  `date_added` datetime NOT NULL
+  `date_added` datetime NOT NULL,
+  PRIMARY KEY (`customer_transaction_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1162,10 +1346,12 @@ CREATE TABLE `tp2_customer_transaction` (
 -- Structure de la table `tp2_customer_wishlist`
 --
 
-CREATE TABLE `tp2_customer_wishlist` (
+DROP TABLE IF EXISTS `tp2_customer_wishlist`;
+CREATE TABLE IF NOT EXISTS `tp2_customer_wishlist` (
   `customer_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
-  `date_added` datetime NOT NULL
+  `date_added` datetime NOT NULL,
+  PRIMARY KEY (`customer_id`,`product_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1174,14 +1360,16 @@ CREATE TABLE `tp2_customer_wishlist` (
 -- Structure de la table `tp2_custom_field`
 --
 
-CREATE TABLE `tp2_custom_field` (
-  `custom_field_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_custom_field`;
+CREATE TABLE IF NOT EXISTS `tp2_custom_field` (
+  `custom_field_id` int(11) NOT NULL AUTO_INCREMENT,
   `type` varchar(32) NOT NULL,
   `value` text NOT NULL,
   `validation` varchar(255) NOT NULL,
   `location` varchar(10) NOT NULL,
   `status` tinyint(1) NOT NULL,
-  `sort_order` int(3) NOT NULL
+  `sort_order` int(3) NOT NULL,
+  PRIMARY KEY (`custom_field_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1190,10 +1378,12 @@ CREATE TABLE `tp2_custom_field` (
 -- Structure de la table `tp2_custom_field_customer_group`
 --
 
-CREATE TABLE `tp2_custom_field_customer_group` (
+DROP TABLE IF EXISTS `tp2_custom_field_customer_group`;
+CREATE TABLE IF NOT EXISTS `tp2_custom_field_customer_group` (
   `custom_field_id` int(11) NOT NULL,
   `customer_group_id` int(11) NOT NULL,
-  `required` tinyint(1) NOT NULL
+  `required` tinyint(1) NOT NULL,
+  PRIMARY KEY (`custom_field_id`,`customer_group_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1202,10 +1392,12 @@ CREATE TABLE `tp2_custom_field_customer_group` (
 -- Structure de la table `tp2_custom_field_description`
 --
 
-CREATE TABLE `tp2_custom_field_description` (
+DROP TABLE IF EXISTS `tp2_custom_field_description`;
+CREATE TABLE IF NOT EXISTS `tp2_custom_field_description` (
   `custom_field_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
-  `name` varchar(128) NOT NULL
+  `name` varchar(128) NOT NULL,
+  PRIMARY KEY (`custom_field_id`,`language_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1214,10 +1406,12 @@ CREATE TABLE `tp2_custom_field_description` (
 -- Structure de la table `tp2_custom_field_value`
 --
 
-CREATE TABLE `tp2_custom_field_value` (
-  `custom_field_value_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_custom_field_value`;
+CREATE TABLE IF NOT EXISTS `tp2_custom_field_value` (
+  `custom_field_value_id` int(11) NOT NULL AUTO_INCREMENT,
   `custom_field_id` int(11) NOT NULL,
-  `sort_order` int(3) NOT NULL
+  `sort_order` int(3) NOT NULL,
+  PRIMARY KEY (`custom_field_value_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1226,11 +1420,13 @@ CREATE TABLE `tp2_custom_field_value` (
 -- Structure de la table `tp2_custom_field_value_description`
 --
 
-CREATE TABLE `tp2_custom_field_value_description` (
+DROP TABLE IF EXISTS `tp2_custom_field_value_description`;
+CREATE TABLE IF NOT EXISTS `tp2_custom_field_value_description` (
   `custom_field_value_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
   `custom_field_id` int(11) NOT NULL,
-  `name` varchar(128) NOT NULL
+  `name` varchar(128) NOT NULL,
+  PRIMARY KEY (`custom_field_value_id`,`language_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1239,11 +1435,13 @@ CREATE TABLE `tp2_custom_field_value_description` (
 -- Structure de la table `tp2_download`
 --
 
-CREATE TABLE `tp2_download` (
-  `download_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_download`;
+CREATE TABLE IF NOT EXISTS `tp2_download` (
+  `download_id` int(11) NOT NULL AUTO_INCREMENT,
   `filename` varchar(160) NOT NULL,
   `mask` varchar(128) NOT NULL,
-  `date_added` datetime NOT NULL
+  `date_added` datetime NOT NULL,
+  PRIMARY KEY (`download_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1252,10 +1450,12 @@ CREATE TABLE `tp2_download` (
 -- Structure de la table `tp2_download_description`
 --
 
-CREATE TABLE `tp2_download_description` (
+DROP TABLE IF EXISTS `tp2_download_description`;
+CREATE TABLE IF NOT EXISTS `tp2_download_description` (
   `download_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
-  `name` varchar(64) NOT NULL
+  `name` varchar(64) NOT NULL,
+  PRIMARY KEY (`download_id`,`language_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1264,17 +1464,19 @@ CREATE TABLE `tp2_download_description` (
 -- Structure de la table `tp2_event`
 --
 
-CREATE TABLE `tp2_event` (
-  `event_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_event`;
+CREATE TABLE IF NOT EXISTS `tp2_event` (
+  `event_id` int(11) NOT NULL AUTO_INCREMENT,
   `code` varchar(64) NOT NULL,
   `trigger` text NOT NULL,
   `action` text NOT NULL,
   `status` tinyint(1) NOT NULL,
-  `sort_order` int(3) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `sort_order` int(3) NOT NULL,
+  PRIMARY KEY (`event_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=46 DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_event`
+-- Déchargement des données de la table `tp2_event`
 --
 
 INSERT INTO `tp2_event` (`event_id`, `code`, `trigger`, `action`, `status`, `sort_order`) VALUES
@@ -1330,14 +1532,16 @@ INSERT INTO `tp2_event` (`event_id`, `code`, `trigger`, `action`, `status`, `sor
 -- Structure de la table `tp2_extension`
 --
 
-CREATE TABLE `tp2_extension` (
-  `extension_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_extension`;
+CREATE TABLE IF NOT EXISTS `tp2_extension` (
+  `extension_id` int(11) NOT NULL AUTO_INCREMENT,
   `type` varchar(32) NOT NULL,
-  `code` varchar(32) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `code` varchar(32) NOT NULL,
+  PRIMARY KEY (`extension_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=43 DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_extension`
+-- Déchargement des données de la table `tp2_extension`
 --
 
 INSERT INTO `tp2_extension` (`extension_id`, `type`, `code`) VALUES
@@ -1389,11 +1593,13 @@ INSERT INTO `tp2_extension` (`extension_id`, `type`, `code`) VALUES
 -- Structure de la table `tp2_extension_install`
 --
 
-CREATE TABLE `tp2_extension_install` (
-  `extension_install_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_extension_install`;
+CREATE TABLE IF NOT EXISTS `tp2_extension_install` (
+  `extension_install_id` int(11) NOT NULL AUTO_INCREMENT,
   `extension_download_id` int(11) NOT NULL,
   `filename` varchar(255) NOT NULL,
-  `date_added` datetime NOT NULL
+  `date_added` datetime NOT NULL,
+  PRIMARY KEY (`extension_install_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1402,11 +1608,13 @@ CREATE TABLE `tp2_extension_install` (
 -- Structure de la table `tp2_extension_path`
 --
 
-CREATE TABLE `tp2_extension_path` (
-  `extension_path_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_extension_path`;
+CREATE TABLE IF NOT EXISTS `tp2_extension_path` (
+  `extension_path_id` int(11) NOT NULL AUTO_INCREMENT,
   `extension_install_id` int(11) NOT NULL,
   `path` varchar(255) NOT NULL,
-  `date_added` datetime NOT NULL
+  `date_added` datetime NOT NULL,
+  PRIMARY KEY (`extension_path_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1415,10 +1623,12 @@ CREATE TABLE `tp2_extension_path` (
 -- Structure de la table `tp2_filter`
 --
 
-CREATE TABLE `tp2_filter` (
-  `filter_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_filter`;
+CREATE TABLE IF NOT EXISTS `tp2_filter` (
+  `filter_id` int(11) NOT NULL AUTO_INCREMENT,
   `filter_group_id` int(11) NOT NULL,
-  `sort_order` int(3) NOT NULL
+  `sort_order` int(3) NOT NULL,
+  PRIMARY KEY (`filter_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1427,11 +1637,13 @@ CREATE TABLE `tp2_filter` (
 -- Structure de la table `tp2_filter_description`
 --
 
-CREATE TABLE `tp2_filter_description` (
+DROP TABLE IF EXISTS `tp2_filter_description`;
+CREATE TABLE IF NOT EXISTS `tp2_filter_description` (
   `filter_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
   `filter_group_id` int(11) NOT NULL,
-  `name` varchar(64) NOT NULL
+  `name` varchar(64) NOT NULL,
+  PRIMARY KEY (`filter_id`,`language_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1440,9 +1652,11 @@ CREATE TABLE `tp2_filter_description` (
 -- Structure de la table `tp2_filter_group`
 --
 
-CREATE TABLE `tp2_filter_group` (
-  `filter_group_id` int(11) NOT NULL,
-  `sort_order` int(3) NOT NULL
+DROP TABLE IF EXISTS `tp2_filter_group`;
+CREATE TABLE IF NOT EXISTS `tp2_filter_group` (
+  `filter_group_id` int(11) NOT NULL AUTO_INCREMENT,
+  `sort_order` int(3) NOT NULL,
+  PRIMARY KEY (`filter_group_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1451,10 +1665,12 @@ CREATE TABLE `tp2_filter_group` (
 -- Structure de la table `tp2_filter_group_description`
 --
 
-CREATE TABLE `tp2_filter_group_description` (
+DROP TABLE IF EXISTS `tp2_filter_group_description`;
+CREATE TABLE IF NOT EXISTS `tp2_filter_group_description` (
   `filter_group_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
-  `name` varchar(64) NOT NULL
+  `name` varchar(64) NOT NULL,
+  PRIMARY KEY (`filter_group_id`,`language_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1463,16 +1679,18 @@ CREATE TABLE `tp2_filter_group_description` (
 -- Structure de la table `tp2_geo_zone`
 --
 
-CREATE TABLE `tp2_geo_zone` (
-  `geo_zone_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_geo_zone`;
+CREATE TABLE IF NOT EXISTS `tp2_geo_zone` (
+  `geo_zone_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(32) NOT NULL,
   `description` varchar(255) NOT NULL,
   `date_added` datetime NOT NULL,
-  `date_modified` datetime NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `date_modified` datetime NOT NULL,
+  PRIMARY KEY (`geo_zone_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_geo_zone`
+-- Déchargement des données de la table `tp2_geo_zone`
 --
 
 INSERT INTO `tp2_geo_zone` (`geo_zone_id`, `name`, `description`, `date_added`, `date_modified`) VALUES
@@ -1485,10 +1703,13 @@ INSERT INTO `tp2_geo_zone` (`geo_zone_id`, `name`, `description`, `date_added`, 
 -- Structure de la table `tp2_googleshopping_category`
 --
 
-CREATE TABLE `tp2_googleshopping_category` (
+DROP TABLE IF EXISTS `tp2_googleshopping_category`;
+CREATE TABLE IF NOT EXISTS `tp2_googleshopping_category` (
   `google_product_category` varchar(10) NOT NULL,
   `store_id` int(11) NOT NULL DEFAULT '0',
-  `category_id` int(11) NOT NULL
+  `category_id` int(11) NOT NULL,
+  PRIMARY KEY (`google_product_category`,`store_id`),
+  KEY `category_id_store_id` (`category_id`,`store_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1497,8 +1718,9 @@ CREATE TABLE `tp2_googleshopping_category` (
 -- Structure de la table `tp2_googleshopping_product`
 --
 
-CREATE TABLE `tp2_googleshopping_product` (
-  `product_advertise_google_id` int(11) UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `tp2_googleshopping_product`;
+CREATE TABLE IF NOT EXISTS `tp2_googleshopping_product` (
+  `product_advertise_google_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `product_id` int(11) DEFAULT NULL,
   `store_id` int(11) NOT NULL DEFAULT '0',
   `has_issues` tinyint(1) DEFAULT NULL,
@@ -1519,7 +1741,9 @@ CREATE TABLE `tp2_googleshopping_product` (
   `size_type` enum('regular','petite','plus','big and tall','maternity') DEFAULT NULL,
   `size_system` enum('AU','BR','CN','DE','EU','FR','IT','JP','MEX','UK','US') DEFAULT NULL,
   `size` int(11) DEFAULT NULL,
-  `is_modified` tinyint(1) NOT NULL DEFAULT '0'
+  `is_modified` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`product_advertise_google_id`),
+  UNIQUE KEY `product_id_store_id` (`product_id`,`store_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1528,14 +1752,16 @@ CREATE TABLE `tp2_googleshopping_product` (
 -- Structure de la table `tp2_googleshopping_product_status`
 --
 
-CREATE TABLE `tp2_googleshopping_product_status` (
+DROP TABLE IF EXISTS `tp2_googleshopping_product_status`;
+CREATE TABLE IF NOT EXISTS `tp2_googleshopping_product_status` (
   `product_id` int(11) NOT NULL DEFAULT '0',
   `store_id` int(11) NOT NULL DEFAULT '0',
   `product_variation_id` varchar(64) NOT NULL DEFAULT '',
   `destination_statuses` text NOT NULL,
   `data_quality_issues` text NOT NULL,
   `item_level_issues` text NOT NULL,
-  `google_expiration_date` int(11) NOT NULL DEFAULT '0'
+  `google_expiration_date` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`product_id`,`store_id`,`product_variation_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1544,10 +1770,12 @@ CREATE TABLE `tp2_googleshopping_product_status` (
 -- Structure de la table `tp2_googleshopping_product_target`
 --
 
-CREATE TABLE `tp2_googleshopping_product_target` (
+DROP TABLE IF EXISTS `tp2_googleshopping_product_target`;
+CREATE TABLE IF NOT EXISTS `tp2_googleshopping_product_target` (
   `product_id` int(11) NOT NULL,
   `store_id` int(11) NOT NULL DEFAULT '0',
-  `advertise_google_target_id` int(11) UNSIGNED NOT NULL
+  `advertise_google_target_id` int(11) UNSIGNED NOT NULL,
+  PRIMARY KEY (`product_id`,`advertise_google_target_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1556,7 +1784,8 @@ CREATE TABLE `tp2_googleshopping_product_target` (
 -- Structure de la table `tp2_googleshopping_target`
 --
 
-CREATE TABLE `tp2_googleshopping_target` (
+DROP TABLE IF EXISTS `tp2_googleshopping_target`;
+CREATE TABLE IF NOT EXISTS `tp2_googleshopping_target` (
   `advertise_google_target_id` int(11) UNSIGNED NOT NULL,
   `store_id` int(11) NOT NULL DEFAULT '0',
   `campaign_name` varchar(255) NOT NULL DEFAULT '',
@@ -1565,7 +1794,9 @@ CREATE TABLE `tp2_googleshopping_target` (
   `feeds` text NOT NULL,
   `status` enum('paused','active') NOT NULL DEFAULT 'paused',
   `date_added` date DEFAULT NULL,
-  `roas` int(11) NOT NULL DEFAULT '0'
+  `roas` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`advertise_google_target_id`),
+  KEY `store_id` (`store_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1574,15 +1805,17 @@ CREATE TABLE `tp2_googleshopping_target` (
 -- Structure de la table `tp2_information`
 --
 
-CREATE TABLE `tp2_information` (
-  `information_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_information`;
+CREATE TABLE IF NOT EXISTS `tp2_information` (
+  `information_id` int(11) NOT NULL AUTO_INCREMENT,
   `bottom` int(1) NOT NULL DEFAULT '0',
   `sort_order` int(3) NOT NULL DEFAULT '0',
-  `status` tinyint(1) NOT NULL DEFAULT '1'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `status` tinyint(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`information_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_information`
+-- Déchargement des données de la table `tp2_information`
 --
 
 INSERT INTO `tp2_information` (`information_id`, `bottom`, `sort_order`, `status`) VALUES
@@ -1597,25 +1830,31 @@ INSERT INTO `tp2_information` (`information_id`, `bottom`, `sort_order`, `status
 -- Structure de la table `tp2_information_description`
 --
 
-CREATE TABLE `tp2_information_description` (
+DROP TABLE IF EXISTS `tp2_information_description`;
+CREATE TABLE IF NOT EXISTS `tp2_information_description` (
   `information_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
   `title` varchar(64) NOT NULL,
   `description` mediumtext NOT NULL,
   `meta_title` varchar(255) NOT NULL,
   `meta_description` varchar(255) NOT NULL,
-  `meta_keyword` varchar(255) NOT NULL
+  `meta_keyword` varchar(255) NOT NULL,
+  PRIMARY KEY (`information_id`,`language_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_information_description`
+-- Déchargement des données de la table `tp2_information_description`
 --
 
 INSERT INTO `tp2_information_description` (`information_id`, `language_id`, `title`, `description`, `meta_title`, `meta_description`, `meta_keyword`) VALUES
 (4, 1, 'About Us', '&lt;p&gt;\r\n	About Us&lt;/p&gt;\r\n', 'About Us', '', ''),
 (5, 1, 'Terms &amp; Conditions', '&lt;p&gt;\r\n	Terms &amp;amp; Conditions&lt;/p&gt;\r\n', 'Terms &amp; Conditions', '', ''),
 (3, 1, 'Privacy Policy', '&lt;p&gt;\r\n	Privacy Policy&lt;/p&gt;\r\n', 'Privacy Policy', '', ''),
-(6, 1, 'Delivery Information', '&lt;p&gt;\r\n	Delivery Information&lt;/p&gt;\r\n', 'Delivery Information', '', '');
+(6, 1, 'Delivery Information', '&lt;p&gt;\r\n	Delivery Information&lt;/p&gt;\r\n', 'Delivery Information', '', ''),
+(4, 2, 'About Us', '&lt;p&gt;\r\n	About Us&lt;/p&gt;\r\n', 'About Us', '', ''),
+(5, 2, 'Terms &amp; Conditions', '&lt;p&gt;\r\n	Terms &amp;amp; Conditions&lt;/p&gt;\r\n', 'Terms &amp; Conditions', '', ''),
+(3, 2, 'Privacy Policy', '&lt;p&gt;\r\n	Privacy Policy&lt;/p&gt;\r\n', 'Privacy Policy', '', ''),
+(6, 2, 'Delivery Information', '&lt;p&gt;\r\n	Delivery Information&lt;/p&gt;\r\n', 'Delivery Information', '', '');
 
 -- --------------------------------------------------------
 
@@ -1623,10 +1862,12 @@ INSERT INTO `tp2_information_description` (`information_id`, `language_id`, `tit
 -- Structure de la table `tp2_information_to_layout`
 --
 
-CREATE TABLE `tp2_information_to_layout` (
+DROP TABLE IF EXISTS `tp2_information_to_layout`;
+CREATE TABLE IF NOT EXISTS `tp2_information_to_layout` (
   `information_id` int(11) NOT NULL,
   `store_id` int(11) NOT NULL,
-  `layout_id` int(11) NOT NULL
+  `layout_id` int(11) NOT NULL,
+  PRIMARY KEY (`information_id`,`store_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1635,13 +1876,15 @@ CREATE TABLE `tp2_information_to_layout` (
 -- Structure de la table `tp2_information_to_store`
 --
 
-CREATE TABLE `tp2_information_to_store` (
+DROP TABLE IF EXISTS `tp2_information_to_store`;
+CREATE TABLE IF NOT EXISTS `tp2_information_to_store` (
   `information_id` int(11) NOT NULL,
-  `store_id` int(11) NOT NULL
+  `store_id` int(11) NOT NULL,
+  PRIMARY KEY (`information_id`,`store_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_information_to_store`
+-- Déchargement des données de la table `tp2_information_to_store`
 --
 
 INSERT INTO `tp2_information_to_store` (`information_id`, `store_id`) VALUES
@@ -1656,23 +1899,27 @@ INSERT INTO `tp2_information_to_store` (`information_id`, `store_id`) VALUES
 -- Structure de la table `tp2_language`
 --
 
-CREATE TABLE `tp2_language` (
-  `language_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_language`;
+CREATE TABLE IF NOT EXISTS `tp2_language` (
+  `language_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(32) NOT NULL,
   `code` varchar(5) NOT NULL,
   `locale` varchar(255) NOT NULL,
   `image` varchar(64) NOT NULL,
   `directory` varchar(32) NOT NULL,
   `sort_order` int(3) NOT NULL DEFAULT '0',
-  `status` tinyint(1) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `status` tinyint(1) NOT NULL,
+  PRIMARY KEY (`language_id`),
+  KEY `name` (`name`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_language`
+-- Déchargement des données de la table `tp2_language`
 --
 
 INSERT INTO `tp2_language` (`language_id`, `name`, `code`, `locale`, `image`, `directory`, `sort_order`, `status`) VALUES
-(1, 'English', 'en-gb', 'en-US,en_US.UTF-8,en_US,en-gb,english', 'gb.png', 'english', 1, 1);
+(1, 'English', 'en-gb', 'en-US,en_US.UTF-8,en_US,en-gb,english', 'gb.png', 'english', 1, 1),
+(2, 'français', 'fr-fr', 'fr-fr', '', '', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1680,13 +1927,15 @@ INSERT INTO `tp2_language` (`language_id`, `name`, `code`, `locale`, `image`, `d
 -- Structure de la table `tp2_layout`
 --
 
-CREATE TABLE `tp2_layout` (
-  `layout_id` int(11) NOT NULL,
-  `name` varchar(64) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+DROP TABLE IF EXISTS `tp2_layout`;
+CREATE TABLE IF NOT EXISTS `tp2_layout` (
+  `layout_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(64) NOT NULL,
+  PRIMARY KEY (`layout_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_layout`
+-- Déchargement des données de la table `tp2_layout`
 --
 
 INSERT INTO `tp2_layout` (`layout_id`, `name`) VALUES
@@ -1710,16 +1959,18 @@ INSERT INTO `tp2_layout` (`layout_id`, `name`) VALUES
 -- Structure de la table `tp2_layout_module`
 --
 
-CREATE TABLE `tp2_layout_module` (
-  `layout_module_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_layout_module`;
+CREATE TABLE IF NOT EXISTS `tp2_layout_module` (
+  `layout_module_id` int(11) NOT NULL AUTO_INCREMENT,
   `layout_id` int(11) NOT NULL,
   `code` varchar(64) NOT NULL,
   `position` varchar(14) NOT NULL,
-  `sort_order` int(3) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `sort_order` int(3) NOT NULL,
+  PRIMARY KEY (`layout_module_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=74 DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_layout_module`
+-- Déchargement des données de la table `tp2_layout_module`
 --
 
 INSERT INTO `tp2_layout_module` (`layout_module_id`, `layout_id`, `code`, `position`, `sort_order`) VALUES
@@ -1740,15 +1991,17 @@ INSERT INTO `tp2_layout_module` (`layout_module_id`, `layout_id`, `code`, `posit
 -- Structure de la table `tp2_layout_route`
 --
 
-CREATE TABLE `tp2_layout_route` (
-  `layout_route_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_layout_route`;
+CREATE TABLE IF NOT EXISTS `tp2_layout_route` (
+  `layout_route_id` int(11) NOT NULL AUTO_INCREMENT,
   `layout_id` int(11) NOT NULL,
   `store_id` int(11) NOT NULL,
-  `route` varchar(64) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `route` varchar(64) NOT NULL,
+  PRIMARY KEY (`layout_route_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=54 DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_layout_route`
+-- Déchargement des données de la table `tp2_layout_route`
 --
 
 INSERT INTO `tp2_layout_route` (`layout_route_id`, `layout_id`, `store_id`, `route`) VALUES
@@ -1772,13 +2025,15 @@ INSERT INTO `tp2_layout_route` (`layout_route_id`, `layout_id`, `store_id`, `rou
 -- Structure de la table `tp2_length_class`
 --
 
-CREATE TABLE `tp2_length_class` (
-  `length_class_id` int(11) NOT NULL,
-  `value` decimal(15,8) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+DROP TABLE IF EXISTS `tp2_length_class`;
+CREATE TABLE IF NOT EXISTS `tp2_length_class` (
+  `length_class_id` int(11) NOT NULL AUTO_INCREMENT,
+  `value` decimal(15,8) NOT NULL,
+  PRIMARY KEY (`length_class_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_length_class`
+-- Déchargement des données de la table `tp2_length_class`
 --
 
 INSERT INTO `tp2_length_class` (`length_class_id`, `value`) VALUES
@@ -1792,21 +2047,26 @@ INSERT INTO `tp2_length_class` (`length_class_id`, `value`) VALUES
 -- Structure de la table `tp2_length_class_description`
 --
 
-CREATE TABLE `tp2_length_class_description` (
+DROP TABLE IF EXISTS `tp2_length_class_description`;
+CREATE TABLE IF NOT EXISTS `tp2_length_class_description` (
   `length_class_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
   `title` varchar(32) NOT NULL,
-  `unit` varchar(4) NOT NULL
+  `unit` varchar(4) NOT NULL,
+  PRIMARY KEY (`length_class_id`,`language_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_length_class_description`
+-- Déchargement des données de la table `tp2_length_class_description`
 --
 
 INSERT INTO `tp2_length_class_description` (`length_class_id`, `language_id`, `title`, `unit`) VALUES
 (1, 1, 'Centimeter', 'cm'),
 (2, 1, 'Millimeter', 'mm'),
-(3, 1, 'Inch', 'in');
+(3, 1, 'Inch', 'in'),
+(1, 2, 'Centimeter', 'cm'),
+(2, 2, 'Millimeter', 'mm'),
+(3, 2, 'Inch', 'in');
 
 -- --------------------------------------------------------
 
@@ -1814,8 +2074,9 @@ INSERT INTO `tp2_length_class_description` (`length_class_id`, `language_id`, `t
 -- Structure de la table `tp2_location`
 --
 
-CREATE TABLE `tp2_location` (
-  `location_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_location`;
+CREATE TABLE IF NOT EXISTS `tp2_location` (
+  `location_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(32) NOT NULL,
   `address` text NOT NULL,
   `telephone` varchar(32) NOT NULL,
@@ -1823,7 +2084,9 @@ CREATE TABLE `tp2_location` (
   `geocode` varchar(32) NOT NULL,
   `image` varchar(255) DEFAULT NULL,
   `open` text NOT NULL,
-  `comment` text NOT NULL
+  `comment` text NOT NULL,
+  PRIMARY KEY (`location_id`),
+  KEY `name` (`name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1832,15 +2095,17 @@ CREATE TABLE `tp2_location` (
 -- Structure de la table `tp2_manufacturer`
 --
 
-CREATE TABLE `tp2_manufacturer` (
-  `manufacturer_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_manufacturer`;
+CREATE TABLE IF NOT EXISTS `tp2_manufacturer` (
+  `manufacturer_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(64) NOT NULL,
   `image` varchar(255) DEFAULT NULL,
-  `sort_order` int(3) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `sort_order` int(3) NOT NULL,
+  PRIMARY KEY (`manufacturer_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_manufacturer`
+-- Déchargement des données de la table `tp2_manufacturer`
 --
 
 INSERT INTO `tp2_manufacturer` (`manufacturer_id`, `name`, `image`, `sort_order`) VALUES
@@ -1857,13 +2122,15 @@ INSERT INTO `tp2_manufacturer` (`manufacturer_id`, `name`, `image`, `sort_order`
 -- Structure de la table `tp2_manufacturer_to_store`
 --
 
-CREATE TABLE `tp2_manufacturer_to_store` (
+DROP TABLE IF EXISTS `tp2_manufacturer_to_store`;
+CREATE TABLE IF NOT EXISTS `tp2_manufacturer_to_store` (
   `manufacturer_id` int(11) NOT NULL,
-  `store_id` int(11) NOT NULL
+  `store_id` int(11) NOT NULL,
+  PRIMARY KEY (`manufacturer_id`,`store_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_manufacturer_to_store`
+-- Déchargement des données de la table `tp2_manufacturer_to_store`
 --
 
 INSERT INTO `tp2_manufacturer_to_store` (`manufacturer_id`, `store_id`) VALUES
@@ -1880,13 +2147,15 @@ INSERT INTO `tp2_manufacturer_to_store` (`manufacturer_id`, `store_id`) VALUES
 -- Structure de la table `tp2_marketing`
 --
 
-CREATE TABLE `tp2_marketing` (
-  `marketing_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_marketing`;
+CREATE TABLE IF NOT EXISTS `tp2_marketing` (
+  `marketing_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(32) NOT NULL,
   `description` text NOT NULL,
   `code` varchar(64) NOT NULL,
   `clicks` int(5) NOT NULL DEFAULT '0',
-  `date_added` datetime NOT NULL
+  `date_added` datetime NOT NULL,
+  PRIMARY KEY (`marketing_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1895,8 +2164,9 @@ CREATE TABLE `tp2_marketing` (
 -- Structure de la table `tp2_modification`
 --
 
-CREATE TABLE `tp2_modification` (
-  `modification_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_modification`;
+CREATE TABLE IF NOT EXISTS `tp2_modification` (
+  `modification_id` int(11) NOT NULL AUTO_INCREMENT,
   `extension_install_id` int(11) NOT NULL,
   `name` varchar(64) NOT NULL,
   `code` varchar(64) NOT NULL,
@@ -1905,7 +2175,8 @@ CREATE TABLE `tp2_modification` (
   `link` varchar(255) NOT NULL,
   `xml` mediumtext NOT NULL,
   `status` tinyint(1) NOT NULL,
-  `date_added` datetime NOT NULL
+  `date_added` datetime NOT NULL,
+  PRIMARY KEY (`modification_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1914,23 +2185,25 @@ CREATE TABLE `tp2_modification` (
 -- Structure de la table `tp2_module`
 --
 
-CREATE TABLE `tp2_module` (
-  `module_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_module`;
+CREATE TABLE IF NOT EXISTS `tp2_module` (
+  `module_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(64) NOT NULL,
   `code` varchar(32) NOT NULL,
-  `setting` text NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `setting` text NOT NULL,
+  PRIMARY KEY (`module_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_module`
+-- Déchargement des données de la table `tp2_module`
 --
 
 INSERT INTO `tp2_module` (`module_id`, `name`, `code`, `setting`) VALUES
-(30, 'Category', 'banner', '{"name":"Category","banner_id":"6","width":"182","height":"182","status":"1"}'),
-(29, 'Home Page', 'carousel', '{"name":"Home Page","banner_id":"8","width":"130","height":"100","status":"1"}'),
-(28, 'Home Page', 'featured', '{"name":"Home Page","product":["43","40","42","30"],"limit":"4","width":"200","height":"200","status":"1"}'),
-(27, 'Home Page', 'slideshow', '{"name":"Home Page","banner_id":"7","width":"1140","height":"380","status":"1"}'),
-(31, 'Banner 1', 'banner', '{"name":"Banner 1","banner_id":"6","width":"182","height":"182","status":"1"}');
+(30, 'Category', 'banner', '{\"name\":\"Category\",\"banner_id\":\"6\",\"width\":\"182\",\"height\":\"182\",\"status\":\"1\"}'),
+(29, 'Home Page', 'carousel', '{\"name\":\"Home Page\",\"banner_id\":\"8\",\"width\":\"130\",\"height\":\"100\",\"status\":\"1\"}'),
+(28, 'Home Page', 'featured', '{\"name\":\"Home Page\",\"product\":[\"43\",\"40\",\"42\",\"30\"],\"limit\":\"4\",\"width\":\"200\",\"height\":\"200\",\"status\":\"1\"}'),
+(27, 'Home Page', 'slideshow', '{\"name\":\"Home Page\",\"banner_id\":\"7\",\"width\":\"1140\",\"height\":\"380\",\"status\":\"1\"}'),
+(31, 'Banner 1', 'banner', '{\"name\":\"Banner 1\",\"banner_id\":\"6\",\"width\":\"182\",\"height\":\"182\",\"status\":\"1\"}');
 
 -- --------------------------------------------------------
 
@@ -1938,14 +2211,16 @@ INSERT INTO `tp2_module` (`module_id`, `name`, `code`, `setting`) VALUES
 -- Structure de la table `tp2_option`
 --
 
-CREATE TABLE `tp2_option` (
-  `option_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_option`;
+CREATE TABLE IF NOT EXISTS `tp2_option` (
+  `option_id` int(11) NOT NULL AUTO_INCREMENT,
   `type` varchar(32) NOT NULL,
-  `sort_order` int(3) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `sort_order` int(3) NOT NULL,
+  PRIMARY KEY (`option_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_option`
+-- Déchargement des données de la table `tp2_option`
 --
 
 INSERT INTO `tp2_option` (`option_id`, `type`, `sort_order`) VALUES
@@ -1967,14 +2242,16 @@ INSERT INTO `tp2_option` (`option_id`, `type`, `sort_order`) VALUES
 -- Structure de la table `tp2_option_description`
 --
 
-CREATE TABLE `tp2_option_description` (
+DROP TABLE IF EXISTS `tp2_option_description`;
+CREATE TABLE IF NOT EXISTS `tp2_option_description` (
   `option_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
-  `name` varchar(128) NOT NULL
+  `name` varchar(128) NOT NULL,
+  PRIMARY KEY (`option_id`,`language_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_option_description`
+-- Déchargement des données de la table `tp2_option_description`
 --
 
 INSERT INTO `tp2_option_description` (`option_id`, `language_id`, `name`) VALUES
@@ -1988,7 +2265,18 @@ INSERT INTO `tp2_option_description` (`option_id`, `language_id`, `name`) VALUES
 (9, 1, 'Time'),
 (10, 1, 'Date &amp; Time'),
 (12, 1, 'Delivery Date'),
-(11, 1, 'Size');
+(11, 1, 'Size'),
+(1, 2, 'Radio'),
+(2, 2, 'Checkbox'),
+(4, 2, 'Text'),
+(6, 2, 'Textarea'),
+(8, 2, 'Date'),
+(7, 2, 'File'),
+(5, 2, 'Select'),
+(9, 2, 'Time'),
+(10, 2, 'Date &amp; Time'),
+(12, 2, 'Delivery Date'),
+(11, 2, 'Size');
 
 -- --------------------------------------------------------
 
@@ -1996,15 +2284,17 @@ INSERT INTO `tp2_option_description` (`option_id`, `language_id`, `name`) VALUES
 -- Structure de la table `tp2_option_value`
 --
 
-CREATE TABLE `tp2_option_value` (
-  `option_value_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_option_value`;
+CREATE TABLE IF NOT EXISTS `tp2_option_value` (
+  `option_value_id` int(11) NOT NULL AUTO_INCREMENT,
   `option_id` int(11) NOT NULL,
   `image` varchar(255) NOT NULL,
-  `sort_order` int(3) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `sort_order` int(3) NOT NULL,
+  PRIMARY KEY (`option_value_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=49 DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_option_value`
+-- Déchargement des données de la table `tp2_option_value`
 --
 
 INSERT INTO `tp2_option_value` (`option_value_id`, `option_id`, `image`, `sort_order`) VALUES
@@ -2029,15 +2319,17 @@ INSERT INTO `tp2_option_value` (`option_value_id`, `option_id`, `image`, `sort_o
 -- Structure de la table `tp2_option_value_description`
 --
 
-CREATE TABLE `tp2_option_value_description` (
+DROP TABLE IF EXISTS `tp2_option_value_description`;
+CREATE TABLE IF NOT EXISTS `tp2_option_value_description` (
   `option_value_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
   `option_id` int(11) NOT NULL,
-  `name` varchar(128) NOT NULL
+  `name` varchar(128) NOT NULL,
+  PRIMARY KEY (`option_value_id`,`language_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_option_value_description`
+-- Déchargement des données de la table `tp2_option_value_description`
 --
 
 INSERT INTO `tp2_option_value_description` (`option_value_id`, `language_id`, `option_id`, `name`) VALUES
@@ -2054,7 +2346,21 @@ INSERT INTO `tp2_option_value_description` (`option_value_id`, `language_id`, `o
 (24, 1, 2, 'Checkbox 2'),
 (48, 1, 11, 'Large'),
 (47, 1, 11, 'Medium'),
-(46, 1, 11, 'Small');
+(46, 1, 11, 'Small'),
+(43, 2, 1, 'Large'),
+(32, 2, 1, 'Small'),
+(45, 2, 2, 'Checkbox 4'),
+(44, 2, 2, 'Checkbox 3'),
+(31, 2, 1, 'Medium'),
+(42, 2, 5, 'Yellow'),
+(41, 2, 5, 'Green'),
+(39, 2, 5, 'Red'),
+(40, 2, 5, 'Blue'),
+(23, 2, 2, 'Checkbox 1'),
+(24, 2, 2, 'Checkbox 2'),
+(48, 2, 11, 'Large'),
+(47, 2, 11, 'Medium'),
+(46, 2, 11, 'Small');
 
 -- --------------------------------------------------------
 
@@ -2062,8 +2368,9 @@ INSERT INTO `tp2_option_value_description` (`option_value_id`, `language_id`, `o
 -- Structure de la table `tp2_order`
 --
 
-CREATE TABLE `tp2_order` (
-  `order_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_order`;
+CREATE TABLE IF NOT EXISTS `tp2_order` (
+  `order_id` int(11) NOT NULL AUTO_INCREMENT,
   `invoice_no` int(11) NOT NULL DEFAULT '0',
   `invoice_prefix` varchar(26) NOT NULL,
   `store_id` int(11) NOT NULL DEFAULT '0',
@@ -2123,7 +2430,8 @@ CREATE TABLE `tp2_order` (
   `user_agent` varchar(255) NOT NULL,
   `accept_language` varchar(255) NOT NULL,
   `date_added` datetime NOT NULL,
-  `date_modified` datetime NOT NULL
+  `date_modified` datetime NOT NULL,
+  PRIMARY KEY (`order_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -2132,13 +2440,15 @@ CREATE TABLE `tp2_order` (
 -- Structure de la table `tp2_order_history`
 --
 
-CREATE TABLE `tp2_order_history` (
-  `order_history_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_order_history`;
+CREATE TABLE IF NOT EXISTS `tp2_order_history` (
+  `order_history_id` int(11) NOT NULL AUTO_INCREMENT,
   `order_id` int(11) NOT NULL,
   `order_status_id` int(11) NOT NULL,
   `notify` tinyint(1) NOT NULL DEFAULT '0',
   `comment` text NOT NULL,
-  `date_added` datetime NOT NULL
+  `date_added` datetime NOT NULL,
+  PRIMARY KEY (`order_history_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -2147,15 +2457,17 @@ CREATE TABLE `tp2_order_history` (
 -- Structure de la table `tp2_order_option`
 --
 
-CREATE TABLE `tp2_order_option` (
-  `order_option_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_order_option`;
+CREATE TABLE IF NOT EXISTS `tp2_order_option` (
+  `order_option_id` int(11) NOT NULL AUTO_INCREMENT,
   `order_id` int(11) NOT NULL,
   `order_product_id` int(11) NOT NULL,
   `product_option_id` int(11) NOT NULL,
   `product_option_value_id` int(11) NOT NULL DEFAULT '0',
   `name` varchar(255) NOT NULL,
   `value` text NOT NULL,
-  `type` varchar(32) NOT NULL
+  `type` varchar(32) NOT NULL,
+  PRIMARY KEY (`order_option_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -2164,8 +2476,9 @@ CREATE TABLE `tp2_order_option` (
 -- Structure de la table `tp2_order_product`
 --
 
-CREATE TABLE `tp2_order_product` (
-  `order_product_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_order_product`;
+CREATE TABLE IF NOT EXISTS `tp2_order_product` (
+  `order_product_id` int(11) NOT NULL AUTO_INCREMENT,
   `order_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
@@ -2174,7 +2487,9 @@ CREATE TABLE `tp2_order_product` (
   `price` decimal(15,4) NOT NULL DEFAULT '0.0000',
   `total` decimal(15,4) NOT NULL DEFAULT '0.0000',
   `tax` decimal(15,4) NOT NULL DEFAULT '0.0000',
-  `reward` int(8) NOT NULL
+  `reward` int(8) NOT NULL,
+  PRIMARY KEY (`order_product_id`),
+  KEY `order_id` (`order_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -2183,8 +2498,9 @@ CREATE TABLE `tp2_order_product` (
 -- Structure de la table `tp2_order_recurring`
 --
 
-CREATE TABLE `tp2_order_recurring` (
-  `order_recurring_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_order_recurring`;
+CREATE TABLE IF NOT EXISTS `tp2_order_recurring` (
+  `order_recurring_id` int(11) NOT NULL AUTO_INCREMENT,
   `order_id` int(11) NOT NULL,
   `reference` varchar(255) NOT NULL,
   `product_id` int(11) NOT NULL,
@@ -2203,7 +2519,8 @@ CREATE TABLE `tp2_order_recurring` (
   `trial_duration` smallint(6) NOT NULL,
   `trial_price` decimal(10,4) NOT NULL,
   `status` tinyint(4) NOT NULL,
-  `date_added` datetime NOT NULL
+  `date_added` datetime NOT NULL,
+  PRIMARY KEY (`order_recurring_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -2212,13 +2529,15 @@ CREATE TABLE `tp2_order_recurring` (
 -- Structure de la table `tp2_order_recurring_transaction`
 --
 
-CREATE TABLE `tp2_order_recurring_transaction` (
-  `order_recurring_transaction_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_order_recurring_transaction`;
+CREATE TABLE IF NOT EXISTS `tp2_order_recurring_transaction` (
+  `order_recurring_transaction_id` int(11) NOT NULL AUTO_INCREMENT,
   `order_recurring_id` int(11) NOT NULL,
   `reference` varchar(255) NOT NULL,
   `type` varchar(255) NOT NULL,
   `amount` decimal(10,4) NOT NULL,
-  `date_added` datetime NOT NULL
+  `date_added` datetime NOT NULL,
+  PRIMARY KEY (`order_recurring_transaction_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -2227,12 +2546,14 @@ CREATE TABLE `tp2_order_recurring_transaction` (
 -- Structure de la table `tp2_order_shipment`
 --
 
-CREATE TABLE `tp2_order_shipment` (
-  `order_shipment_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_order_shipment`;
+CREATE TABLE IF NOT EXISTS `tp2_order_shipment` (
+  `order_shipment_id` int(11) NOT NULL AUTO_INCREMENT,
   `order_id` int(11) NOT NULL,
   `date_added` datetime NOT NULL,
   `shipping_courier_id` varchar(255) NOT NULL DEFAULT '',
-  `tracking_number` varchar(255) NOT NULL DEFAULT ''
+  `tracking_number` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`order_shipment_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -2241,14 +2562,16 @@ CREATE TABLE `tp2_order_shipment` (
 -- Structure de la table `tp2_order_status`
 --
 
-CREATE TABLE `tp2_order_status` (
-  `order_status_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_order_status`;
+CREATE TABLE IF NOT EXISTS `tp2_order_status` (
+  `order_status_id` int(11) NOT NULL AUTO_INCREMENT,
   `language_id` int(11) NOT NULL,
-  `name` varchar(32) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `name` varchar(32) NOT NULL,
+  PRIMARY KEY (`order_status_id`,`language_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_order_status`
+-- Déchargement des données de la table `tp2_order_status`
 --
 
 INSERT INTO `tp2_order_status` (`order_status_id`, `language_id`, `name`) VALUES
@@ -2265,7 +2588,21 @@ INSERT INTO `tp2_order_status` (`order_status_id`, `language_id`, `name`) VALUES
 (1, 1, 'Pending'),
 (16, 1, 'Voided'),
 (15, 1, 'Processed'),
-(14, 1, 'Expired');
+(14, 1, 'Expired'),
+(2, 2, 'Processing'),
+(3, 2, 'Shipped'),
+(7, 2, 'Canceled'),
+(5, 2, 'Complete'),
+(8, 2, 'Denied'),
+(9, 2, 'Canceled Reversal'),
+(10, 2, 'Failed'),
+(11, 2, 'Refunded'),
+(12, 2, 'Reversed'),
+(13, 2, 'Chargeback'),
+(1, 2, 'Pending'),
+(16, 2, 'Voided'),
+(15, 2, 'Processed'),
+(14, 2, 'Expired');
 
 -- --------------------------------------------------------
 
@@ -2273,13 +2610,16 @@ INSERT INTO `tp2_order_status` (`order_status_id`, `language_id`, `name`) VALUES
 -- Structure de la table `tp2_order_total`
 --
 
-CREATE TABLE `tp2_order_total` (
-  `order_total_id` int(10) NOT NULL,
+DROP TABLE IF EXISTS `tp2_order_total`;
+CREATE TABLE IF NOT EXISTS `tp2_order_total` (
+  `order_total_id` int(10) NOT NULL AUTO_INCREMENT,
   `order_id` int(11) NOT NULL,
   `code` varchar(32) NOT NULL,
   `title` varchar(255) NOT NULL,
   `value` decimal(15,4) NOT NULL DEFAULT '0.0000',
-  `sort_order` int(3) NOT NULL
+  `sort_order` int(3) NOT NULL,
+  PRIMARY KEY (`order_total_id`),
+  KEY `order_id` (`order_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -2288,8 +2628,9 @@ CREATE TABLE `tp2_order_total` (
 -- Structure de la table `tp2_order_voucher`
 --
 
-CREATE TABLE `tp2_order_voucher` (
-  `order_voucher_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_order_voucher`;
+CREATE TABLE IF NOT EXISTS `tp2_order_voucher` (
+  `order_voucher_id` int(11) NOT NULL AUTO_INCREMENT,
   `order_id` int(11) NOT NULL,
   `voucher_id` int(11) NOT NULL,
   `description` varchar(255) NOT NULL,
@@ -2300,7 +2641,8 @@ CREATE TABLE `tp2_order_voucher` (
   `to_email` varchar(96) NOT NULL,
   `voucher_theme_id` int(11) NOT NULL,
   `message` text NOT NULL,
-  `amount` decimal(15,4) NOT NULL
+  `amount` decimal(15,4) NOT NULL,
+  PRIMARY KEY (`order_voucher_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -2309,8 +2651,9 @@ CREATE TABLE `tp2_order_voucher` (
 -- Structure de la table `tp2_product`
 --
 
-CREATE TABLE `tp2_product` (
-  `product_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_product`;
+CREATE TABLE IF NOT EXISTS `tp2_product` (
+  `product_id` int(11) NOT NULL AUTO_INCREMENT,
   `model` varchar(64) NOT NULL,
   `sku` varchar(64) NOT NULL,
   `upc` varchar(12) NOT NULL,
@@ -2340,11 +2683,12 @@ CREATE TABLE `tp2_product` (
   `status` tinyint(1) NOT NULL DEFAULT '0',
   `viewed` int(5) NOT NULL DEFAULT '0',
   `date_added` datetime NOT NULL,
-  `date_modified` datetime NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `date_modified` datetime NOT NULL,
+  PRIMARY KEY (`product_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=50 DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_product`
+-- Déchargement des données de la table `tp2_product`
 --
 
 INSERT INTO `tp2_product` (`product_id`, `model`, `sku`, `upc`, `ean`, `jan`, `isbn`, `mpn`, `location`, `quantity`, `stock_status_id`, `image`, `manufacturer_id`, `shipping`, `price`, `points`, `tax_class_id`, `date_available`, `weight`, `weight_class_id`, `length`, `width`, `height`, `length_class_id`, `subtract`, `minimum`, `sort_order`, `status`, `viewed`, `date_added`, `date_modified`) VALUES
@@ -2374,15 +2718,17 @@ INSERT INTO `tp2_product` (`product_id`, `model`, `sku`, `upc`, `ean`, `jan`, `i
 -- Structure de la table `tp2_product_attribute`
 --
 
-CREATE TABLE `tp2_product_attribute` (
+DROP TABLE IF EXISTS `tp2_product_attribute`;
+CREATE TABLE IF NOT EXISTS `tp2_product_attribute` (
   `product_id` int(11) NOT NULL,
   `attribute_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
-  `text` text NOT NULL
+  `text` text NOT NULL,
+  PRIMARY KEY (`product_id`,`attribute_id`,`language_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_product_attribute`
+-- Déchargement des données de la table `tp2_product_attribute`
 --
 
 INSERT INTO `tp2_product_attribute` (`product_id`, `attribute_id`, `language_id`, `text`) VALUES
@@ -2390,7 +2736,12 @@ INSERT INTO `tp2_product_attribute` (`product_id`, `attribute_id`, `language_id`
 (47, 4, 1, '16GB'),
 (43, 4, 1, '8gb'),
 (42, 3, 1, '100mhz'),
-(47, 2, 1, '4');
+(47, 2, 1, '4'),
+(43, 2, 2, '1'),
+(47, 4, 2, '16GB'),
+(43, 4, 2, '8gb'),
+(42, 3, 2, '100mhz'),
+(47, 2, 2, '4');
 
 -- --------------------------------------------------------
 
@@ -2398,7 +2749,8 @@ INSERT INTO `tp2_product_attribute` (`product_id`, `attribute_id`, `language_id`
 -- Structure de la table `tp2_product_description`
 --
 
-CREATE TABLE `tp2_product_description` (
+DROP TABLE IF EXISTS `tp2_product_description`;
+CREATE TABLE IF NOT EXISTS `tp2_product_description` (
   `product_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
@@ -2406,11 +2758,13 @@ CREATE TABLE `tp2_product_description` (
   `tag` text NOT NULL,
   `meta_title` varchar(255) NOT NULL,
   `meta_description` varchar(255) NOT NULL,
-  `meta_keyword` varchar(255) NOT NULL
+  `meta_keyword` varchar(255) NOT NULL,
+  PRIMARY KEY (`product_id`,`language_id`),
+  KEY `name` (`name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_product_description`
+-- Déchargement des données de la table `tp2_product_description`
 --
 
 INSERT INTO `tp2_product_description` (`product_id`, `language_id`, `name`, `description`, `tag`, `meta_title`, `meta_description`, `meta_keyword`) VALUES
@@ -2432,7 +2786,27 @@ INSERT INTO `tp2_product_description` (`product_id`, `language_id`, `name`, `des
 (31, 1, 'Nikon D300', '&lt;div class=&quot;cpt_product_description &quot;&gt;\r\n	&lt;div&gt;\r\n		Engineered with pro-level features and performance, the 12.3-effective-megapixel D300 combines brand new technologies with advanced features inherited from Nikon&amp;#39;s newly announced D3 professional digital SLR camera to offer serious photographers remarkable performance combined with agility.&lt;br /&gt;\r\n		&lt;br /&gt;\r\n		Similar to the D3, the D300 features Nikon&amp;#39;s exclusive EXPEED Image Processing System that is central to driving the speed and processing power needed for many of the camera&amp;#39;s new features. The D300 features a new 51-point autofocus system with Nikon&amp;#39;s 3D Focus Tracking feature and two new LiveView shooting modes that allow users to frame a photograph using the camera&amp;#39;s high-resolution LCD monitor. The D300 shares a similar Scene Recognition System as is found in the D3; it promises to greatly enhance the accuracy of autofocus, autoexposure, and auto white balance by recognizing the subject or scene being photographed and applying this information to the calculations for the three functions.&lt;br /&gt;\r\n		&lt;br /&gt;\r\n		The D300 reacts with lightning speed, powering up in a mere 0.13 seconds and shooting with an imperceptible 45-millisecond shutter release lag time. The D300 is capable of shooting at a rapid six frames per second and can go as fast as eight frames per second when using the optional MB-D10 multi-power battery pack. In continuous bursts, the D300 can shoot up to 100 shots at full 12.3-megapixel resolution. (NORMAL-LARGE image setting, using a SanDisk Extreme IV 1GB CompactFlash card.)&lt;br /&gt;\r\n		&lt;br /&gt;\r\n		The D300 incorporates a range of innovative technologies and features that will significantly improve the accuracy, control, and performance photographers can get from their equipment. Its new Scene Recognition System advances the use of Nikon&amp;#39;s acclaimed 1,005-segment sensor to recognize colors and light patterns that help the camera determine the subject and the type of scene being photographed before a picture is taken. This information is used to improve the accuracy of autofocus, autoexposure, and auto white balance functions in the D300. For example, the camera can track moving subjects better and by identifying them, it can also automatically select focus points faster and with greater accuracy. It can also analyze highlights and more accurately determine exposure, as well as infer light sources to deliver more accurate white balance detection.&lt;/div&gt;\r\n&lt;/div&gt;\r\n&lt;!-- cpt_container_end --&gt;', '', 'Nikon D300', '', ''),
 (49, 1, 'Samsung Galaxy Tab 10.1', '&lt;p&gt;\r\n	Samsung Galaxy Tab 10.1, is the world&amp;rsquo;s thinnest tablet, measuring 8.6 mm thickness, running with Android 3.0 Honeycomb OS on a 1GHz dual-core Tegra 2 processor, similar to its younger brother Samsung Galaxy Tab 8.9.&lt;/p&gt;\r\n&lt;p&gt;\r\n	Samsung Galaxy Tab 10.1 gives pure Android 3.0 experience, adding its new TouchWiz UX or TouchWiz 4.0 &amp;ndash; includes a live panel, which lets you to customize with different content, such as your pictures, bookmarks, and social feeds, sporting a 10.1 inches WXGA capacitive touch screen with 1280 x 800 pixels of resolution, equipped with 3 megapixel rear camera with LED flash and a 2 megapixel front camera, HSPA+ connectivity up to 21Mbps, 720p HD video recording capability, 1080p HD playback, DLNA support, Bluetooth 2.1, USB 2.0, gyroscope, Wi-Fi 802.11 a/b/g/n, micro-SD slot, 3.5mm headphone jack, and SIM slot, including the Samsung Stick &amp;ndash; a Bluetooth microphone that can be carried in a pocket like a pen and sound dock with powered subwoofer.&lt;/p&gt;\r\n&lt;p&gt;\r\n	Samsung Galaxy Tab 10.1 will come in 16GB / 32GB / 64GB verities and pre-loaded with Social Hub, Reader&amp;rsquo;s Hub, Music Hub and Samsung Mini Apps Tray &amp;ndash; which gives you access to more commonly used apps to help ease multitasking and it is capable of Adobe Flash Player 10.2, powered by 6860mAh battery that gives you 10hours of video-playback time.&amp;nbsp;&amp;auml;&amp;ouml;&lt;/p&gt;\r\n', '', 'Samsung Galaxy Tab 10.1', '', ''),
 (42, 1, 'Apple Cinema 30&quot;', '&lt;p&gt;\r\n	&lt;font face=&quot;helvetica,geneva,arial&quot; size=&quot;2&quot;&gt;&lt;font face=&quot;Helvetica&quot; size=&quot;2&quot;&gt;The 30-inch Apple Cinema HD Display delivers an amazing 2560 x 1600 pixel resolution. Designed specifically for the creative professional, this display provides more space for easier access to all the tools and palettes needed to edit, format and composite your work. Combine this display with a Mac Pro, MacBook Pro, or PowerMac G5 and there\'s no limit to what you can achieve. &lt;br&gt;\r\n	&lt;br&gt;\r\n	&lt;/font&gt;&lt;font face=&quot;Helvetica&quot; size=&quot;2&quot;&gt;The Cinema HD features an active-matrix liquid crystal display that produces flicker-free images that deliver twice the brightness, twice the sharpness and twice the contrast ratio of a typical CRT display. Unlike other flat panels, it\'s designed with a pure digital interface to deliver distortion-free images that never need adjusting. With over 4 million digital pixels, the display is uniquely suited for scientific and technical applications such as visualizing molecular structures or analyzing geological data. &lt;br&gt;\r\n	&lt;br&gt;\r\n	&lt;/font&gt;&lt;font face=&quot;Helvetica&quot; size=&quot;2&quot;&gt;Offering accurate, brilliant color performance, the Cinema HD delivers up to 16.7 million colors across a wide gamut allowing you to see subtle nuances between colors from soft pastels to rich jewel tones. A wide viewing angle ensures uniform color from edge to edge. Apple\'s ColorSync technology allows you to create custom profiles to maintain consistent color onscreen and in print. The result: You can confidently use this display in all your color-critical applications. &lt;br&gt;\r\n	&lt;br&gt;\r\n	&lt;/font&gt;&lt;font face=&quot;Helvetica&quot; size=&quot;2&quot;&gt;Housed in a new aluminum design, the display has a very thin bezel that enhances visual accuracy. Each display features two FireWire 400 ports and two USB 2.0 ports, making attachment of desktop peripherals, such as iSight, iPod, digital and still cameras, hard drives, printers and scanners, even more accessible and convenient. Taking advantage of the much thinner and lighter footprint of an LCD, the new displays support the VESA (Video Electronics Standards Association) mounting interface standard. Customers with the optional Cinema Display VESA Mount Adapter kit gain the flexibility to mount their display in locations most appropriate for their work environment. &lt;br&gt;\r\n	&lt;br&gt;\r\n	&lt;/font&gt;&lt;font face=&quot;Helvetica&quot; size=&quot;2&quot;&gt;The Cinema HD features a single cable design with elegant breakout for the USB 2.0, FireWire 400 and a pure digital connection using the industry standard Digital Video Interface (DVI) interface. The DVI connection allows for a direct pure-digital connection.&lt;br&gt;\r\n	&lt;/font&gt;&lt;/font&gt;&lt;/p&gt;\r\n&lt;h3&gt;\r\n	Features:&lt;/h3&gt;\r\n&lt;p&gt;\r\n	Unrivaled display performance&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		30-inch (viewable) active-matrix liquid crystal display provides breathtaking image quality and vivid, richly saturated color.&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Support for 2560-by-1600 pixel resolution for display of high definition still and video imagery.&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Wide-format design for simultaneous display of two full pages of text and graphics.&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Industry standard DVI connector for direct attachment to Mac- and Windows-based desktops and notebooks&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Incredibly wide (170 degree) horizontal and vertical viewing angle for maximum visibility and color performance.&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Lightning-fast pixel response for full-motion digital video playback.&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Support for 16.7 million saturated colors, for use in all graphics-intensive applications.&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	Simple setup and operation&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Single cable with elegant breakout for connection to DVI, USB and FireWire ports&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Built-in two-port USB 2.0 hub for easy connection of desktop peripheral devices.&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Two FireWire 400 ports to support iSight and other desktop peripherals&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	Sleek, elegant design&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Huge virtual workspace, very small footprint.&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Narrow Bezel design to minimize visual impact of using dual displays&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Unique hinge design for effortless adjustment&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Support for VESA mounting solutions (Apple Cinema Display VESA Mount Adapter sold separately)&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;h3&gt;\r\n	Technical specifications&lt;/h3&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Screen size (diagonal viewable image size)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Apple Cinema HD Display: 30 inches (29.7-inch viewable)&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Screen type&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Thin film transistor (TFT) active-matrix liquid crystal display (AMLCD)&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Resolutions&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		2560 x 1600 pixels (optimum resolution)&lt;/li&gt;\r\n	&lt;li&gt;\r\n		2048 x 1280&lt;/li&gt;\r\n	&lt;li&gt;\r\n		1920 x 1200&lt;/li&gt;\r\n	&lt;li&gt;\r\n		1280 x 800&lt;/li&gt;\r\n	&lt;li&gt;\r\n		1024 x 640&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Display colors (maximum)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		16.7 million&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Viewing angle (typical)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		170° horizontal; 170° vertical&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Brightness (typical)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		30-inch Cinema HD Display: 400 cd/m2&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Contrast ratio (typical)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		700:1&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Response time (typical)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		16 ms&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Pixel pitch&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		30-inch Cinema HD Display: 0.250 mm&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Screen treatment&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Antiglare hardcoat&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;User controls (hardware and software)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Display Power,&lt;/li&gt;\r\n	&lt;li&gt;\r\n		System sleep, wake&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Brightness&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Monitor tilt&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Connectors and cables&lt;/b&gt;&lt;br&gt;\r\n	Cable&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		DVI (Digital Visual Interface)&lt;/li&gt;\r\n	&lt;li&gt;\r\n		FireWire 400&lt;/li&gt;\r\n	&lt;li&gt;\r\n		USB 2.0&lt;/li&gt;\r\n	&lt;li&gt;\r\n		DC power (24 V)&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	Connectors&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Two-port, self-powered USB 2.0 hub&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Two FireWire 400 ports&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Kensington security port&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;VESA mount adapter&lt;/b&gt;&lt;br&gt;\r\n	Requires optional Cinema Display VESA Mount Adapter (M9649G/A)&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Compatible with VESA FDMI (MIS-D, 100, C) compliant mounting solutions&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Electrical requirements&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Input voltage: 100-240 VAC 50-60Hz&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Maximum power when operating: 150W&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Energy saver mode: 3W or less&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Environmental requirements&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Operating temperature: 50° to 95° F (10° to 35° C)&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Storage temperature: -40° to 116° F (-40° to 47° C)&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Operating humidity: 20% to 80% noncondensing&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Maximum operating altitude: 10,000 feet&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Agency approvals&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		FCC Part 15 Class B&lt;/li&gt;\r\n	&lt;li&gt;\r\n		EN55022 Class B&lt;/li&gt;\r\n	&lt;li&gt;\r\n		EN55024&lt;/li&gt;\r\n	&lt;li&gt;\r\n		VCCI Class B&lt;/li&gt;\r\n	&lt;li&gt;\r\n		AS/NZS 3548 Class B&lt;/li&gt;\r\n	&lt;li&gt;\r\n		CNS 13438 Class B&lt;/li&gt;\r\n	&lt;li&gt;\r\n		ICES-003 Class B&lt;/li&gt;\r\n	&lt;li&gt;\r\n		ISO 13406 part 2&lt;/li&gt;\r\n	&lt;li&gt;\r\n		MPR II&lt;/li&gt;\r\n	&lt;li&gt;\r\n		IEC 60950&lt;/li&gt;\r\n	&lt;li&gt;\r\n		UL 60950&lt;/li&gt;\r\n	&lt;li&gt;\r\n		CSA 60950&lt;/li&gt;\r\n	&lt;li&gt;\r\n		EN60950&lt;/li&gt;\r\n	&lt;li&gt;\r\n		ENERGY STAR&lt;/li&gt;\r\n	&lt;li&gt;\r\n		TCO \'03&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Size and weight&lt;/b&gt;&lt;br&gt;\r\n	30-inch Apple Cinema HD Display&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Height: 21.3 inches (54.3 cm)&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Width: 27.2 inches (68.8 cm)&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Depth: 8.46 inches (21.5 cm)&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Weight: 27.5 pounds (12.5 kg)&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;System Requirements&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Mac Pro, all graphic options&lt;/li&gt;\r\n	&lt;li&gt;\r\n		MacBook Pro&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Power Mac G5 (PCI-X) with ATI Radeon 9650 or better or NVIDIA GeForce 6800 GT DDL or better&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Power Mac G5 (PCI Express), all graphics options&lt;/li&gt;\r\n	&lt;li&gt;\r\n		PowerBook G4 with dual-link DVI support&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Windows PC and graphics card that supports DVI ports with dual-link digital bandwidth and VESA DDC standard for plug-and-play setup&lt;/li&gt;\r\n&lt;/ul&gt;\r\n', '', 'Apple Cinema 30', '', ''),
-(30, 1, 'Canon EOS 5D', '&lt;p&gt;\r\n	Canon\'s press material for the EOS 5D states that it \'defines (a) new D-SLR category\', while we\'re not typically too concerned with marketing talk this particular statement is clearly pretty accurate. The EOS 5D is unlike any previous digital SLR in that it combines a full-frame (35 mm sized) high resolution sensor (12.8 megapixels) with a relatively compact body (slightly larger than the EOS 20D, although in your hand it feels noticeably \'chunkier\'). The EOS 5D is aimed to slot in between the EOS 20D and the EOS-1D professional digital SLR\'s, an important difference when compared to the latter is that the EOS 5D doesn\'t have any environmental seals. While Canon don\'t specifically refer to the EOS 5D as a \'professional\' digital SLR it will have obvious appeal to professionals who want a high quality digital SLR in a body lighter than the EOS-1D. It will also no doubt appeal to current EOS 20D owners (although lets hope they\'ve not bought too many EF-S lenses...) äë&lt;/p&gt;\r\n', '', 'sdf', '', '');
+(30, 1, 'Canon EOS 5D', '&lt;p&gt;\r\n	Canon\'s press material for the EOS 5D states that it \'defines (a) new D-SLR category\', while we\'re not typically too concerned with marketing talk this particular statement is clearly pretty accurate. The EOS 5D is unlike any previous digital SLR in that it combines a full-frame (35 mm sized) high resolution sensor (12.8 megapixels) with a relatively compact body (slightly larger than the EOS 20D, although in your hand it feels noticeably \'chunkier\'). The EOS 5D is aimed to slot in between the EOS 20D and the EOS-1D professional digital SLR\'s, an important difference when compared to the latter is that the EOS 5D doesn\'t have any environmental seals. While Canon don\'t specifically refer to the EOS 5D as a \'professional\' digital SLR it will have obvious appeal to professionals who want a high quality digital SLR in a body lighter than the EOS-1D. It will also no doubt appeal to current EOS 20D owners (although lets hope they\'ve not bought too many EF-S lenses...) äë&lt;/p&gt;\r\n', '', 'sdf', '', ''),
+(35, 2, 'Product 8', '&lt;p&gt;\r\n	Product 8&lt;/p&gt;\r\n', '', 'Product 8', '', ''),
+(48, 2, 'iPod Classic', '&lt;div class=&quot;cpt_product_description &quot;&gt;\r\n	&lt;div&gt;\r\n		&lt;p&gt;\r\n			&lt;strong&gt;More room to move.&lt;/strong&gt;&lt;/p&gt;\r\n		&lt;p&gt;\r\n			With 80GB or 160GB of storage and up to 40 hours of battery life, the new iPod classic lets you enjoy up to 40,000 songs or up to 200 hours of video or any combination wherever you go.&lt;/p&gt;\r\n		&lt;p&gt;\r\n			&lt;strong&gt;Cover Flow.&lt;/strong&gt;&lt;/p&gt;\r\n		&lt;p&gt;\r\n			Browse through your music collection by flipping through album art. Select an album to turn it over and see the track list.&lt;/p&gt;\r\n		&lt;p&gt;\r\n			&lt;strong&gt;Enhanced interface.&lt;/strong&gt;&lt;/p&gt;\r\n		&lt;p&gt;\r\n			Experience a whole new way to browse and view your music and video.&lt;/p&gt;\r\n		&lt;p&gt;\r\n			&lt;strong&gt;Sleeker design.&lt;/strong&gt;&lt;/p&gt;\r\n		&lt;p&gt;\r\n			Beautiful, durable, and sleeker than ever, iPod classic now features an anodized aluminum and polished stainless steel enclosure with rounded edges.&lt;/p&gt;\r\n	&lt;/div&gt;\r\n&lt;/div&gt;\r\n&lt;!-- cpt_container_end --&gt;', '', 'iPod Classic', '', ''),
+(40, 2, 'iPhone', '&lt;p class=&quot;intro&quot;&gt;\r\n	iPhone is a revolutionary new mobile phone that allows you to make a call by simply tapping a name or number in your address book, a favorites list, or a call log. It also automatically syncs all your contacts from a PC, Mac, or Internet service. And it lets you select and listen to voicemail messages in whatever order you want just like email.&lt;/p&gt;\r\n', '', 'iPhone', '', ''),
+(28, 2, 'HTC Touch HD', '&lt;p&gt;\r\n	HTC Touch - in High Definition. Watch music videos and streaming content in awe-inspiring high definition clarity for a mobile experience you never thought possible. Seductively sleek, the HTC Touch HD provides the next generation of mobile functionality, all at a simple touch. Fully integrated with Windows Mobile Professional 6.1, ultrafast 3.5G, GPS, 5MP camera, plus lots more - all delivered on a breathtakingly crisp 3.8&amp;quot; WVGA touchscreen - you can take control of your mobile world with the HTC Touch HD.&lt;/p&gt;\r\n&lt;p&gt;\r\n	&lt;strong&gt;Features&lt;/strong&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Processor Qualcomm&amp;reg; MSM 7201A&amp;trade; 528 MHz&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Windows Mobile&amp;reg; 6.1 Professional Operating System&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Memory: 512 MB ROM, 288 MB RAM&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Dimensions: 115 mm x 62.8 mm x 12 mm / 146.4 grams&lt;/li&gt;\r\n	&lt;li&gt;\r\n		3.8-inch TFT-LCD flat touch-sensitive screen with 480 x 800 WVGA resolution&lt;/li&gt;\r\n	&lt;li&gt;\r\n		HSDPA/WCDMA: Europe/Asia: 900/2100 MHz; Up to 2 Mbps up-link and 7.2 Mbps down-link speeds&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Quad-band GSM/GPRS/EDGE: Europe/Asia: 850/900/1800/1900 MHz (Band frequency, HSUPA availability, and data speed are operator dependent.)&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Device Control via HTC TouchFLO&amp;trade; 3D &amp;amp; Touch-sensitive front panel buttons&lt;/li&gt;\r\n	&lt;li&gt;\r\n		GPS and A-GPS ready&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Bluetooth&amp;reg; 2.0 with Enhanced Data Rate and A2DP for wireless stereo headsets&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Wi-Fi&amp;reg;: IEEE 802.11 b/g&lt;/li&gt;\r\n	&lt;li&gt;\r\n		HTC ExtUSB&amp;trade; (11-pin mini-USB 2.0)&lt;/li&gt;\r\n	&lt;li&gt;\r\n		5 megapixel color camera with auto focus&lt;/li&gt;\r\n	&lt;li&gt;\r\n		VGA CMOS color camera&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Built-in 3.5 mm audio jack, microphone, speaker, and FM radio&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Ring tone formats: AAC, AAC+, eAAC+, AMR-NB, AMR-WB, QCP, MP3, WMA, WAV&lt;/li&gt;\r\n	&lt;li&gt;\r\n		40 polyphonic and standard MIDI format 0 and 1 (SMF)/SP MIDI&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Rechargeable Lithium-ion or Lithium-ion polymer 1350 mAh battery&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Expansion Slot: microSD&amp;trade; memory card (SD 2.0 compatible)&lt;/li&gt;\r\n	&lt;li&gt;\r\n		AC Adapter Voltage range/frequency: 100 ~ 240V AC, 50/60 Hz DC output: 5V and 1A&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Special Features: FM Radio, G-Sensor&lt;/li&gt;\r\n&lt;/ul&gt;\r\n', '', '	 HTC Touch HD', '', ''),
+(44, 2, 'MacBook Air', '&lt;div&gt;\r\n	MacBook Air is ultrathin, ultraportable, and ultra unlike anything else. But you don&amp;rsquo;t lose inches and pounds overnight. It&amp;rsquo;s the result of rethinking conventions. Of multiple wireless innovations. And of breakthrough design. With MacBook Air, mobile computing suddenly has a new standard.&lt;/div&gt;\r\n', '', 'MacBook Air', '', ''),
+(45, 2, 'MacBook Pro', '&lt;div class=&quot;cpt_product_description &quot;&gt;\r\n	&lt;div&gt;\r\n		&lt;p&gt;\r\n			&lt;b&gt;Latest Intel mobile architecture&lt;/b&gt;&lt;/p&gt;\r\n		&lt;p&gt;\r\n			Powered by the most advanced mobile processors from Intel, the new Core 2 Duo MacBook Pro is over 50% faster than the original Core Duo MacBook Pro and now supports up to 4GB of RAM.&lt;/p&gt;\r\n		&lt;p&gt;\r\n			&lt;b&gt;Leading-edge graphics&lt;/b&gt;&lt;/p&gt;\r\n		&lt;p&gt;\r\n			The NVIDIA GeForce 8600M GT delivers exceptional graphics processing power. For the ultimate creative canvas, you can even configure the 17-inch model with a 1920-by-1200 resolution display.&lt;/p&gt;\r\n		&lt;p&gt;\r\n			&lt;b&gt;Designed for life on the road&lt;/b&gt;&lt;/p&gt;\r\n		&lt;p&gt;\r\n			Innovations such as a magnetic power connection and an illuminated keyboard with ambient light sensor put the MacBook Pro in a class by itself.&lt;/p&gt;\r\n		&lt;p&gt;\r\n			&lt;b&gt;Connect. Create. Communicate.&lt;/b&gt;&lt;/p&gt;\r\n		&lt;p&gt;\r\n			Quickly set up a video conference with the built-in iSight camera. Control presentations and media from up to 30 feet away with the included Apple Remote. Connect to high-bandwidth peripherals with FireWire 800 and DVI.&lt;/p&gt;\r\n		&lt;p&gt;\r\n			&lt;b&gt;Next-generation wireless&lt;/b&gt;&lt;/p&gt;\r\n		&lt;p&gt;\r\n			Featuring 802.11n wireless technology, the MacBook Pro delivers up to five times the performance and up to twice the range of previous-generation technologies.&lt;/p&gt;\r\n	&lt;/div&gt;\r\n&lt;/div&gt;\r\n&lt;!-- cpt_container_end --&gt;', '', 'MacBook Pro', '', ''),
+(29, 2, 'Palm Treo Pro', '&lt;p&gt;\r\n	Redefine your workday with the Palm Treo Pro smartphone. Perfectly balanced, you can respond to business and personal email, stay on top of appointments and contacts, and use Wi-Fi or GPS when you&amp;rsquo;re out and about. Then watch a video on YouTube, catch up with news and sports on the web, or listen to a few songs. Balance your work and play the way you like it, with the Palm Treo Pro.&lt;/p&gt;\r\n&lt;p&gt;\r\n	&lt;strong&gt;Features&lt;/strong&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Windows Mobile&amp;reg; 6.1 Professional Edition&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Qualcomm&amp;reg; MSM7201 400MHz Processor&lt;/li&gt;\r\n	&lt;li&gt;\r\n		320x320 transflective colour TFT touchscreen&lt;/li&gt;\r\n	&lt;li&gt;\r\n		HSDPA/UMTS/EDGE/GPRS/GSM radio&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Tri-band UMTS &amp;mdash; 850MHz, 1900MHz, 2100MHz&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Quad-band GSM &amp;mdash; 850/900/1800/1900&lt;/li&gt;\r\n	&lt;li&gt;\r\n		802.11b/g with WPA, WPA2, and 801.1x authentication&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Built-in GPS&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Bluetooth Version: 2.0 + Enhanced Data Rate&lt;/li&gt;\r\n	&lt;li&gt;\r\n		256MB storage (100MB user available), 128MB RAM&lt;/li&gt;\r\n	&lt;li&gt;\r\n		2.0 megapixel camera, up to 8x digital zoom and video capture&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Removable, rechargeable 1500mAh lithium-ion battery&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Up to 5.0 hours talk time and up to 250 hours standby&lt;/li&gt;\r\n	&lt;li&gt;\r\n		MicroSDHC card expansion (up to 32GB supported)&lt;/li&gt;\r\n	&lt;li&gt;\r\n		MicroUSB 2.0 for synchronization and charging&lt;/li&gt;\r\n	&lt;li&gt;\r\n		3.5mm stereo headset jack&lt;/li&gt;\r\n	&lt;li&gt;\r\n		60mm (W) x 114mm (L) x 13.5mm (D) / 133g&lt;/li&gt;\r\n&lt;/ul&gt;\r\n', '', 'Palm Treo Pro', '', ''),
+(36, 2, 'iPod Nano', '&lt;div&gt;\r\n	&lt;p&gt;\r\n		&lt;strong&gt;Video in your pocket.&lt;/strong&gt;&lt;/p&gt;\r\n	&lt;p&gt;\r\n		Its the small iPod with one very big idea: video. The worlds most popular music player now lets you enjoy movies, TV shows, and more on a two-inch display thats 65% brighter than before.&lt;/p&gt;\r\n	&lt;p&gt;\r\n		&lt;strong&gt;Cover Flow.&lt;/strong&gt;&lt;/p&gt;\r\n	&lt;p&gt;\r\n		Browse through your music collection by flipping through album art. Select an album to turn it over and see the track list.&lt;strong&gt;&amp;nbsp;&lt;/strong&gt;&lt;/p&gt;\r\n	&lt;p&gt;\r\n		&lt;strong&gt;Enhanced interface.&lt;/strong&gt;&lt;/p&gt;\r\n	&lt;p&gt;\r\n		Experience a whole new way to browse and view your music and video.&lt;/p&gt;\r\n	&lt;p&gt;\r\n		&lt;strong&gt;Sleek and colorful.&lt;/strong&gt;&lt;/p&gt;\r\n	&lt;p&gt;\r\n		With an anodized aluminum and polished stainless steel enclosure and a choice of five colors, iPod nano is dressed to impress.&lt;/p&gt;\r\n	&lt;p&gt;\r\n		&lt;strong&gt;iTunes.&lt;/strong&gt;&lt;/p&gt;\r\n	&lt;p&gt;\r\n		Available as a free download, iTunes makes it easy to browse and buy millions of songs, movies, TV shows, audiobooks, and games and download free podcasts all at the iTunes Store. And you can import your own music, manage your whole media library, and sync your iPod or iPhone with ease.&lt;/p&gt;\r\n&lt;/div&gt;\r\n', '', 'iPod Nano', '', ''),
+(46, 2, 'Sony VAIO', '&lt;div&gt;\r\n	Unprecedented power. The next generation of processing technology has arrived. Built into the newest VAIO notebooks lies Intel&amp;#39;s latest, most powerful innovation yet: Intel&amp;reg; Centrino&amp;reg; 2 processor technology. Boasting incredible speed, expanded wireless connectivity, enhanced multimedia support and greater energy efficiency, all the high-performance essentials are seamlessly combined into a single chip.&lt;/div&gt;\r\n', '', 'Sony VAIO', '', ''),
+(47, 2, 'HP LP3065', '&lt;p&gt;\r\n	Stop your co-workers in their tracks with the stunning new 30-inch diagonal HP LP3065 Flat Panel Monitor. This flagship monitor features best-in-class performance and presentation features on a huge wide-aspect screen while letting you work as comfortably as possible - you might even forget you&amp;#39;re at the office&lt;/p&gt;\r\n', '', 'HP LP3065', '', ''),
+(32, 2, 'iPod Touch', '&lt;p&gt;\r\n	&lt;strong&gt;Revolutionary multi-touch interface.&lt;/strong&gt;&lt;br /&gt;\r\n	iPod touch features the same multi-touch screen technology as iPhone. Pinch to zoom in on a photo. Scroll through your songs and videos with a flick. Flip through your library by album artwork with Cover Flow.&lt;/p&gt;\r\n&lt;p&gt;\r\n	&lt;strong&gt;Gorgeous 3.5-inch widescreen display.&lt;/strong&gt;&lt;br /&gt;\r\n	Watch your movies, TV shows, and photos come alive with bright, vivid color on the 320-by-480-pixel display.&lt;/p&gt;\r\n&lt;p&gt;\r\n	&lt;strong&gt;Music downloads straight from iTunes.&lt;/strong&gt;&lt;br /&gt;\r\n	Shop the iTunes Wi-Fi Music Store from anywhere with Wi-Fi.1 Browse or search to find the music youre looking for, preview it, and buy it with just a tap.&lt;/p&gt;\r\n&lt;p&gt;\r\n	&lt;strong&gt;Surf the web with Wi-Fi.&lt;/strong&gt;&lt;br /&gt;\r\n	Browse the web using Safari and watch YouTube videos on the first iPod with Wi-Fi built in&lt;br /&gt;\r\n	&amp;nbsp;&lt;/p&gt;\r\n', '', '	 iPod Touch', '', ''),
+(41, 2, 'iMac', '&lt;div&gt;\r\n	Just when you thought iMac had everything, now there&acute;s even more. More powerful Intel Core 2 Duo processors. And more memory standard. Combine this with Mac OS X Leopard and iLife &acute;08, and it&acute;s more all-in-one than ever. iMac packs amazing performance into a stunningly slim space.&lt;/div&gt;\r\n', '', 'iMac', '', ''),
+(33, 2, 'Samsung SyncMaster 941BW', '&lt;div&gt;\r\n	Imagine the advantages of going big without slowing down. The big 19&amp;quot; 941BW monitor combines wide aspect ratio with fast pixel response time, for bigger images, more room to work and crisp motion. In addition, the exclusive MagicBright 2, MagicColor and MagicTune technologies help deliver the ideal image in every situation, while sleek, narrow bezels and adjustable stands deliver style just the way you want it. With the Samsung 941BW widescreen analog/digital LCD monitor, it&amp;#39;s not hard to imagine.&lt;/div&gt;\r\n', '', 'Samsung SyncMaster 941BW', '', ''),
+(34, 2, 'iPod Shuffle', '&lt;div&gt;\r\n	&lt;strong&gt;Born to be worn.&lt;/strong&gt;\r\n	&lt;p&gt;\r\n		Clip on the worlds most wearable music player and take up to 240 songs with you anywhere. Choose from five colors including four new hues to make your musical fashion statement.&lt;/p&gt;\r\n	&lt;p&gt;\r\n		&lt;strong&gt;Random meets rhythm.&lt;/strong&gt;&lt;/p&gt;\r\n	&lt;p&gt;\r\n		With iTunes autofill, iPod shuffle can deliver a new musical experience every time you sync. For more randomness, you can shuffle songs during playback with the slide of a switch.&lt;/p&gt;\r\n	&lt;strong&gt;Everything is easy.&lt;/strong&gt;\r\n	&lt;p&gt;\r\n		Charge and sync with the included USB dock. Operate the iPod shuffle controls with one hand. Enjoy up to 12 hours straight of skip-free music playback.&lt;/p&gt;\r\n&lt;/div&gt;\r\n', '', 'iPod Shuffle', '', ''),
+(43, 2, 'MacBook', '&lt;div&gt;\r\n	&lt;p&gt;\r\n		&lt;b&gt;Intel Core 2 Duo processor&lt;/b&gt;&lt;/p&gt;\r\n	&lt;p&gt;\r\n		Powered by an Intel Core 2 Duo processor at speeds up to 2.16GHz, the new MacBook is the fastest ever.&lt;/p&gt;\r\n	&lt;p&gt;\r\n		&lt;b&gt;1GB memory, larger hard drives&lt;/b&gt;&lt;/p&gt;\r\n	&lt;p&gt;\r\n		The new MacBook now comes with 1GB of memory standard and larger hard drives for the entire line perfect for running more of your favorite applications and storing growing media collections.&lt;/p&gt;\r\n	&lt;p&gt;\r\n		&lt;b&gt;Sleek, 1.08-inch-thin design&lt;/b&gt;&lt;/p&gt;\r\n	&lt;p&gt;\r\n		MacBook makes it easy to hit the road thanks to its tough polycarbonate case, built-in wireless technologies, and innovative MagSafe Power Adapter that releases automatically if someone accidentally trips on the cord.&lt;/p&gt;\r\n	&lt;p&gt;\r\n		&lt;b&gt;Built-in iSight camera&lt;/b&gt;&lt;/p&gt;\r\n	&lt;p&gt;\r\n		Right out of the box, you can have a video chat with friends or family,2 record a video at your desk, or take fun pictures with Photo Booth&lt;/p&gt;\r\n&lt;/div&gt;\r\n', '', 'MacBook', '', ''),
+(31, 2, 'Nikon D300', '&lt;div class=&quot;cpt_product_description &quot;&gt;\r\n	&lt;div&gt;\r\n		Engineered with pro-level features and performance, the 12.3-effective-megapixel D300 combines brand new technologies with advanced features inherited from Nikon&amp;#39;s newly announced D3 professional digital SLR camera to offer serious photographers remarkable performance combined with agility.&lt;br /&gt;\r\n		&lt;br /&gt;\r\n		Similar to the D3, the D300 features Nikon&amp;#39;s exclusive EXPEED Image Processing System that is central to driving the speed and processing power needed for many of the camera&amp;#39;s new features. The D300 features a new 51-point autofocus system with Nikon&amp;#39;s 3D Focus Tracking feature and two new LiveView shooting modes that allow users to frame a photograph using the camera&amp;#39;s high-resolution LCD monitor. The D300 shares a similar Scene Recognition System as is found in the D3; it promises to greatly enhance the accuracy of autofocus, autoexposure, and auto white balance by recognizing the subject or scene being photographed and applying this information to the calculations for the three functions.&lt;br /&gt;\r\n		&lt;br /&gt;\r\n		The D300 reacts with lightning speed, powering up in a mere 0.13 seconds and shooting with an imperceptible 45-millisecond shutter release lag time. The D300 is capable of shooting at a rapid six frames per second and can go as fast as eight frames per second when using the optional MB-D10 multi-power battery pack. In continuous bursts, the D300 can shoot up to 100 shots at full 12.3-megapixel resolution. (NORMAL-LARGE image setting, using a SanDisk Extreme IV 1GB CompactFlash card.)&lt;br /&gt;\r\n		&lt;br /&gt;\r\n		The D300 incorporates a range of innovative technologies and features that will significantly improve the accuracy, control, and performance photographers can get from their equipment. Its new Scene Recognition System advances the use of Nikon&amp;#39;s acclaimed 1,005-segment sensor to recognize colors and light patterns that help the camera determine the subject and the type of scene being photographed before a picture is taken. This information is used to improve the accuracy of autofocus, autoexposure, and auto white balance functions in the D300. For example, the camera can track moving subjects better and by identifying them, it can also automatically select focus points faster and with greater accuracy. It can also analyze highlights and more accurately determine exposure, as well as infer light sources to deliver more accurate white balance detection.&lt;/div&gt;\r\n&lt;/div&gt;\r\n&lt;!-- cpt_container_end --&gt;', '', 'Nikon D300', '', ''),
+(49, 2, 'Samsung Galaxy Tab 10.1', '&lt;p&gt;\r\n	Samsung Galaxy Tab 10.1, is the world&amp;rsquo;s thinnest tablet, measuring 8.6 mm thickness, running with Android 3.0 Honeycomb OS on a 1GHz dual-core Tegra 2 processor, similar to its younger brother Samsung Galaxy Tab 8.9.&lt;/p&gt;\r\n&lt;p&gt;\r\n	Samsung Galaxy Tab 10.1 gives pure Android 3.0 experience, adding its new TouchWiz UX or TouchWiz 4.0 &amp;ndash; includes a live panel, which lets you to customize with different content, such as your pictures, bookmarks, and social feeds, sporting a 10.1 inches WXGA capacitive touch screen with 1280 x 800 pixels of resolution, equipped with 3 megapixel rear camera with LED flash and a 2 megapixel front camera, HSPA+ connectivity up to 21Mbps, 720p HD video recording capability, 1080p HD playback, DLNA support, Bluetooth 2.1, USB 2.0, gyroscope, Wi-Fi 802.11 a/b/g/n, micro-SD slot, 3.5mm headphone jack, and SIM slot, including the Samsung Stick &amp;ndash; a Bluetooth microphone that can be carried in a pocket like a pen and sound dock with powered subwoofer.&lt;/p&gt;\r\n&lt;p&gt;\r\n	Samsung Galaxy Tab 10.1 will come in 16GB / 32GB / 64GB verities and pre-loaded with Social Hub, Reader&amp;rsquo;s Hub, Music Hub and Samsung Mini Apps Tray &amp;ndash; which gives you access to more commonly used apps to help ease multitasking and it is capable of Adobe Flash Player 10.2, powered by 6860mAh battery that gives you 10hours of video-playback time.&amp;nbsp;&amp;auml;&amp;ouml;&lt;/p&gt;\r\n', '', 'Samsung Galaxy Tab 10.1', '', '');
+INSERT INTO `tp2_product_description` (`product_id`, `language_id`, `name`, `description`, `tag`, `meta_title`, `meta_description`, `meta_keyword`) VALUES
+(42, 2, 'Apple Cinema 30&quot;', '&lt;p&gt;\r\n	&lt;font face=&quot;helvetica,geneva,arial&quot; size=&quot;2&quot;&gt;&lt;font face=&quot;Helvetica&quot; size=&quot;2&quot;&gt;The 30-inch Apple Cinema HD Display delivers an amazing 2560 x 1600 pixel resolution. Designed specifically for the creative professional, this display provides more space for easier access to all the tools and palettes needed to edit, format and composite your work. Combine this display with a Mac Pro, MacBook Pro, or PowerMac G5 and there\'s no limit to what you can achieve. &lt;br&gt;\r\n	&lt;br&gt;\r\n	&lt;/font&gt;&lt;font face=&quot;Helvetica&quot; size=&quot;2&quot;&gt;The Cinema HD features an active-matrix liquid crystal display that produces flicker-free images that deliver twice the brightness, twice the sharpness and twice the contrast ratio of a typical CRT display. Unlike other flat panels, it\'s designed with a pure digital interface to deliver distortion-free images that never need adjusting. With over 4 million digital pixels, the display is uniquely suited for scientific and technical applications such as visualizing molecular structures or analyzing geological data. &lt;br&gt;\r\n	&lt;br&gt;\r\n	&lt;/font&gt;&lt;font face=&quot;Helvetica&quot; size=&quot;2&quot;&gt;Offering accurate, brilliant color performance, the Cinema HD delivers up to 16.7 million colors across a wide gamut allowing you to see subtle nuances between colors from soft pastels to rich jewel tones. A wide viewing angle ensures uniform color from edge to edge. Apple\'s ColorSync technology allows you to create custom profiles to maintain consistent color onscreen and in print. The result: You can confidently use this display in all your color-critical applications. &lt;br&gt;\r\n	&lt;br&gt;\r\n	&lt;/font&gt;&lt;font face=&quot;Helvetica&quot; size=&quot;2&quot;&gt;Housed in a new aluminum design, the display has a very thin bezel that enhances visual accuracy. Each display features two FireWire 400 ports and two USB 2.0 ports, making attachment of desktop peripherals, such as iSight, iPod, digital and still cameras, hard drives, printers and scanners, even more accessible and convenient. Taking advantage of the much thinner and lighter footprint of an LCD, the new displays support the VESA (Video Electronics Standards Association) mounting interface standard. Customers with the optional Cinema Display VESA Mount Adapter kit gain the flexibility to mount their display in locations most appropriate for their work environment. &lt;br&gt;\r\n	&lt;br&gt;\r\n	&lt;/font&gt;&lt;font face=&quot;Helvetica&quot; size=&quot;2&quot;&gt;The Cinema HD features a single cable design with elegant breakout for the USB 2.0, FireWire 400 and a pure digital connection using the industry standard Digital Video Interface (DVI) interface. The DVI connection allows for a direct pure-digital connection.&lt;br&gt;\r\n	&lt;/font&gt;&lt;/font&gt;&lt;/p&gt;\r\n&lt;h3&gt;\r\n	Features:&lt;/h3&gt;\r\n&lt;p&gt;\r\n	Unrivaled display performance&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		30-inch (viewable) active-matrix liquid crystal display provides breathtaking image quality and vivid, richly saturated color.&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Support for 2560-by-1600 pixel resolution for display of high definition still and video imagery.&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Wide-format design for simultaneous display of two full pages of text and graphics.&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Industry standard DVI connector for direct attachment to Mac- and Windows-based desktops and notebooks&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Incredibly wide (170 degree) horizontal and vertical viewing angle for maximum visibility and color performance.&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Lightning-fast pixel response for full-motion digital video playback.&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Support for 16.7 million saturated colors, for use in all graphics-intensive applications.&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	Simple setup and operation&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Single cable with elegant breakout for connection to DVI, USB and FireWire ports&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Built-in two-port USB 2.0 hub for easy connection of desktop peripheral devices.&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Two FireWire 400 ports to support iSight and other desktop peripherals&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	Sleek, elegant design&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Huge virtual workspace, very small footprint.&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Narrow Bezel design to minimize visual impact of using dual displays&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Unique hinge design for effortless adjustment&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Support for VESA mounting solutions (Apple Cinema Display VESA Mount Adapter sold separately)&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;h3&gt;\r\n	Technical specifications&lt;/h3&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Screen size (diagonal viewable image size)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Apple Cinema HD Display: 30 inches (29.7-inch viewable)&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Screen type&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Thin film transistor (TFT) active-matrix liquid crystal display (AMLCD)&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Resolutions&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		2560 x 1600 pixels (optimum resolution)&lt;/li&gt;\r\n	&lt;li&gt;\r\n		2048 x 1280&lt;/li&gt;\r\n	&lt;li&gt;\r\n		1920 x 1200&lt;/li&gt;\r\n	&lt;li&gt;\r\n		1280 x 800&lt;/li&gt;\r\n	&lt;li&gt;\r\n		1024 x 640&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Display colors (maximum)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		16.7 million&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Viewing angle (typical)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		170° horizontal; 170° vertical&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Brightness (typical)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		30-inch Cinema HD Display: 400 cd/m2&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Contrast ratio (typical)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		700:1&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Response time (typical)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		16 ms&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Pixel pitch&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		30-inch Cinema HD Display: 0.250 mm&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Screen treatment&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Antiglare hardcoat&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;User controls (hardware and software)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Display Power,&lt;/li&gt;\r\n	&lt;li&gt;\r\n		System sleep, wake&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Brightness&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Monitor tilt&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Connectors and cables&lt;/b&gt;&lt;br&gt;\r\n	Cable&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		DVI (Digital Visual Interface)&lt;/li&gt;\r\n	&lt;li&gt;\r\n		FireWire 400&lt;/li&gt;\r\n	&lt;li&gt;\r\n		USB 2.0&lt;/li&gt;\r\n	&lt;li&gt;\r\n		DC power (24 V)&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	Connectors&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Two-port, self-powered USB 2.0 hub&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Two FireWire 400 ports&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Kensington security port&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;VESA mount adapter&lt;/b&gt;&lt;br&gt;\r\n	Requires optional Cinema Display VESA Mount Adapter (M9649G/A)&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Compatible with VESA FDMI (MIS-D, 100, C) compliant mounting solutions&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Electrical requirements&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Input voltage: 100-240 VAC 50-60Hz&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Maximum power when operating: 150W&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Energy saver mode: 3W or less&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Environmental requirements&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Operating temperature: 50° to 95° F (10° to 35° C)&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Storage temperature: -40° to 116° F (-40° to 47° C)&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Operating humidity: 20% to 80% noncondensing&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Maximum operating altitude: 10,000 feet&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Agency approvals&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		FCC Part 15 Class B&lt;/li&gt;\r\n	&lt;li&gt;\r\n		EN55022 Class B&lt;/li&gt;\r\n	&lt;li&gt;\r\n		EN55024&lt;/li&gt;\r\n	&lt;li&gt;\r\n		VCCI Class B&lt;/li&gt;\r\n	&lt;li&gt;\r\n		AS/NZS 3548 Class B&lt;/li&gt;\r\n	&lt;li&gt;\r\n		CNS 13438 Class B&lt;/li&gt;\r\n	&lt;li&gt;\r\n		ICES-003 Class B&lt;/li&gt;\r\n	&lt;li&gt;\r\n		ISO 13406 part 2&lt;/li&gt;\r\n	&lt;li&gt;\r\n		MPR II&lt;/li&gt;\r\n	&lt;li&gt;\r\n		IEC 60950&lt;/li&gt;\r\n	&lt;li&gt;\r\n		UL 60950&lt;/li&gt;\r\n	&lt;li&gt;\r\n		CSA 60950&lt;/li&gt;\r\n	&lt;li&gt;\r\n		EN60950&lt;/li&gt;\r\n	&lt;li&gt;\r\n		ENERGY STAR&lt;/li&gt;\r\n	&lt;li&gt;\r\n		TCO \'03&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Size and weight&lt;/b&gt;&lt;br&gt;\r\n	30-inch Apple Cinema HD Display&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Height: 21.3 inches (54.3 cm)&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Width: 27.2 inches (68.8 cm)&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Depth: 8.46 inches (21.5 cm)&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Weight: 27.5 pounds (12.5 kg)&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;System Requirements&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Mac Pro, all graphic options&lt;/li&gt;\r\n	&lt;li&gt;\r\n		MacBook Pro&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Power Mac G5 (PCI-X) with ATI Radeon 9650 or better or NVIDIA GeForce 6800 GT DDL or better&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Power Mac G5 (PCI Express), all graphics options&lt;/li&gt;\r\n	&lt;li&gt;\r\n		PowerBook G4 with dual-link DVI support&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Windows PC and graphics card that supports DVI ports with dual-link digital bandwidth and VESA DDC standard for plug-and-play setup&lt;/li&gt;\r\n&lt;/ul&gt;\r\n', '', 'Apple Cinema 30', '', ''),
+(30, 2, 'Canon EOS 5D', '&lt;p&gt;\r\n	Canon\'s press material for the EOS 5D states that it \'defines (a) new D-SLR category\', while we\'re not typically too concerned with marketing talk this particular statement is clearly pretty accurate. The EOS 5D is unlike any previous digital SLR in that it combines a full-frame (35 mm sized) high resolution sensor (12.8 megapixels) with a relatively compact body (slightly larger than the EOS 20D, although in your hand it feels noticeably \'chunkier\'). The EOS 5D is aimed to slot in between the EOS 20D and the EOS-1D professional digital SLR\'s, an important difference when compared to the latter is that the EOS 5D doesn\'t have any environmental seals. While Canon don\'t specifically refer to the EOS 5D as a \'professional\' digital SLR it will have obvious appeal to professionals who want a high quality digital SLR in a body lighter than the EOS-1D. It will also no doubt appeal to current EOS 20D owners (although lets hope they\'ve not bought too many EF-S lenses...) äë&lt;/p&gt;\r\n', '', 'sdf', '', '');
 
 -- --------------------------------------------------------
 
@@ -2440,19 +2814,22 @@ INSERT INTO `tp2_product_description` (`product_id`, `language_id`, `name`, `des
 -- Structure de la table `tp2_product_discount`
 --
 
-CREATE TABLE `tp2_product_discount` (
-  `product_discount_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_product_discount`;
+CREATE TABLE IF NOT EXISTS `tp2_product_discount` (
+  `product_discount_id` int(11) NOT NULL AUTO_INCREMENT,
   `product_id` int(11) NOT NULL,
   `customer_group_id` int(11) NOT NULL,
   `quantity` int(4) NOT NULL DEFAULT '0',
   `priority` int(5) NOT NULL DEFAULT '1',
   `price` decimal(15,4) NOT NULL DEFAULT '0.0000',
   `date_start` date NOT NULL DEFAULT '0000-00-00',
-  `date_end` date NOT NULL DEFAULT '0000-00-00'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `date_end` date NOT NULL DEFAULT '0000-00-00',
+  PRIMARY KEY (`product_discount_id`),
+  KEY `product_id` (`product_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=441 DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_product_discount`
+-- Déchargement des données de la table `tp2_product_discount`
 --
 
 INSERT INTO `tp2_product_discount` (`product_discount_id`, `product_id`, `customer_group_id`, `quantity`, `priority`, `price`, `date_start`, `date_end`) VALUES
@@ -2466,9 +2843,11 @@ INSERT INTO `tp2_product_discount` (`product_discount_id`, `product_id`, `custom
 -- Structure de la table `tp2_product_filter`
 --
 
-CREATE TABLE `tp2_product_filter` (
+DROP TABLE IF EXISTS `tp2_product_filter`;
+CREATE TABLE IF NOT EXISTS `tp2_product_filter` (
   `product_id` int(11) NOT NULL,
-  `filter_id` int(11) NOT NULL
+  `filter_id` int(11) NOT NULL,
+  PRIMARY KEY (`product_id`,`filter_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -2477,15 +2856,18 @@ CREATE TABLE `tp2_product_filter` (
 -- Structure de la table `tp2_product_image`
 --
 
-CREATE TABLE `tp2_product_image` (
-  `product_image_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_product_image`;
+CREATE TABLE IF NOT EXISTS `tp2_product_image` (
+  `product_image_id` int(11) NOT NULL AUTO_INCREMENT,
   `product_id` int(11) NOT NULL,
   `image` varchar(255) DEFAULT NULL,
-  `sort_order` int(3) NOT NULL DEFAULT '0'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `sort_order` int(3) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`product_image_id`),
+  KEY `product_id` (`product_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2352 DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_product_image`
+-- Déchargement des données de la table `tp2_product_image`
 --
 
 INSERT INTO `tp2_product_image` (`product_image_id`, `product_id`, `image`, `sort_order`) VALUES
@@ -2557,16 +2939,18 @@ INSERT INTO `tp2_product_image` (`product_image_id`, `product_id`, `image`, `sor
 -- Structure de la table `tp2_product_option`
 --
 
-CREATE TABLE `tp2_product_option` (
-  `product_option_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_product_option`;
+CREATE TABLE IF NOT EXISTS `tp2_product_option` (
+  `product_option_id` int(11) NOT NULL AUTO_INCREMENT,
   `product_id` int(11) NOT NULL,
   `option_id` int(11) NOT NULL,
   `value` text NOT NULL,
-  `required` tinyint(1) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `required` tinyint(1) NOT NULL,
+  PRIMARY KEY (`product_option_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=227 DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_product_option`
+-- Déchargement des données de la table `tp2_product_option`
 --
 
 INSERT INTO `tp2_product_option` (`product_option_id`, `product_id`, `option_id`, `value`, `required`) VALUES
@@ -2589,8 +2973,9 @@ INSERT INTO `tp2_product_option` (`product_option_id`, `product_id`, `option_id`
 -- Structure de la table `tp2_product_option_value`
 --
 
-CREATE TABLE `tp2_product_option_value` (
-  `product_option_value_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_product_option_value`;
+CREATE TABLE IF NOT EXISTS `tp2_product_option_value` (
+  `product_option_value_id` int(11) NOT NULL AUTO_INCREMENT,
   `product_option_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `option_id` int(11) NOT NULL,
@@ -2602,11 +2987,12 @@ CREATE TABLE `tp2_product_option_value` (
   `points` int(8) NOT NULL,
   `points_prefix` varchar(1) NOT NULL,
   `weight` decimal(15,8) NOT NULL,
-  `weight_prefix` varchar(1) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `weight_prefix` varchar(1) NOT NULL,
+  PRIMARY KEY (`product_option_value_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_product_option_value`
+-- Déchargement des données de la table `tp2_product_option_value`
 --
 
 INSERT INTO `tp2_product_option_value` (`product_option_value_id`, `product_option_id`, `product_id`, `option_id`, `option_value_id`, `quantity`, `subtract`, `price`, `price_prefix`, `points`, `points_prefix`, `weight`, `weight_prefix`) VALUES
@@ -2633,10 +3019,12 @@ INSERT INTO `tp2_product_option_value` (`product_option_value_id`, `product_opti
 -- Structure de la table `tp2_product_recurring`
 --
 
-CREATE TABLE `tp2_product_recurring` (
+DROP TABLE IF EXISTS `tp2_product_recurring`;
+CREATE TABLE IF NOT EXISTS `tp2_product_recurring` (
   `product_id` int(11) NOT NULL,
   `recurring_id` int(11) NOT NULL,
-  `customer_group_id` int(11) NOT NULL
+  `customer_group_id` int(11) NOT NULL,
+  PRIMARY KEY (`product_id`,`recurring_id`,`customer_group_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -2645,13 +3033,15 @@ CREATE TABLE `tp2_product_recurring` (
 -- Structure de la table `tp2_product_related`
 --
 
-CREATE TABLE `tp2_product_related` (
+DROP TABLE IF EXISTS `tp2_product_related`;
+CREATE TABLE IF NOT EXISTS `tp2_product_related` (
   `product_id` int(11) NOT NULL,
-  `related_id` int(11) NOT NULL
+  `related_id` int(11) NOT NULL,
+  PRIMARY KEY (`product_id`,`related_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_product_related`
+-- Déchargement des données de la table `tp2_product_related`
 --
 
 INSERT INTO `tp2_product_related` (`product_id`, `related_id`) VALUES
@@ -2666,15 +3056,17 @@ INSERT INTO `tp2_product_related` (`product_id`, `related_id`) VALUES
 -- Structure de la table `tp2_product_reward`
 --
 
-CREATE TABLE `tp2_product_reward` (
-  `product_reward_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_product_reward`;
+CREATE TABLE IF NOT EXISTS `tp2_product_reward` (
+  `product_reward_id` int(11) NOT NULL AUTO_INCREMENT,
   `product_id` int(11) NOT NULL DEFAULT '0',
   `customer_group_id` int(11) NOT NULL DEFAULT '0',
-  `points` int(8) NOT NULL DEFAULT '0'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `points` int(8) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`product_reward_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=546 DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_product_reward`
+-- Déchargement des données de la table `tp2_product_reward`
 --
 
 INSERT INTO `tp2_product_reward` (`product_reward_id`, `product_id`, `customer_group_id`, `points`) VALUES
@@ -2704,18 +3096,21 @@ INSERT INTO `tp2_product_reward` (`product_reward_id`, `product_id`, `customer_g
 -- Structure de la table `tp2_product_special`
 --
 
-CREATE TABLE `tp2_product_special` (
-  `product_special_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_product_special`;
+CREATE TABLE IF NOT EXISTS `tp2_product_special` (
+  `product_special_id` int(11) NOT NULL AUTO_INCREMENT,
   `product_id` int(11) NOT NULL,
   `customer_group_id` int(11) NOT NULL,
   `priority` int(5) NOT NULL DEFAULT '1',
   `price` decimal(15,4) NOT NULL DEFAULT '0.0000',
   `date_start` date NOT NULL DEFAULT '0000-00-00',
-  `date_end` date NOT NULL DEFAULT '0000-00-00'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `date_end` date NOT NULL DEFAULT '0000-00-00',
+  PRIMARY KEY (`product_special_id`),
+  KEY `product_id` (`product_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=440 DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_product_special`
+-- Déchargement des données de la table `tp2_product_special`
 --
 
 INSERT INTO `tp2_product_special` (`product_special_id`, `product_id`, `customer_group_id`, `priority`, `price`, `date_start`, `date_end`) VALUES
@@ -2729,13 +3124,16 @@ INSERT INTO `tp2_product_special` (`product_special_id`, `product_id`, `customer
 -- Structure de la table `tp2_product_to_category`
 --
 
-CREATE TABLE `tp2_product_to_category` (
+DROP TABLE IF EXISTS `tp2_product_to_category`;
+CREATE TABLE IF NOT EXISTS `tp2_product_to_category` (
   `product_id` int(11) NOT NULL,
-  `category_id` int(11) NOT NULL
+  `category_id` int(11) NOT NULL,
+  PRIMARY KEY (`product_id`,`category_id`),
+  KEY `category_id` (`category_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_product_to_category`
+-- Déchargement des données de la table `tp2_product_to_category`
 --
 
 INSERT INTO `tp2_product_to_category` (`product_id`, `category_id`) VALUES
@@ -2776,9 +3174,11 @@ INSERT INTO `tp2_product_to_category` (`product_id`, `category_id`) VALUES
 -- Structure de la table `tp2_product_to_download`
 --
 
-CREATE TABLE `tp2_product_to_download` (
+DROP TABLE IF EXISTS `tp2_product_to_download`;
+CREATE TABLE IF NOT EXISTS `tp2_product_to_download` (
   `product_id` int(11) NOT NULL,
-  `download_id` int(11) NOT NULL
+  `download_id` int(11) NOT NULL,
+  PRIMARY KEY (`product_id`,`download_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -2787,10 +3187,12 @@ CREATE TABLE `tp2_product_to_download` (
 -- Structure de la table `tp2_product_to_layout`
 --
 
-CREATE TABLE `tp2_product_to_layout` (
+DROP TABLE IF EXISTS `tp2_product_to_layout`;
+CREATE TABLE IF NOT EXISTS `tp2_product_to_layout` (
   `product_id` int(11) NOT NULL,
   `store_id` int(11) NOT NULL,
-  `layout_id` int(11) NOT NULL
+  `layout_id` int(11) NOT NULL,
+  PRIMARY KEY (`product_id`,`store_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -2799,13 +3201,15 @@ CREATE TABLE `tp2_product_to_layout` (
 -- Structure de la table `tp2_product_to_store`
 --
 
-CREATE TABLE `tp2_product_to_store` (
+DROP TABLE IF EXISTS `tp2_product_to_store`;
+CREATE TABLE IF NOT EXISTS `tp2_product_to_store` (
   `product_id` int(11) NOT NULL,
-  `store_id` int(11) NOT NULL DEFAULT '0'
+  `store_id` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`product_id`,`store_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_product_to_store`
+-- Déchargement des données de la table `tp2_product_to_store`
 --
 
 INSERT INTO `tp2_product_to_store` (`product_id`, `store_id`) VALUES
@@ -2835,8 +3239,9 @@ INSERT INTO `tp2_product_to_store` (`product_id`, `store_id`) VALUES
 -- Structure de la table `tp2_recurring`
 --
 
-CREATE TABLE `tp2_recurring` (
-  `recurring_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_recurring`;
+CREATE TABLE IF NOT EXISTS `tp2_recurring` (
+  `recurring_id` int(11) NOT NULL AUTO_INCREMENT,
   `price` decimal(10,4) NOT NULL,
   `frequency` enum('day','week','semi_month','month','year') NOT NULL,
   `duration` int(10) UNSIGNED NOT NULL,
@@ -2847,7 +3252,8 @@ CREATE TABLE `tp2_recurring` (
   `trial_duration` int(10) UNSIGNED NOT NULL,
   `trial_cycle` int(10) UNSIGNED NOT NULL,
   `status` tinyint(4) NOT NULL,
-  `sort_order` int(11) NOT NULL
+  `sort_order` int(11) NOT NULL,
+  PRIMARY KEY (`recurring_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -2856,10 +3262,12 @@ CREATE TABLE `tp2_recurring` (
 -- Structure de la table `tp2_recurring_description`
 --
 
-CREATE TABLE `tp2_recurring_description` (
+DROP TABLE IF EXISTS `tp2_recurring_description`;
+CREATE TABLE IF NOT EXISTS `tp2_recurring_description` (
   `recurring_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL
+  `name` varchar(255) NOT NULL,
+  PRIMARY KEY (`recurring_id`,`language_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -2868,8 +3276,9 @@ CREATE TABLE `tp2_recurring_description` (
 -- Structure de la table `tp2_return`
 --
 
-CREATE TABLE `tp2_return` (
-  `return_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_return`;
+CREATE TABLE IF NOT EXISTS `tp2_return` (
+  `return_id` int(11) NOT NULL AUTO_INCREMENT,
   `order_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL,
@@ -2887,7 +3296,8 @@ CREATE TABLE `tp2_return` (
   `comment` text,
   `date_ordered` date NOT NULL DEFAULT '0000-00-00',
   `date_added` datetime NOT NULL,
-  `date_modified` datetime NOT NULL
+  `date_modified` datetime NOT NULL,
+  PRIMARY KEY (`return_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -2896,20 +3306,25 @@ CREATE TABLE `tp2_return` (
 -- Structure de la table `tp2_return_action`
 --
 
-CREATE TABLE `tp2_return_action` (
-  `return_action_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_return_action`;
+CREATE TABLE IF NOT EXISTS `tp2_return_action` (
+  `return_action_id` int(11) NOT NULL AUTO_INCREMENT,
   `language_id` int(11) NOT NULL DEFAULT '0',
-  `name` varchar(64) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `name` varchar(64) NOT NULL,
+  PRIMARY KEY (`return_action_id`,`language_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_return_action`
+-- Déchargement des données de la table `tp2_return_action`
 --
 
 INSERT INTO `tp2_return_action` (`return_action_id`, `language_id`, `name`) VALUES
 (1, 1, 'Refunded'),
 (2, 1, 'Credit Issued'),
-(3, 1, 'Replacement Sent');
+(3, 1, 'Replacement Sent'),
+(1, 2, 'Refunded'),
+(2, 2, 'Credit Issued'),
+(3, 2, 'Replacement Sent');
 
 -- --------------------------------------------------------
 
@@ -2917,13 +3332,15 @@ INSERT INTO `tp2_return_action` (`return_action_id`, `language_id`, `name`) VALU
 -- Structure de la table `tp2_return_history`
 --
 
-CREATE TABLE `tp2_return_history` (
-  `return_history_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_return_history`;
+CREATE TABLE IF NOT EXISTS `tp2_return_history` (
+  `return_history_id` int(11) NOT NULL AUTO_INCREMENT,
   `return_id` int(11) NOT NULL,
   `return_status_id` int(11) NOT NULL,
   `notify` tinyint(1) NOT NULL,
   `comment` text NOT NULL,
-  `date_added` datetime NOT NULL
+  `date_added` datetime NOT NULL,
+  PRIMARY KEY (`return_history_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -2932,14 +3349,16 @@ CREATE TABLE `tp2_return_history` (
 -- Structure de la table `tp2_return_reason`
 --
 
-CREATE TABLE `tp2_return_reason` (
-  `return_reason_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_return_reason`;
+CREATE TABLE IF NOT EXISTS `tp2_return_reason` (
+  `return_reason_id` int(11) NOT NULL AUTO_INCREMENT,
   `language_id` int(11) NOT NULL DEFAULT '0',
-  `name` varchar(128) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `name` varchar(128) NOT NULL,
+  PRIMARY KEY (`return_reason_id`,`language_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_return_reason`
+-- Déchargement des données de la table `tp2_return_reason`
 --
 
 INSERT INTO `tp2_return_reason` (`return_reason_id`, `language_id`, `name`) VALUES
@@ -2947,7 +3366,12 @@ INSERT INTO `tp2_return_reason` (`return_reason_id`, `language_id`, `name`) VALU
 (2, 1, 'Received Wrong Item'),
 (3, 1, 'Order Error'),
 (4, 1, 'Faulty, please supply details'),
-(5, 1, 'Other, please supply details');
+(5, 1, 'Other, please supply details'),
+(1, 2, 'Dead On Arrival'),
+(2, 2, 'Received Wrong Item'),
+(3, 2, 'Order Error'),
+(4, 2, 'Faulty, please supply details'),
+(5, 2, 'Other, please supply details');
 
 -- --------------------------------------------------------
 
@@ -2955,20 +3379,25 @@ INSERT INTO `tp2_return_reason` (`return_reason_id`, `language_id`, `name`) VALU
 -- Structure de la table `tp2_return_status`
 --
 
-CREATE TABLE `tp2_return_status` (
-  `return_status_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_return_status`;
+CREATE TABLE IF NOT EXISTS `tp2_return_status` (
+  `return_status_id` int(11) NOT NULL AUTO_INCREMENT,
   `language_id` int(11) NOT NULL DEFAULT '0',
-  `name` varchar(32) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `name` varchar(32) NOT NULL,
+  PRIMARY KEY (`return_status_id`,`language_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_return_status`
+-- Déchargement des données de la table `tp2_return_status`
 --
 
 INSERT INTO `tp2_return_status` (`return_status_id`, `language_id`, `name`) VALUES
 (1, 1, 'Pending'),
 (3, 1, 'Complete'),
-(2, 1, 'Awaiting Products');
+(2, 1, 'Awaiting Products'),
+(1, 2, 'Pending'),
+(3, 2, 'Complete'),
+(2, 2, 'Awaiting Products');
 
 -- --------------------------------------------------------
 
@@ -2976,8 +3405,9 @@ INSERT INTO `tp2_return_status` (`return_status_id`, `language_id`, `name`) VALU
 -- Structure de la table `tp2_review`
 --
 
-CREATE TABLE `tp2_review` (
-  `review_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_review`;
+CREATE TABLE IF NOT EXISTS `tp2_review` (
+  `review_id` int(11) NOT NULL AUTO_INCREMENT,
   `product_id` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL,
   `author` varchar(64) NOT NULL,
@@ -2985,7 +3415,9 @@ CREATE TABLE `tp2_review` (
   `rating` int(1) NOT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '0',
   `date_added` datetime NOT NULL,
-  `date_modified` datetime NOT NULL
+  `date_modified` datetime NOT NULL,
+  PRIMARY KEY (`review_id`),
+  KEY `product_id` (`product_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -2994,16 +3426,20 @@ CREATE TABLE `tp2_review` (
 -- Structure de la table `tp2_seo_url`
 --
 
-CREATE TABLE `tp2_seo_url` (
-  `seo_url_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_seo_url`;
+CREATE TABLE IF NOT EXISTS `tp2_seo_url` (
+  `seo_url_id` int(11) NOT NULL AUTO_INCREMENT,
   `store_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
   `query` varchar(255) NOT NULL,
-  `keyword` varchar(255) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `keyword` varchar(255) NOT NULL,
+  PRIMARY KEY (`seo_url_id`),
+  KEY `query` (`query`),
+  KEY `keyword` (`keyword`)
+) ENGINE=MyISAM AUTO_INCREMENT=844 DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_seo_url`
+-- Déchargement des données de la table `tp2_seo_url`
 --
 
 INSERT INTO `tp2_seo_url` (`seo_url_id`, `store_id`, `language_id`, `query`, `keyword`) VALUES
@@ -3081,18 +3517,31 @@ INSERT INTO `tp2_seo_url` (`seo_url_id`, `store_id`, `language_id`, `query`, `ke
 -- Structure de la table `tp2_session`
 --
 
-CREATE TABLE `tp2_session` (
+DROP TABLE IF EXISTS `tp2_session`;
+CREATE TABLE IF NOT EXISTS `tp2_session` (
   `session_id` varchar(32) NOT NULL,
   `data` text NOT NULL,
-  `expire` datetime NOT NULL
+  `expire` datetime NOT NULL,
+  PRIMARY KEY (`session_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_session`
+-- Déchargement des données de la table `tp2_session`
 --
 
 INSERT INTO `tp2_session` (`session_id`, `data`, `expire`) VALUES
-('0e962e4e16c04a7c95a6c71880', '{"language":"en-gb","currency":"USD","user_id":"1","user_token":"swXFEdGi3x1FFpYZuip144RzMZpjxZPY"}', '2019-12-05 18:50:52');
+('0e962e4e16c04a7c95a6c71880', '{\"language\":\"en-gb\",\"currency\":\"USD\",\"user_id\":\"1\",\"user_token\":\"swXFEdGi3x1FFpYZuip144RzMZpjxZPY\"}', '2019-12-05 18:50:52'),
+('10e23c7722f195fc13f4ca8d50', 'false', '2020-01-01 22:43:22'),
+('17de260ecd42c6835c13b953dc', '{\"language\":\"en-gb\",\"currency\":\"USD\",\"user_id\":\"1\",\"user_token\":\"HnvyplkvjGSgwrHJ42KQhnrULhmEAOEG\"}', '2019-12-27 18:13:15'),
+('199a723898cd5ab062e6835e27', '{\"language\":\"en-gb\",\"currency\":\"USD\",\"user_id\":\"1\",\"user_token\":\"udBPAeO28LjEftzXAUvcobKaRYeHCGYM\"}', '2020-01-15 01:53:06'),
+('6a8bb46f242f226d12021553eb', '{\"language\":\"en-gb\",\"currency\":\"USD\",\"user_id\":\"1\",\"user_token\":\"5tuW7yqoL7tGws6UyJyEiBv5ZozHVqx4\"}', '2019-12-19 01:34:44'),
+('96c58e0150ff00b92bae269668', '{\"user_id\":\"1\",\"user_token\":\"B2woZ2fe8kAeF5WZdyJOWj8vZigDrNaq\"}', '2019-12-28 00:21:22'),
+('a5424c7bba3ae78a5c59c94b3d', 'false', '2019-12-27 18:14:01'),
+('aebd91b1e1a772ef6c7c3804bf', '{\"language\":\"en-gb\",\"currency\":\"USD\",\"user_id\":\"1\",\"user_token\":\"67VUcM8P8GjyxVlLNqKsYlvEnnSBPqu4\"}', '2019-12-27 17:27:16'),
+('b58f87098234f1c1f1291b14f2', '{\"api_id\":\"1\"}', '2019-12-22 17:27:02'),
+('b874e31e01becade43cdd2cfe1', '{\"language\":\"en-gb\",\"currency\":\"USD\",\"customer_id\":\"1\",\"shipping_address\":false}', '2019-12-16 15:26:53'),
+('bcb7455ab21a2300b528ba3551', '{\"language\":\"en-gb\",\"currency\":\"USD\",\"user_id\":\"1\",\"user_token\":\"4pXvrSQdfE844u8Ish90g0DYXYB65GMs\"}', '2019-12-20 23:22:36'),
+('cc9494263177d19a6094c1dbab', '{\"language\":\"en-gb\",\"currency\":\"USD\"}', '2020-01-01 22:39:04');
 
 -- --------------------------------------------------------
 
@@ -3100,114 +3549,104 @@ INSERT INTO `tp2_session` (`session_id`, `data`, `expire`) VALUES
 -- Structure de la table `tp2_setting`
 --
 
-CREATE TABLE `tp2_setting` (
-  `setting_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_setting`;
+CREATE TABLE IF NOT EXISTS `tp2_setting` (
+  `setting_id` int(11) NOT NULL AUTO_INCREMENT,
   `store_id` int(11) NOT NULL DEFAULT '0',
   `code` varchar(128) NOT NULL,
   `key` varchar(128) NOT NULL,
   `value` text NOT NULL,
-  `serialized` tinyint(1) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `serialized` tinyint(1) NOT NULL,
+  PRIMARY KEY (`setting_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=294 DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_setting`
+-- Déchargement des données de la table `tp2_setting`
 --
 
 INSERT INTO `tp2_setting` (`setting_id`, `store_id`, `code`, `key`, `value`, `serialized`) VALUES
-(1, 0, 'config', 'config_robots', 'abot\r\ndbot\r\nebot\r\nhbot\r\nkbot\r\nlbot\r\nmbot\r\nnbot\r\nobot\r\npbot\r\nrbot\r\nsbot\r\ntbot\r\nvbot\r\nybot\r\nzbot\r\nbot.\r\nbot/\r\n_bot\r\n.bot\r\n/bot\r\n-bot\r\n:bot\r\n(bot\r\ncrawl\r\nslurp\r\nspider\r\nseek\r\naccoona\r\nacoon\r\nadressendeutschland\r\nah-ha.com\r\nahoy\r\naltavista\r\nananzi\r\nanthill\r\nappie\r\narachnophilia\r\narale\r\naraneo\r\naranha\r\narchitext\r\naretha\r\narks\r\nasterias\r\natlocal\r\natn\r\natomz\r\naugurfind\r\nbackrub\r\nbannana_bot\r\nbaypup\r\nbdfetch\r\nbig brother\r\nbiglotron\r\nbjaaland\r\nblackwidow\r\nblaiz\r\nblog\r\nblo.\r\nbloodhound\r\nboitho\r\nbooch\r\nbradley\r\nbutterfly\r\ncalif\r\ncassandra\r\nccubee\r\ncfetch\r\ncharlotte\r\nchurl\r\ncienciaficcion\r\ncmc\r\ncollective\r\ncomagent\r\ncombine\r\ncomputingsite\r\ncsci\r\ncurl\r\ncusco\r\ndaumoa\r\ndeepindex\r\ndelorie\r\ndepspid\r\ndeweb\r\ndie blinde kuh\r\ndigger\r\nditto\r\ndmoz\r\ndocomo\r\ndownload express\r\ndtaagent\r\ndwcp\r\nebiness\r\nebingbong\r\ne-collector\r\nejupiter\r\nemacs-w3 search engine\r\nesther\r\nevliya celebi\r\nezresult\r\nfalcon\r\nfelix ide\r\nferret\r\nfetchrover\r\nfido\r\nfindlinks\r\nfireball\r\nfish search\r\nfouineur\r\nfunnelweb\r\ngazz\r\ngcreep\r\ngenieknows\r\ngetterroboplus\r\ngeturl\r\nglx\r\ngoforit\r\ngolem\r\ngrabber\r\ngrapnel\r\ngralon\r\ngriffon\r\ngromit\r\ngrub\r\ngulliver\r\nhamahakki\r\nharvest\r\nhavindex\r\nhelix\r\nheritrix\r\nhku www octopus\r\nhomerweb\r\nhtdig\r\nhtml index\r\nhtml_analyzer\r\nhtmlgobble\r\nhubater\r\nhyper-decontextualizer\r\nia_archiver\r\nibm_planetwide\r\nichiro\r\niconsurf\r\niltrovatore\r\nimage.kapsi.net\r\nimagelock\r\nincywincy\r\nindexer\r\ninfobee\r\ninformant\r\ningrid\r\ninktomisearch.com\r\ninspector web\r\nintelliagent\r\ninternet shinchakubin\r\nip3000\r\niron33\r\nisraeli-search\r\nivia\r\njack\r\njakarta\r\njavabee\r\njetbot\r\njumpstation\r\nkatipo\r\nkdd-explorer\r\nkilroy\r\nknowledge\r\nkototoi\r\nkretrieve\r\nlabelgrabber\r\nlachesis\r\nlarbin\r\nlegs\r\nlibwww\r\nlinkalarm\r\nlink validator\r\nlinkscan\r\nlockon\r\nlwp\r\nlycos\r\nmagpie\r\nmantraagent\r\nmapoftheinternet\r\nmarvin/\r\nmattie\r\nmediafox\r\nmediapartners\r\nmercator\r\nmerzscope\r\nmicrosoft url control\r\nminirank\r\nmiva\r\nmj12\r\nmnogosearch\r\nmoget\r\nmonster\r\nmoose\r\nmotor\r\nmultitext\r\nmuncher\r\nmuscatferret\r\nmwd.search\r\nmyweb\r\nnajdi\r\nnameprotect\r\nnationaldirectory\r\nnazilla\r\nncsa beta\r\nnec-meshexplorer\r\nnederland.zoek\r\nnetcarta webmap engine\r\nnetmechanic\r\nnetresearchserver\r\nnetscoop\r\nnewscan-online\r\nnhse\r\nnokia6682/\r\nnomad\r\nnoyona\r\nnutch\r\nnzexplorer\r\nobjectssearch\r\noccam\r\nomni\r\nopen text\r\nopenfind\r\nopenintelligencedata\r\norb search\r\nosis-project\r\npack rat\r\npageboy\r\npagebull\r\npage_verifier\r\npanscient\r\nparasite\r\npartnersite\r\npatric\r\npear.\r\npegasus\r\nperegrinator\r\npgp key agent\r\nphantom\r\nphpdig\r\npicosearch\r\npiltdownman\r\npimptrain\r\npinpoint\r\npioneer\r\npiranha\r\nplumtreewebaccessor\r\npogodak\r\npoirot\r\npompos\r\npoppelsdorf\r\npoppi\r\npopular iconoclast\r\npsycheclone\r\npublisher\r\npython\r\nrambler\r\nraven search\r\nroach\r\nroad runner\r\nroadhouse\r\nrobbie\r\nrobofox\r\nrobozilla\r\nrules\r\nsalty\r\nsbider\r\nscooter\r\nscoutjet\r\nscrubby\r\nsearch.\r\nsearchprocess\r\nsemanticdiscovery\r\nsenrigan\r\nsg-scout\r\nshai\hulud\r\nshark\r\nshopwiki\r\nsidewinder\r\nsift\r\nsilk\r\nsimmany\r\nsite searcher\r\nsite valet\r\nsitetech-rover\r\nskymob.com\r\nsleek\r\nsmartwit\r\nsna-\r\nsnappy\r\nsnooper\r\nsohu\r\nspeedfind\r\nsphere\r\nsphider\r\nspinner\r\nspyder\r\nsteeler/\r\nsuke\r\nsuntek\r\nsupersnooper\r\nsurfnomore\r\nsven\r\nsygol\r\nszukacz\r\ntach black widow\r\ntarantula\r\ntempleton\r\n/teoma\r\nt-h-u-n-d-e-r-s-t-o-n-e\r\ntheophrastus\r\ntitan\r\ntitin\r\ntkwww\r\ntoutatis\r\nt-rex\r\ntutorgig\r\ntwiceler\r\ntwisted\r\nucsd\r\nudmsearch\r\nurl check\r\nupdated\r\nvagabondo\r\nvalkyrie\r\nverticrawl\r\nvictoria\r\nvision-search\r\nvolcano\r\nvoyager/\r\nvoyager-hc\r\nw3c_validator\r\nw3m2\r\nw3mir\r\nwalker\r\nwallpaper\r\nwanderer\r\nwauuu\r\nwavefire\r\nweb core\r\nweb hopper\r\nweb wombat\r\nwebbandit\r\nwebcatcher\r\nwebcopy\r\nwebfoot\r\nweblayers\r\nweblinker\r\nweblog monitor\r\nwebmirror\r\nwebmonkey\r\nwebquest\r\nwebreaper\r\nwebsitepulse\r\nwebsnarf\r\nwebstolperer\r\nwebvac\r\nwebwalk\r\nwebwatch\r\nwebwombat\r\nwebzinger\r\nwhizbang\r\nwhowhere\r\nwild ferret\r\nworldlight\r\nwwwc\r\nwwwster\r\nxenu\r\nxget\r\nxift\r\nxirq\r\nyandex\r\nyanga\r\nyeti\r\nyodao\r\nzao\r\nzippp\r\nzyborg', 0),
-(2, 0, 'config', 'config_shared', '0', 0),
-(3, 0, 'config', 'config_secure', '0', 0),
+(283, 0, 'config', 'config_compression', '0', 0),
+(284, 0, 'config', 'config_secure', '0', 0),
+(285, 0, 'config', 'config_password', '1', 0),
+(286, 0, 'config', 'config_shared', '0', 0),
+(287, 0, 'config', 'config_encryption', 'SrtLq287vC3nBlzj8gEJSaGzn6qJjqiiCiKaaIaArbB6Hj4Ss8Xd3L5WcWuZ8IuZGuzrtHh4rQWu3xSULZnRksdBqVw1L7H2LtiQtrggITX3qG3Ah23t6CN6jqkZFjyYDaAFkYK43IywVYuzm99bQhlU8ZeZysrBaF29oy2VI3WTIdWsegihYFxGVoDdXFYWblQE2sCuxUIY2rhfUs6ITFR4KXXjJYw1qoREp4hKtyPna4dSL7dgbrw0VsovhUoG3ycAf5RhkGtBSAVipvxUHDMNyVni3UAdveQr4WiND7DFLVPmCHQCxdtxjaDtTkkAMnqXLz0JXdUH3EF4cHjIUdbgQexjE536cdzEjGZOQNeEKkCxiBz6Baod379vX9J4RenjnUixWRCniON0xjcCFGdeasVEPZq2Go10yDyBhJZtGv3SL7J8fahVCjm0IHA3MFt5BmCFGfiw3R9CNKtpmdB4h9KCpbZJgXkgSkHPfEsVwRqqy2pXXuVH252tVGnL8W2N19UL5eo8OBrxSIV9fWB2jI84XrHxnHFj1e4MqOydGppaMtakwXRtNyWrWtxLhJIt959nss2jncUz1EFD5vFGBNgji3SgNcSLGeW3nznM1rONnGpa69W0HhCx4JiRiHn4qIeVtZsz3ihuNneVv8uksJLgZsLldNK8Jg2dOzZBad7SSORKV5xHnXXwq6UCq6g5czSy3UQhyhACcr9sVupsMQVhsYOsjaOA31Yd7IBNOnEvq7NdhEayn5swG2LGQ9kXHyBmm7N9iJundZ0H807fF7VeGTYqDmuwGYsRvDhE0CUUIzazYVfRv7BQxFJoK1s7iD5Xuon1aVRCobSRHPi2QoqaY2atJI8sIgicMw0dHIzfFeX6q4RCr3tFGxL3DWgmZFeSrYB8gasVqWJqkcyfYW3WxWsBfglAOOZ9xXDzJf4U0jcJDAJsG4qH0NW9T5NJ3Cw9ATdHqSbS8bP6kYSZKiiMhw1cNs8BMNHgbor46cNHsB3zpeS9TEduAlDk', 0),
 (4, 0, 'voucher', 'total_voucher_sort_order', '8', 0),
 (5, 0, 'voucher', 'total_voucher_status', '1', 0),
-(6, 0, 'config', 'config_fraud_detection', '0', 0),
-(7, 0, 'config', 'config_ftp_status', '0', 0),
-(8, 0, 'config', 'config_ftp_root', '', 0),
-(9, 0, 'config', 'config_ftp_password', '', 0),
-(10, 0, 'config', 'config_ftp_username', '', 0),
-(11, 0, 'config', 'config_ftp_port', '21', 0),
-(12, 0, 'config', 'config_ftp_hostname', '', 0),
-(13, 0, 'config', 'config_meta_title', 'Your Store', 0),
-(14, 0, 'config', 'config_meta_description', 'My Store', 0),
-(15, 0, 'config', 'config_meta_keyword', '', 0),
-(16, 0, 'config', 'config_theme', 'default', 0),
-(17, 0, 'config', 'config_layout_id', '4', 0),
-(18, 0, 'config', 'config_country_id', '222', 0),
-(19, 0, 'config', 'config_zone_id', '3563', 0),
-(20, 0, 'config', 'config_language', 'en-gb', 0),
-(21, 0, 'config', 'config_admin_language', 'en-gb', 0),
-(22, 0, 'config', 'config_currency', 'USD', 0),
-(23, 0, 'config', 'config_currency_auto', '1', 0),
-(24, 0, 'config', 'config_length_class_id', '1', 0),
-(25, 0, 'config', 'config_weight_class_id', '1', 0),
-(26, 0, 'config', 'config_product_count', '1', 0),
-(27, 0, 'config', 'config_limit_admin', '20', 0),
-(28, 0, 'config', 'config_review_status', '1', 0),
-(29, 0, 'config', 'config_review_guest', '1', 0),
-(30, 0, 'config', 'config_voucher_min', '1', 0),
-(31, 0, 'config', 'config_voucher_max', '1000', 0),
-(32, 0, 'config', 'config_tax', '1', 0),
-(33, 0, 'config', 'config_tax_default', 'shipping', 0),
-(34, 0, 'config', 'config_tax_customer', 'shipping', 0),
-(35, 0, 'config', 'config_customer_online', '0', 0),
-(36, 0, 'config', 'config_customer_activity', '0', 0),
-(37, 0, 'config', 'config_customer_search', '0', 0),
-(38, 0, 'config', 'config_customer_group_id', '1', 0),
-(39, 0, 'config', 'config_customer_group_display', '["1"]', 1),
-(40, 0, 'config', 'config_customer_price', '0', 0),
-(41, 0, 'config', 'config_account_id', '3', 0),
-(42, 0, 'config', 'config_invoice_prefix', 'INV-2019-00', 0),
-(203, 0, 'config', 'config_api_id', '1', 0),
-(44, 0, 'config', 'config_cart_weight', '1', 0),
-(45, 0, 'config', 'config_checkout_guest', '1', 0),
-(46, 0, 'config', 'config_checkout_id', '5', 0),
-(47, 0, 'config', 'config_order_status_id', '1', 0),
-(48, 0, 'config', 'config_processing_status', '["5","1","2","12","3"]', 1),
-(49, 0, 'config', 'config_complete_status', '["5","3"]', 1),
-(50, 0, 'config', 'config_stock_display', '0', 0),
-(51, 0, 'config', 'config_stock_warning', '0', 0),
-(52, 0, 'config', 'config_stock_checkout', '0', 0),
-(53, 0, 'config', 'config_affiliate_approval', '0', 0),
-(54, 0, 'config', 'config_affiliate_auto', '0', 0),
-(55, 0, 'config', 'config_affiliate_commission', '5', 0),
-(56, 0, 'config', 'config_affiliate_id', '4', 0),
-(57, 0, 'config', 'config_return_id', '0', 0),
-(58, 0, 'config', 'config_return_status_id', '2', 0),
-(59, 0, 'config', 'config_logo', 'catalog/logo.png', 0),
-(60, 0, 'config', 'config_icon', 'catalog/cart.png', 0),
-(61, 0, 'config', 'config_comment', '', 0),
-(62, 0, 'config', 'config_open', '', 0),
-(63, 0, 'config', 'config_image', '', 0),
-(64, 0, 'config', 'config_fax', '', 0),
-(65, 0, 'config', 'config_telephone', '123456789', 0),
-(201, 0, 'config', 'config_email', 'gaelsurgoog@gmail.com', 0),
-(67, 0, 'config', 'config_geocode', '', 0),
-(68, 0, 'config', 'config_owner', 'Your Name', 0),
-(69, 0, 'config', 'config_address', 'Address 1', 0),
-(70, 0, 'config', 'config_name', 'Your Store', 0),
-(71, 0, 'config', 'config_seo_url', '0', 0),
-(72, 0, 'config', 'config_file_max_size', '300000', 0),
-(73, 0, 'config', 'config_file_ext_allowed', 'zip\r\ntxt\r\npng\r\njpe\r\njpeg\r\njpg\r\ngif\r\nbmp\r\nico\r\ntiff\r\ntif\r\nsvg\r\nsvgz\r\nzip\r\nrar\r\nmsi\r\ncab\r\nmp3\r\nqt\r\nmov\r\npdf\r\npsd\r\nai\r\neps\r\nps\r\ndoc', 0),
-(74, 0, 'config', 'config_file_mime_allowed', 'text/plain\r\nimage/png\r\nimage/jpeg\r\nimage/gif\r\nimage/bmp\r\nimage/tiff\r\nimage/svg+xml\r\napplication/zip\r\n&quot;application/zip&quot;\r\napplication/x-zip\r\n&quot;application/x-zip&quot;\r\napplication/x-zip-compressed\r\n&quot;application/x-zip-compressed&quot;\r\napplication/rar\r\n&quot;application/rar&quot;\r\napplication/x-rar\r\n&quot;application/x-rar&quot;\r\napplication/x-rar-compressed\r\n&quot;application/x-rar-compressed&quot;\r\napplication/octet-stream\r\n&quot;application/octet-stream&quot;\r\naudio/mpeg\r\nvideo/quicktime\r\napplication/pdf', 0),
-(75, 0, 'config', 'config_maintenance', '0', 0),
-(76, 0, 'config', 'config_password', '1', 0),
-(202, 0, 'config', 'config_encryption', 'SrtLq287vC3nBlzj8gEJSaGzn6qJjqiiCiKaaIaArbB6Hj4Ss8Xd3L5WcWuZ8IuZGuzrtHh4rQWu3xSULZnRksdBqVw1L7H2LtiQtrggITX3qG3Ah23t6CN6jqkZFjyYDaAFkYK43IywVYuzm99bQhlU8ZeZysrBaF29oy2VI3WTIdWsegihYFxGVoDdXFYWblQE2sCuxUIY2rhfUs6ITFR4KXXjJYw1qoREp4hKtyPna4dSL7dgbrw0VsovhUoG3ycAf5RhkGtBSAVipvxUHDMNyVni3UAdveQr4WiND7DFLVPmCHQCxdtxjaDtTkkAMnqXLz0JXdUH3EF4cHjIUdbgQexjE536cdzEjGZOQNeEKkCxiBz6Baod379vX9J4RenjnUixWRCniON0xjcCFGdeasVEPZq2Go10yDyBhJZtGv3SL7J8fahVCjm0IHA3MFt5BmCFGfiw3R9CNKtpmdB4h9KCpbZJgXkgSkHPfEsVwRqqy2pXXuVH252tVGnL8W2N19UL5eo8OBrxSIV9fWB2jI84XrHxnHFj1e4MqOydGppaMtakwXRtNyWrWtxLhJIt959nss2jncUz1EFD5vFGBNgji3SgNcSLGeW3nznM1rONnGpa69W0HhCx4JiRiHn4qIeVtZsz3ihuNneVv8uksJLgZsLldNK8Jg2dOzZBad7SSORKV5xHnXXwq6UCq6g5czSy3UQhyhACcr9sVupsMQVhsYOsjaOA31Yd7IBNOnEvq7NdhEayn5swG2LGQ9kXHyBmm7N9iJundZ0H807fF7VeGTYqDmuwGYsRvDhE0CUUIzazYVfRv7BQxFJoK1s7iD5Xuon1aVRCobSRHPi2QoqaY2atJI8sIgicMw0dHIzfFeX6q4RCr3tFGxL3DWgmZFeSrYB8gasVqWJqkcyfYW3WxWsBfglAOOZ9xXDzJf4U0jcJDAJsG4qH0NW9T5NJ3Cw9ATdHqSbS8bP6kYSZKiiMhw1cNs8BMNHgbor46cNHsB3zpeS9TEduAlDk', 0),
-(78, 0, 'config', 'config_compression', '0', 0),
-(79, 0, 'config', 'config_error_display', '1', 0),
-(80, 0, 'config', 'config_error_log', '1', 0),
-(81, 0, 'config', 'config_error_filename', 'error.log', 0),
-(82, 0, 'config', 'config_google_analytics', '', 0),
-(83, 0, 'config', 'config_mail_engine', 'mail', 0),
-(84, 0, 'config', 'config_mail_parameter', '', 0),
-(85, 0, 'config', 'config_mail_smtp_hostname', '', 0),
-(86, 0, 'config', 'config_mail_smtp_username', '', 0),
-(87, 0, 'config', 'config_mail_smtp_password', '', 0),
-(88, 0, 'config', 'config_mail_smtp_port', '25', 0),
-(89, 0, 'config', 'config_mail_smtp_timeout', '5', 0),
-(90, 0, 'config', 'config_mail_alert_email', '', 0),
-(91, 0, 'config', 'config_mail_alert', '["order"]', 1),
-(92, 0, 'config', 'config_captcha', 'basic', 0),
-(93, 0, 'config', 'config_captcha_page', '["review","return","contact"]', 1),
-(94, 0, 'config', 'config_login_attempts', '5', 0),
+(282, 0, 'config', 'config_robots', 'abot\r\ndbot\r\nebot\r\nhbot\r\nkbot\r\nlbot\r\nmbot\r\nnbot\r\nobot\r\npbot\r\nrbot\r\nsbot\r\ntbot\r\nvbot\r\nybot\r\nzbot\r\nbot.\r\nbot/\r\n_bot\r\n.bot\r\n/bot\r\n-bot\r\n:bot\r\n(bot\r\ncrawl\r\nslurp\r\nspider\r\nseek\r\naccoona\r\nacoon\r\nadressendeutschland\r\nah-ha.com\r\nahoy\r\naltavista\r\nananzi\r\nanthill\r\nappie\r\narachnophilia\r\narale\r\naraneo\r\naranha\r\narchitext\r\naretha\r\narks\r\nasterias\r\natlocal\r\natn\r\natomz\r\naugurfind\r\nbackrub\r\nbannana_bot\r\nbaypup\r\nbdfetch\r\nbig brother\r\nbiglotron\r\nbjaaland\r\nblackwidow\r\nblaiz\r\nblog\r\nblo.\r\nbloodhound\r\nboitho\r\nbooch\r\nbradley\r\nbutterfly\r\ncalif\r\ncassandra\r\nccubee\r\ncfetch\r\ncharlotte\r\nchurl\r\ncienciaficcion\r\ncmc\r\ncollective\r\ncomagent\r\ncombine\r\ncomputingsite\r\ncsci\r\ncurl\r\ncusco\r\ndaumoa\r\ndeepindex\r\ndelorie\r\ndepspid\r\ndeweb\r\ndie blinde kuh\r\ndigger\r\nditto\r\ndmoz\r\ndocomo\r\ndownload express\r\ndtaagent\r\ndwcp\r\nebiness\r\nebingbong\r\ne-collector\r\nejupiter\r\nemacs-w3 search engine\r\nesther\r\nevliya celebi\r\nezresult\r\nfalcon\r\nfelix ide\r\nferret\r\nfetchrover\r\nfido\r\nfindlinks\r\nfireball\r\nfish search\r\nfouineur\r\nfunnelweb\r\ngazz\r\ngcreep\r\ngenieknows\r\ngetterroboplus\r\ngeturl\r\nglx\r\ngoforit\r\ngolem\r\ngrabber\r\ngrapnel\r\ngralon\r\ngriffon\r\ngromit\r\ngrub\r\ngulliver\r\nhamahakki\r\nharvest\r\nhavindex\r\nhelix\r\nheritrix\r\nhku www octopus\r\nhomerweb\r\nhtdig\r\nhtml index\r\nhtml_analyzer\r\nhtmlgobble\r\nhubater\r\nhyper-decontextualizer\r\nia_archiver\r\nibm_planetwide\r\nichiro\r\niconsurf\r\niltrovatore\r\nimage.kapsi.net\r\nimagelock\r\nincywincy\r\nindexer\r\ninfobee\r\ninformant\r\ningrid\r\ninktomisearch.com\r\ninspector web\r\nintelliagent\r\ninternet shinchakubin\r\nip3000\r\niron33\r\nisraeli-search\r\nivia\r\njack\r\njakarta\r\njavabee\r\njetbot\r\njumpstation\r\nkatipo\r\nkdd-explorer\r\nkilroy\r\nknowledge\r\nkototoi\r\nkretrieve\r\nlabelgrabber\r\nlachesis\r\nlarbin\r\nlegs\r\nlibwww\r\nlinkalarm\r\nlink validator\r\nlinkscan\r\nlockon\r\nlwp\r\nlycos\r\nmagpie\r\nmantraagent\r\nmapoftheinternet\r\nmarvin/\r\nmattie\r\nmediafox\r\nmediapartners\r\nmercator\r\nmerzscope\r\nmicrosoft url control\r\nminirank\r\nmiva\r\nmj12\r\nmnogosearch\r\nmoget\r\nmonster\r\nmoose\r\nmotor\r\nmultitext\r\nmuncher\r\nmuscatferret\r\nmwd.search\r\nmyweb\r\nnajdi\r\nnameprotect\r\nnationaldirectory\r\nnazilla\r\nncsa beta\r\nnec-meshexplorer\r\nnederland.zoek\r\nnetcarta webmap engine\r\nnetmechanic\r\nnetresearchserver\r\nnetscoop\r\nnewscan-online\r\nnhse\r\nnokia6682/\r\nnomad\r\nnoyona\r\nnutch\r\nnzexplorer\r\nobjectssearch\r\noccam\r\nomni\r\nopen text\r\nopenfind\r\nopenintelligencedata\r\norb search\r\nosis-project\r\npack rat\r\npageboy\r\npagebull\r\npage_verifier\r\npanscient\r\nparasite\r\npartnersite\r\npatric\r\npear.\r\npegasus\r\nperegrinator\r\npgp key agent\r\nphantom\r\nphpdig\r\npicosearch\r\npiltdownman\r\npimptrain\r\npinpoint\r\npioneer\r\npiranha\r\nplumtreewebaccessor\r\npogodak\r\npoirot\r\npompos\r\npoppelsdorf\r\npoppi\r\npopular iconoclast\r\npsycheclone\r\npublisher\r\npython\r\nrambler\r\nraven search\r\nroach\r\nroad runner\r\nroadhouse\r\nrobbie\r\nrobofox\r\nrobozilla\r\nrules\r\nsalty\r\nsbider\r\nscooter\r\nscoutjet\r\nscrubby\r\nsearch.\r\nsearchprocess\r\nsemanticdiscovery\r\nsenrigan\r\nsg-scout\r\nshai\'hulud\r\nshark\r\nshopwiki\r\nsidewinder\r\nsift\r\nsilk\r\nsimmany\r\nsite searcher\r\nsite valet\r\nsitetech-rover\r\nskymob.com\r\nsleek\r\nsmartwit\r\nsna-\r\nsnappy\r\nsnooper\r\nsohu\r\nspeedfind\r\nsphere\r\nsphider\r\nspinner\r\nspyder\r\nsteeler/\r\nsuke\r\nsuntek\r\nsupersnooper\r\nsurfnomore\r\nsven\r\nsygol\r\nszukacz\r\ntach black widow\r\ntarantula\r\ntempleton\r\n/teoma\r\nt-h-u-n-d-e-r-s-t-o-n-e\r\ntheophrastus\r\ntitan\r\ntitin\r\ntkwww\r\ntoutatis\r\nt-rex\r\ntutorgig\r\ntwiceler\r\ntwisted\r\nucsd\r\nudmsearch\r\nurl check\r\nupdated\r\nvagabondo\r\nvalkyrie\r\nverticrawl\r\nvictoria\r\nvision-search\r\nvolcano\r\nvoyager/\r\nvoyager-hc\r\nw3c_validator\r\nw3m2\r\nw3mir\r\nwalker\r\nwallpaper\r\nwanderer\r\nwauuu\r\nwavefire\r\nweb core\r\nweb hopper\r\nweb wombat\r\nwebbandit\r\nwebcatcher\r\nwebcopy\r\nwebfoot\r\nweblayers\r\nweblinker\r\nweblog monitor\r\nwebmirror\r\nwebmonkey\r\nwebquest\r\nwebreaper\r\nwebsitepulse\r\nwebsnarf\r\nwebstolperer\r\nwebvac\r\nwebwalk\r\nwebwatch\r\nwebwombat\r\nwebzinger\r\nwhizbang\r\nwhowhere\r\nwild ferret\r\nworldlight\r\nwwwc\r\nwwwster\r\nxenu\r\nxget\r\nxift\r\nxirq\r\nyandex\r\nyanga\r\nyeti\r\nyodao\r\nzao\r\nzippp\r\nzyborg', 0),
+(281, 0, 'config', 'config_seo_url', '0', 0),
+(280, 0, 'config', 'config_maintenance', '0', 0),
+(279, 0, 'config', 'config_mail_alert_email', '', 0),
+(278, 0, 'config', 'config_mail_alert', '[\"order\"]', 1),
+(277, 0, 'config', 'config_mail_smtp_timeout', '5', 0),
+(276, 0, 'config', 'config_mail_smtp_port', '25', 0),
+(275, 0, 'config', 'config_mail_smtp_password', '', 0),
+(274, 0, 'config', 'config_mail_smtp_username', '', 0),
+(273, 0, 'config', 'config_mail_smtp_hostname', '', 0),
+(272, 0, 'config', 'config_mail_parameter', '', 0),
+(271, 0, 'config', 'config_mail_engine', 'mail', 0),
+(270, 0, 'config', 'config_icon', 'catalog/cart.png', 0),
+(269, 0, 'config', 'config_logo', 'catalog/logo.png', 0),
+(268, 0, 'config', 'config_captcha_page', '[\"review\",\"return\",\"contact\"]', 1),
+(267, 0, 'config', 'config_captcha', '', 0),
+(266, 0, 'config', 'config_return_status_id', '2', 0),
+(265, 0, 'config', 'config_return_id', '0', 0),
+(264, 0, 'config', 'config_affiliate_id', '4', 0),
+(263, 0, 'config', 'config_affiliate_commission', '5', 0),
+(262, 0, 'config', 'config_affiliate_auto', '0', 0),
+(261, 0, 'config', 'config_affiliate_approval', '0', 0),
+(260, 0, 'config', 'config_affiliate_group_id', '1', 0),
+(259, 0, 'config', 'config_stock_checkout', '0', 0),
+(258, 0, 'config', 'config_stock_warning', '0', 0),
+(257, 0, 'config', 'config_stock_display', '0', 0),
+(256, 0, 'config', 'config_api_id', '1', 0),
+(255, 0, 'config', 'config_fraud_status_id', '7', 0),
+(252, 0, 'config', 'config_order_status_id', '1', 0),
+(253, 0, 'config', 'config_processing_status', '[\"5\",\"1\",\"2\",\"12\",\"3\"]', 1),
+(254, 0, 'config', 'config_complete_status', '[\"5\",\"3\"]', 1),
+(243, 0, 'config', 'config_customer_group_id', '1', 0),
+(244, 0, 'config', 'config_customer_group_display', '[\"1\"]', 1),
+(245, 0, 'config', 'config_customer_price', '0', 0),
+(246, 0, 'config', 'config_login_attempts', '5', 0),
+(247, 0, 'config', 'config_account_id', '3', 0),
+(248, 0, 'config', 'config_invoice_prefix', 'INV-2019-00', 0),
+(249, 0, 'config', 'config_cart_weight', '1', 0),
+(250, 0, 'config', 'config_checkout_guest', '1', 0),
+(251, 0, 'config', 'config_checkout_id', '5', 0),
+(242, 0, 'config', 'config_customer_search', '0', 0),
+(222, 0, 'config', 'config_comment', '', 0),
+(223, 0, 'config', 'config_country_id', '222', 0),
+(224, 0, 'config', 'config_zone_id', '3563', 0),
+(225, 0, 'config', 'config_language', 'fr-fr', 0),
+(226, 0, 'config', 'config_admin_language', 'fr-fr', 0),
+(227, 0, 'config', 'config_currency', 'USD', 0),
+(228, 0, 'config', 'config_currency_auto', '1', 0),
+(229, 0, 'config', 'config_length_class_id', '1', 0),
+(230, 0, 'config', 'config_weight_class_id', '1', 0),
+(231, 0, 'config', 'config_product_count', '1', 0),
+(232, 0, 'config', 'config_limit_admin', '20', 0),
+(233, 0, 'config', 'config_review_status', '1', 0),
+(234, 0, 'config', 'config_review_guest', '1', 0),
+(235, 0, 'config', 'config_voucher_min', '1', 0),
+(236, 0, 'config', 'config_voucher_max', '1000', 0),
+(237, 0, 'config', 'config_tax', '1', 0),
+(238, 0, 'config', 'config_tax_default', 'shipping', 0),
+(239, 0, 'config', 'config_tax_customer', 'shipping', 0),
+(240, 0, 'config', 'config_customer_online', '0', 0),
+(241, 0, 'config', 'config_customer_activity', '0', 0),
+(221, 0, 'config', 'config_open', '', 0),
+(220, 0, 'config', 'config_image', '', 0),
+(219, 0, 'config', 'config_fax', '', 0),
+(218, 0, 'config', 'config_telephone', '123456789', 0),
+(217, 0, 'config', 'config_email', 'gaelsurgoog@gmail.com', 0),
+(216, 0, 'config', 'config_geocode', '', 0),
+(215, 0, 'config', 'config_address', 'Address 1', 0),
+(214, 0, 'config', 'config_owner', 'Your Name', 0),
+(213, 0, 'config', 'config_name', 'Your Store', 0),
+(212, 0, 'config', 'config_layout_id', '4', 0),
+(211, 0, 'config', 'config_theme', 'default', 0),
+(210, 0, 'config', 'config_meta_keyword', '', 0),
+(209, 0, 'config', 'config_meta_description', 'My Store', 0),
+(208, 0, 'config', 'config_meta_title', 'Your Store', 0),
 (95, 0, 'payment_free_checkout', 'payment_free_checkout_status', '1', 0),
 (96, 0, 'payment_free_checkout', 'free_checkout_order_status_id', '1', 0),
 (97, 0, 'payment_free_checkout', 'payment_free_checkout_sort_order', '1', 0),
@@ -3312,8 +3751,14 @@ INSERT INTO `tp2_setting` (`setting_id`, `store_id`, `code`, `key`, `value`, `se
 (196, 0, 'report_product_purchased', 'report_product_purchased_sort_order', '11', 0),
 (197, 0, 'report_marketing', 'report_marketing_status', '1', 0),
 (198, 0, 'report_marketing', 'report_marketing_sort_order', '12', 0),
-(199, 0, 'developer', 'developer_theme', '1', 0),
-(200, 0, 'developer', 'developer_sass', '1', 0);
+(207, 0, 'developer', 'developer_sass', '0', 0),
+(206, 0, 'developer', 'developer_theme', '0', 0),
+(288, 0, 'config', 'config_file_max_size', '300000', 0),
+(289, 0, 'config', 'config_file_ext_allowed', 'zip\r\ntxt\r\npng\r\njpe\r\njpeg\r\njpg\r\ngif\r\nbmp\r\nico\r\ntiff\r\ntif\r\nsvg\r\nsvgz\r\nzip\r\nrar\r\nmsi\r\ncab\r\nmp3\r\nqt\r\nmov\r\npdf\r\npsd\r\nai\r\neps\r\nps\r\ndoc', 0),
+(290, 0, 'config', 'config_file_mime_allowed', 'text/plain\r\nimage/png\r\nimage/jpeg\r\nimage/gif\r\nimage/bmp\r\nimage/tiff\r\nimage/svg+xml\r\napplication/zip\r\n&quot;application/zip&quot;\r\napplication/x-zip\r\n&quot;application/x-zip&quot;\r\napplication/x-zip-compressed\r\n&quot;application/x-zip-compressed&quot;\r\napplication/rar\r\n&quot;application/rar&quot;\r\napplication/x-rar\r\n&quot;application/x-rar&quot;\r\napplication/x-rar-compressed\r\n&quot;application/x-rar-compressed&quot;\r\napplication/octet-stream\r\n&quot;application/octet-stream&quot;\r\naudio/mpeg\r\nvideo/quicktime\r\napplication/pdf', 0),
+(291, 0, 'config', 'config_error_display', '1', 0),
+(292, 0, 'config', 'config_error_log', '1', 0),
+(293, 0, 'config', 'config_error_filename', 'error.log', 0);
 
 -- --------------------------------------------------------
 
@@ -3321,14 +3766,16 @@ INSERT INTO `tp2_setting` (`setting_id`, `store_id`, `code`, `key`, `value`, `se
 -- Structure de la table `tp2_shipping_courier`
 --
 
-CREATE TABLE `tp2_shipping_courier` (
+DROP TABLE IF EXISTS `tp2_shipping_courier`;
+CREATE TABLE IF NOT EXISTS `tp2_shipping_courier` (
   `shipping_courier_id` int(11) NOT NULL,
   `shipping_courier_code` varchar(255) NOT NULL DEFAULT '',
-  `shipping_courier_name` varchar(255) NOT NULL DEFAULT ''
+  `shipping_courier_name` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`shipping_courier_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_shipping_courier`
+-- Déchargement des données de la table `tp2_shipping_courier`
 --
 
 INSERT INTO `tp2_shipping_courier` (`shipping_courier_id`, `shipping_courier_code`, `shipping_courier_name`) VALUES
@@ -3345,14 +3792,16 @@ INSERT INTO `tp2_shipping_courier` (`shipping_courier_id`, `shipping_courier_cod
 -- Structure de la table `tp2_statistics`
 --
 
-CREATE TABLE `tp2_statistics` (
-  `statistics_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_statistics`;
+CREATE TABLE IF NOT EXISTS `tp2_statistics` (
+  `statistics_id` int(11) NOT NULL AUTO_INCREMENT,
   `code` varchar(64) NOT NULL,
-  `value` decimal(15,4) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `value` decimal(15,4) NOT NULL,
+  PRIMARY KEY (`statistics_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_statistics`
+-- Déchargement des données de la table `tp2_statistics`
 --
 
 INSERT INTO `tp2_statistics` (`statistics_id`, `code`, `value`) VALUES
@@ -3370,21 +3819,27 @@ INSERT INTO `tp2_statistics` (`statistics_id`, `code`, `value`) VALUES
 -- Structure de la table `tp2_stock_status`
 --
 
-CREATE TABLE `tp2_stock_status` (
-  `stock_status_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_stock_status`;
+CREATE TABLE IF NOT EXISTS `tp2_stock_status` (
+  `stock_status_id` int(11) NOT NULL AUTO_INCREMENT,
   `language_id` int(11) NOT NULL,
-  `name` varchar(32) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `name` varchar(32) NOT NULL,
+  PRIMARY KEY (`stock_status_id`,`language_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_stock_status`
+-- Déchargement des données de la table `tp2_stock_status`
 --
 
 INSERT INTO `tp2_stock_status` (`stock_status_id`, `language_id`, `name`) VALUES
 (7, 1, 'In Stock'),
 (8, 1, 'Pre-Order'),
 (5, 1, 'Out Of Stock'),
-(6, 1, '2-3 Days');
+(6, 1, '2-3 Days'),
+(7, 2, 'In Stock'),
+(8, 2, 'Pre-Order'),
+(5, 2, 'Out Of Stock'),
+(6, 2, '2-3 Days');
 
 -- --------------------------------------------------------
 
@@ -3392,11 +3847,13 @@ INSERT INTO `tp2_stock_status` (`stock_status_id`, `language_id`, `name`) VALUES
 -- Structure de la table `tp2_store`
 --
 
-CREATE TABLE `tp2_store` (
-  `store_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_store`;
+CREATE TABLE IF NOT EXISTS `tp2_store` (
+  `store_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(64) NOT NULL,
   `url` varchar(255) NOT NULL,
-  `ssl` varchar(255) NOT NULL
+  `ssl` varchar(255) NOT NULL,
+  PRIMARY KEY (`store_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -3405,16 +3862,18 @@ CREATE TABLE `tp2_store` (
 -- Structure de la table `tp2_tax_class`
 --
 
-CREATE TABLE `tp2_tax_class` (
-  `tax_class_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_tax_class`;
+CREATE TABLE IF NOT EXISTS `tp2_tax_class` (
+  `tax_class_id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(32) NOT NULL,
   `description` varchar(255) NOT NULL,
   `date_added` datetime NOT NULL,
-  `date_modified` datetime NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `date_modified` datetime NOT NULL,
+  PRIMARY KEY (`tax_class_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_tax_class`
+-- Déchargement des données de la table `tp2_tax_class`
 --
 
 INSERT INTO `tp2_tax_class` (`tax_class_id`, `title`, `description`, `date_added`, `date_modified`) VALUES
@@ -3427,18 +3886,20 @@ INSERT INTO `tp2_tax_class` (`tax_class_id`, `title`, `description`, `date_added
 -- Structure de la table `tp2_tax_rate`
 --
 
-CREATE TABLE `tp2_tax_rate` (
-  `tax_rate_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_tax_rate`;
+CREATE TABLE IF NOT EXISTS `tp2_tax_rate` (
+  `tax_rate_id` int(11) NOT NULL AUTO_INCREMENT,
   `geo_zone_id` int(11) NOT NULL DEFAULT '0',
   `name` varchar(32) NOT NULL,
   `rate` decimal(15,4) NOT NULL DEFAULT '0.0000',
   `type` char(1) NOT NULL,
   `date_added` datetime NOT NULL,
-  `date_modified` datetime NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `date_modified` datetime NOT NULL,
+  PRIMARY KEY (`tax_rate_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=88 DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_tax_rate`
+-- Déchargement des données de la table `tp2_tax_rate`
 --
 
 INSERT INTO `tp2_tax_rate` (`tax_rate_id`, `geo_zone_id`, `name`, `rate`, `type`, `date_added`, `date_modified`) VALUES
@@ -3451,13 +3912,15 @@ INSERT INTO `tp2_tax_rate` (`tax_rate_id`, `geo_zone_id`, `name`, `rate`, `type`
 -- Structure de la table `tp2_tax_rate_to_customer_group`
 --
 
-CREATE TABLE `tp2_tax_rate_to_customer_group` (
+DROP TABLE IF EXISTS `tp2_tax_rate_to_customer_group`;
+CREATE TABLE IF NOT EXISTS `tp2_tax_rate_to_customer_group` (
   `tax_rate_id` int(11) NOT NULL,
-  `customer_group_id` int(11) NOT NULL
+  `customer_group_id` int(11) NOT NULL,
+  PRIMARY KEY (`tax_rate_id`,`customer_group_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_tax_rate_to_customer_group`
+-- Déchargement des données de la table `tp2_tax_rate_to_customer_group`
 --
 
 INSERT INTO `tp2_tax_rate_to_customer_group` (`tax_rate_id`, `customer_group_id`) VALUES
@@ -3470,16 +3933,18 @@ INSERT INTO `tp2_tax_rate_to_customer_group` (`tax_rate_id`, `customer_group_id`
 -- Structure de la table `tp2_tax_rule`
 --
 
-CREATE TABLE `tp2_tax_rule` (
-  `tax_rule_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_tax_rule`;
+CREATE TABLE IF NOT EXISTS `tp2_tax_rule` (
+  `tax_rule_id` int(11) NOT NULL AUTO_INCREMENT,
   `tax_class_id` int(11) NOT NULL,
   `tax_rate_id` int(11) NOT NULL,
   `based` varchar(10) NOT NULL,
-  `priority` int(5) NOT NULL DEFAULT '1'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `priority` int(5) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`tax_rule_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=129 DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_tax_rule`
+-- Déchargement des données de la table `tp2_tax_rule`
 --
 
 INSERT INTO `tp2_tax_rule` (`tax_rule_id`, `tax_class_id`, `tax_rate_id`, `based`, `priority`) VALUES
@@ -3494,13 +3959,15 @@ INSERT INTO `tp2_tax_rule` (`tax_rule_id`, `tax_class_id`, `tax_rate_id`, `based
 -- Structure de la table `tp2_theme`
 --
 
-CREATE TABLE `tp2_theme` (
-  `theme_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_theme`;
+CREATE TABLE IF NOT EXISTS `tp2_theme` (
+  `theme_id` int(11) NOT NULL AUTO_INCREMENT,
   `store_id` int(11) NOT NULL,
   `theme` varchar(64) NOT NULL,
   `route` varchar(64) NOT NULL,
   `code` mediumtext NOT NULL,
-  `date_added` datetime NOT NULL
+  `date_added` datetime NOT NULL,
+  PRIMARY KEY (`theme_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -3509,14 +3976,16 @@ CREATE TABLE `tp2_theme` (
 -- Structure de la table `tp2_translation`
 --
 
-CREATE TABLE `tp2_translation` (
-  `translation_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_translation`;
+CREATE TABLE IF NOT EXISTS `tp2_translation` (
+  `translation_id` int(11) NOT NULL AUTO_INCREMENT,
   `store_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
   `route` varchar(64) NOT NULL,
   `key` varchar(64) NOT NULL,
   `value` text NOT NULL,
-  `date_added` datetime NOT NULL
+  `date_added` datetime NOT NULL,
+  PRIMARY KEY (`translation_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -3525,12 +3994,14 @@ CREATE TABLE `tp2_translation` (
 -- Structure de la table `tp2_upload`
 --
 
-CREATE TABLE `tp2_upload` (
-  `upload_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_upload`;
+CREATE TABLE IF NOT EXISTS `tp2_upload` (
+  `upload_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `filename` varchar(255) NOT NULL,
   `code` varchar(255) NOT NULL,
-  `date_added` datetime NOT NULL
+  `date_added` datetime NOT NULL,
+  PRIMARY KEY (`upload_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -3539,8 +4010,9 @@ CREATE TABLE `tp2_upload` (
 -- Structure de la table `tp2_user`
 --
 
-CREATE TABLE `tp2_user` (
-  `user_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_user`;
+CREATE TABLE IF NOT EXISTS `tp2_user` (
+  `user_id` int(11) NOT NULL AUTO_INCREMENT,
   `user_group_id` int(11) NOT NULL,
   `username` varchar(20) NOT NULL,
   `password` varchar(40) NOT NULL,
@@ -3552,11 +4024,12 @@ CREATE TABLE `tp2_user` (
   `code` varchar(40) NOT NULL,
   `ip` varchar(40) NOT NULL,
   `status` tinyint(1) NOT NULL,
-  `date_added` datetime NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `date_added` datetime NOT NULL,
+  PRIMARY KEY (`user_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_user`
+-- Déchargement des données de la table `tp2_user`
 --
 
 INSERT INTO `tp2_user` (`user_id`, `user_group_id`, `username`, `password`, `salt`, `firstname`, `lastname`, `email`, `image`, `code`, `ip`, `status`, `date_added`) VALUES
@@ -3568,18 +4041,20 @@ INSERT INTO `tp2_user` (`user_id`, `user_group_id`, `username`, `password`, `sal
 -- Structure de la table `tp2_user_group`
 --
 
-CREATE TABLE `tp2_user_group` (
-  `user_group_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_user_group`;
+CREATE TABLE IF NOT EXISTS `tp2_user_group` (
+  `user_group_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(64) NOT NULL,
-  `permission` text NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `permission` text NOT NULL,
+  PRIMARY KEY (`user_group_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_user_group`
+-- Déchargement des données de la table `tp2_user_group`
 --
 
 INSERT INTO `tp2_user_group` (`user_group_id`, `name`, `permission`) VALUES
-(1, 'Administrator', '{"access":["catalog\\/attribute","catalog\\/attribute_group","catalog\\/category","catalog\\/download","catalog\\/filter","catalog\\/information","catalog\\/manufacturer","catalog\\/option","catalog\\/product","catalog\\/recurring","catalog\\/review","common\\/column_left","common\\/developer","common\\/filemanager","common\\/profile","common\\/security","customer\\/custom_field","customer\\/customer","customer\\/customer_approval","customer\\/customer_group","design\\/banner","design\\/layout","design\\/theme","design\\/translation","design\\/seo_url","event\\/statistics","event\\/theme","extension\\/advertise\\/google","extension\\/analytics\\/google","extension\\/captcha\\/basic","extension\\/captcha\\/google","extension\\/dashboard\\/activity","extension\\/dashboard\\/chart","extension\\/dashboard\\/customer","extension\\/dashboard\\/map","extension\\/dashboard\\/online","extension\\/dashboard\\/order","extension\\/dashboard\\/recent","extension\\/dashboard\\/sale","extension\\/extension\\/advertise","extension\\/extension\\/analytics","extension\\/extension\\/captcha","extension\\/extension\\/dashboard","extension\\/extension\\/feed","extension\\/extension\\/fraud","extension\\/extension\\/menu","extension\\/extension\\/module","extension\\/extension\\/payment","extension\\/extension\\/report","extension\\/extension\\/shipping","extension\\/extension\\/theme","extension\\/extension\\/total","extension\\/feed\\/google_base","extension\\/feed\\/google_sitemap","extension\\/feed\\/openbaypro","extension\\/fraud\\/fraudlabspro","extension\\/fraud\\/ip","extension\\/fraud\\/maxmind","extension\\/marketing\\/remarketing","extension\\/module\\/account","extension\\/module\\/amazon_login","extension\\/module\\/amazon_pay","extension\\/module\\/banner","extension\\/module\\/bestseller","extension\\/module\\/carousel","extension\\/module\\/category","extension\\/module\\/divido_calculator","extension\\/module\\/ebay_listing","extension\\/module\\/featured","extension\\/module\\/filter","extension\\/module\\/google_hangouts","extension\\/module\\/html","extension\\/module\\/information","extension\\/module\\/klarna_checkout_module","extension\\/module\\/latest","extension\\/module\\/laybuy_layout","extension\\/module\\/pilibaba_button","extension\\/module\\/pp_button","extension\\/module\\/pp_login","extension\\/module\\/sagepay_direct_cards","extension\\/module\\/sagepay_server_cards","extension\\/module\\/slideshow","extension\\/module\\/special","extension\\/module\\/store","extension\\/openbay\\/amazon","extension\\/openbay\\/amazon_listing","extension\\/openbay\\/amazon_product","extension\\/openbay\\/amazonus","extension\\/openbay\\/amazonus_listing","extension\\/openbay\\/amazonus_product","extension\\/openbay\\/ebay","extension\\/openbay\\/ebay_profile","extension\\/openbay\\/ebay_template","extension\\/openbay\\/etsy","extension\\/openbay\\/etsy_product","extension\\/openbay\\/etsy_shipping","extension\\/openbay\\/etsy_shop","extension\\/openbay\\/fba","extension\\/payment\\/amazon_login_pay","extension\\/payment\\/authorizenet_aim","extension\\/payment\\/authorizenet_sim","extension\\/payment\\/bank_transfer","extension\\/payment\\/bluepay_hosted","extension\\/payment\\/bluepay_redirect","extension\\/payment\\/cardconnect","extension\\/payment\\/cardinity","extension\\/payment\\/cheque","extension\\/payment\\/cod","extension\\/payment\\/divido","extension\\/payment\\/eway","extension\\/payment\\/firstdata","extension\\/payment\\/firstdata_remote","extension\\/payment\\/free_checkout","extension\\/payment\\/g2apay","extension\\/payment\\/globalpay","extension\\/payment\\/globalpay_remote","extension\\/payment\\/klarna_account","extension\\/payment\\/klarna_checkout","extension\\/payment\\/klarna_invoice","extension\\/payment\\/laybuy","extension\\/payment\\/liqpay","extension\\/payment\\/nochex","extension\\/payment\\/paymate","extension\\/payment\\/paypoint","extension\\/payment\\/payza","extension\\/payment\\/perpetual_payments","extension\\/payment\\/pilibaba","extension\\/payment\\/pp_express","extension\\/payment\\/pp_payflow","extension\\/payment\\/pp_payflow_iframe","extension\\/payment\\/pp_pro","extension\\/payment\\/pp_pro_iframe","extension\\/payment\\/pp_standard","extension\\/payment\\/realex","extension\\/payment\\/realex_remote","extension\\/payment\\/sagepay_direct","extension\\/payment\\/sagepay_server","extension\\/payment\\/sagepay_us","extension\\/payment\\/securetrading_pp","extension\\/payment\\/securetrading_ws","extension\\/payment\\/skrill","extension\\/payment\\/twocheckout","extension\\/payment\\/web_payment_software","extension\\/payment\\/worldpay","extension\\/module\\/pp_braintree_button","extension\\/payment\\/pp_braintree","extension\\/report\\/customer_activity","extension\\/report\\/customer_order","extension\\/report\\/customer_reward","extension\\/report\\/customer_search","extension\\/report\\/customer_transaction","extension\\/report\\/marketing","extension\\/report\\/product_purchased","extension\\/report\\/product_viewed","extension\\/report\\/sale_coupon","extension\\/report\\/sale_order","extension\\/report\\/sale_return","extension\\/report\\/sale_shipping","extension\\/report\\/sale_tax","extension\\/shipping\\/auspost","extension\\/shipping\\/ec_ship","extension\\/shipping\\/fedex","extension\\/shipping\\/flat","extension\\/shipping\\/free","extension\\/shipping\\/item","extension\\/shipping\\/parcelforce_48","extension\\/shipping\\/pickup","extension\\/shipping\\/royal_mail","extension\\/shipping\\/ups","extension\\/shipping\\/usps","extension\\/shipping\\/weight","extension\\/theme\\/default","extension\\/total\\/coupon","extension\\/total\\/credit","extension\\/total\\/handling","extension\\/total\\/klarna_fee","extension\\/total\\/low_order_fee","extension\\/total\\/reward","extension\\/total\\/shipping","extension\\/total\\/sub_total","extension\\/total\\/tax","extension\\/total\\/total","extension\\/total\\/voucher","localisation\\/country","localisation\\/currency","localisation\\/geo_zone","localisation\\/language","localisation\\/length_class","localisation\\/location","localisation\\/order_status","localisation\\/return_action","localisation\\/return_reason","localisation\\/return_status","localisation\\/stock_status","localisation\\/tax_class","localisation\\/tax_rate","localisation\\/weight_class","localisation\\/zone","mail\\/affiliate","mail\\/customer","mail\\/forgotten","mail\\/return","mail\\/reward","mail\\/transaction","marketing\\/contact","marketing\\/coupon","marketing\\/marketing","marketplace\\/api","marketplace\\/event","marketplace\\/extension","marketplace\\/install","marketplace\\/installer","marketplace\\/marketplace","marketplace\\/modification","marketplace\\/openbay","report\\/online","report\\/report","report\\/statistics","sale\\/order","sale\\/recurring","sale\\/return","sale\\/voucher","sale\\/voucher_theme","setting\\/setting","setting\\/store","startup\\/error","startup\\/event","startup\\/login","startup\\/permission","startup\\/router","startup\\/sass","startup\\/startup","tool\\/backup","tool\\/log","tool\\/upload","user\\/api","user\\/user","user\\/user_permission"],"modify":["catalog\\/attribute","catalog\\/attribute_group","catalog\\/category","catalog\\/download","catalog\\/filter","catalog\\/information","catalog\\/manufacturer","catalog\\/option","catalog\\/product","catalog\\/recurring","catalog\\/review","common\\/column_left","common\\/developer","common\\/filemanager","common\\/profile","common\\/security","customer\\/custom_field","customer\\/customer","customer\\/customer_approval","customer\\/customer_group","design\\/banner","design\\/layout","design\\/theme","design\\/translation","design\\/seo_url","event\\/statistics","event\\/theme","extension\\/advertise\\/google","extension\\/analytics\\/google","extension\\/captcha\\/basic","extension\\/captcha\\/google","extension\\/dashboard\\/activity","extension\\/dashboard\\/chart","extension\\/dashboard\\/customer","extension\\/dashboard\\/map","extension\\/dashboard\\/online","extension\\/dashboard\\/order","extension\\/dashboard\\/recent","extension\\/dashboard\\/sale","extension\\/extension\\/advertise","extension\\/extension\\/analytics","extension\\/extension\\/captcha","extension\\/extension\\/dashboard","extension\\/extension\\/feed","extension\\/extension\\/fraud","extension\\/extension\\/menu","extension\\/extension\\/module","extension\\/extension\\/payment","extension\\/extension\\/report","extension\\/extension\\/shipping","extension\\/extension\\/theme","extension\\/extension\\/total","extension\\/feed\\/google_base","extension\\/feed\\/google_sitemap","extension\\/feed\\/openbaypro","extension\\/fraud\\/fraudlabspro","extension\\/fraud\\/ip","extension\\/fraud\\/maxmind","extension\\/marketing\\/remarketing","extension\\/module\\/account","extension\\/module\\/amazon_login","extension\\/module\\/amazon_pay","extension\\/module\\/banner","extension\\/module\\/bestseller","extension\\/module\\/carousel","extension\\/module\\/category","extension\\/module\\/divido_calculator","extension\\/module\\/ebay_listing","extension\\/module\\/featured","extension\\/module\\/filter","extension\\/module\\/google_hangouts","extension\\/module\\/html","extension\\/module\\/information","extension\\/module\\/klarna_checkout_module","extension\\/module\\/latest","extension\\/module\\/laybuy_layout","extension\\/module\\/pilibaba_button","extension\\/module\\/pp_button","extension\\/module\\/pp_login","extension\\/module\\/sagepay_direct_cards","extension\\/module\\/sagepay_server_cards","extension\\/module\\/slideshow","extension\\/module\\/special","extension\\/module\\/store","extension\\/openbay\\/amazon","extension\\/openbay\\/amazon_listing","extension\\/openbay\\/amazon_product","extension\\/openbay\\/amazonus","extension\\/openbay\\/amazonus_listing","extension\\/openbay\\/amazonus_product","extension\\/openbay\\/ebay","extension\\/openbay\\/ebay_profile","extension\\/openbay\\/ebay_template","extension\\/openbay\\/etsy","extension\\/openbay\\/etsy_product","extension\\/openbay\\/etsy_shipping","extension\\/openbay\\/etsy_shop","extension\\/openbay\\/fba","extension\\/payment\\/amazon_login_pay","extension\\/payment\\/authorizenet_aim","extension\\/payment\\/authorizenet_sim","extension\\/payment\\/bank_transfer","extension\\/payment\\/bluepay_hosted","extension\\/payment\\/bluepay_redirect","extension\\/payment\\/cardconnect","extension\\/payment\\/cardinity","extension\\/payment\\/cheque","extension\\/payment\\/cod","extension\\/payment\\/divido","extension\\/payment\\/eway","extension\\/payment\\/firstdata","extension\\/payment\\/firstdata_remote","extension\\/payment\\/free_checkout","extension\\/payment\\/g2apay","extension\\/payment\\/globalpay","extension\\/payment\\/globalpay_remote","extension\\/payment\\/klarna_account","extension\\/payment\\/klarna_checkout","extension\\/payment\\/klarna_invoice","extension\\/payment\\/laybuy","extension\\/payment\\/liqpay","extension\\/payment\\/nochex","extension\\/payment\\/paymate","extension\\/payment\\/paypoint","extension\\/payment\\/payza","extension\\/payment\\/perpetual_payments","extension\\/payment\\/pilibaba","extension\\/payment\\/pp_express","extension\\/payment\\/pp_payflow","extension\\/payment\\/pp_payflow_iframe","extension\\/payment\\/pp_pro","extension\\/payment\\/pp_pro_iframe","extension\\/payment\\/pp_standard","extension\\/payment\\/realex","extension\\/payment\\/realex_remote","extension\\/payment\\/sagepay_direct","extension\\/payment\\/sagepay_server","extension\\/payment\\/sagepay_us","extension\\/payment\\/securetrading_pp","extension\\/payment\\/securetrading_ws","extension\\/payment\\/skrill","extension\\/payment\\/twocheckout","extension\\/payment\\/web_payment_software","extension\\/payment\\/worldpay","extension\\/module\\/pp_braintree_button","extension\\/payment\\/pp_braintree","extension\\/report\\/customer_activity","extension\\/report\\/customer_order","extension\\/report\\/customer_reward","extension\\/report\\/customer_search","extension\\/report\\/customer_transaction","extension\\/report\\/marketing","extension\\/report\\/product_purchased","extension\\/report\\/product_viewed","extension\\/report\\/sale_coupon","extension\\/report\\/sale_order","extension\\/report\\/sale_return","extension\\/report\\/sale_shipping","extension\\/report\\/sale_tax","extension\\/shipping\\/auspost","extension\\/shipping\\/ec_ship","extension\\/shipping\\/fedex","extension\\/shipping\\/flat","extension\\/shipping\\/free","extension\\/shipping\\/item","extension\\/shipping\\/parcelforce_48","extension\\/shipping\\/pickup","extension\\/shipping\\/royal_mail","extension\\/shipping\\/ups","extension\\/shipping\\/usps","extension\\/shipping\\/weight","extension\\/theme\\/default","extension\\/total\\/coupon","extension\\/total\\/credit","extension\\/total\\/handling","extension\\/total\\/klarna_fee","extension\\/total\\/low_order_fee","extension\\/total\\/reward","extension\\/total\\/shipping","extension\\/total\\/sub_total","extension\\/total\\/tax","extension\\/total\\/total","extension\\/total\\/voucher","localisation\\/country","localisation\\/currency","localisation\\/geo_zone","localisation\\/language","localisation\\/length_class","localisation\\/location","localisation\\/order_status","localisation\\/return_action","localisation\\/return_reason","localisation\\/return_status","localisation\\/stock_status","localisation\\/tax_class","localisation\\/tax_rate","localisation\\/weight_class","localisation\\/zone","mail\\/affiliate","mail\\/customer","mail\\/forgotten","mail\\/return","mail\\/reward","mail\\/transaction","marketing\\/contact","marketing\\/coupon","marketing\\/marketing","marketplace\\/event","marketplace\\/api","marketplace\\/extension","marketplace\\/install","marketplace\\/installer","marketplace\\/marketplace","marketplace\\/modification","marketplace\\/openbay","report\\/online","report\\/report","report\\/statistics","sale\\/order","sale\\/recurring","sale\\/return","sale\\/voucher","sale\\/voucher_theme","setting\\/setting","setting\\/store","startup\\/error","startup\\/event","startup\\/login","startup\\/permission","startup\\/router","startup\\/sass","startup\\/startup","tool\\/backup","tool\\/log","tool\\/upload","user\\/api","user\\/user","user\\/user_permission"]}'),
+(1, 'Administrator', '{\"access\":[\"catalog\\/attribute\",\"catalog\\/attribute_group\",\"catalog\\/category\",\"catalog\\/download\",\"catalog\\/filter\",\"catalog\\/information\",\"catalog\\/manufacturer\",\"catalog\\/option\",\"catalog\\/product\",\"catalog\\/recurring\",\"catalog\\/review\",\"common\\/column_left\",\"common\\/developer\",\"common\\/filemanager\",\"common\\/profile\",\"common\\/security\",\"customer\\/custom_field\",\"customer\\/customer\",\"customer\\/customer_approval\",\"customer\\/customer_group\",\"design\\/banner\",\"design\\/layout\",\"design\\/seo_url\",\"design\\/theme\",\"design\\/translation\",\"event\\/statistics\",\"event\\/theme\",\"extension\\/advertise\\/google\",\"extension\\/analytics\\/google\",\"extension\\/captcha\\/basic\",\"extension\\/captcha\\/google\",\"extension\\/dashboard\\/activity\",\"extension\\/dashboard\\/chart\",\"extension\\/dashboard\\/customer\",\"extension\\/dashboard\\/map\",\"extension\\/dashboard\\/online\",\"extension\\/dashboard\\/order\",\"extension\\/dashboard\\/recent\",\"extension\\/dashboard\\/sale\",\"extension\\/extension\\/advertise\",\"extension\\/extension\\/analytics\",\"extension\\/extension\\/captcha\",\"extension\\/extension\\/dashboard\",\"extension\\/extension\\/feed\",\"extension\\/extension\\/fraud\",\"extension\\/extension\\/menu\",\"extension\\/extension\\/module\",\"extension\\/extension\\/payment\",\"extension\\/extension\\/report\",\"extension\\/extension\\/shipping\",\"extension\\/extension\\/theme\",\"extension\\/extension\\/total\",\"extension\\/feed\\/google_base\",\"extension\\/feed\\/google_sitemap\",\"extension\\/feed\\/openbaypro\",\"extension\\/fraud\\/fraudlabspro\",\"extension\\/fraud\\/ip\",\"extension\\/fraud\\/maxmind\",\"extension\\/module\\/account\",\"extension\\/module\\/amazon_login\",\"extension\\/module\\/amazon_pay\",\"extension\\/module\\/banner\",\"extension\\/module\\/bestseller\",\"extension\\/module\\/carousel\",\"extension\\/module\\/category\",\"extension\\/module\\/divido_calculator\",\"extension\\/module\\/ebay_listing\",\"extension\\/module\\/featured\",\"extension\\/module\\/filter\",\"extension\\/module\\/google_hangouts\",\"extension\\/module\\/html\",\"extension\\/module\\/information\",\"extension\\/module\\/klarna_checkout_module\",\"extension\\/module\\/latest\",\"extension\\/module\\/laybuy_layout\",\"extension\\/module\\/pilibaba_button\",\"extension\\/module\\/pp_braintree_button\",\"extension\\/module\\/pp_button\",\"extension\\/module\\/pp_login\",\"extension\\/module\\/sagepay_direct_cards\",\"extension\\/module\\/sagepay_server_cards\",\"extension\\/module\\/slideshow\",\"extension\\/module\\/special\",\"extension\\/module\\/store\",\"extension\\/openbay\\/amazon\",\"extension\\/openbay\\/amazon_listing\",\"extension\\/openbay\\/amazon_product\",\"extension\\/openbay\\/amazonus\",\"extension\\/openbay\\/amazonus_listing\",\"extension\\/openbay\\/amazonus_product\",\"extension\\/openbay\\/ebay\",\"extension\\/openbay\\/ebay_profile\",\"extension\\/openbay\\/ebay_template\",\"extension\\/openbay\\/etsy\",\"extension\\/openbay\\/etsy_product\",\"extension\\/openbay\\/etsy_shipping\",\"extension\\/openbay\\/etsy_shop\",\"extension\\/openbay\\/fba\",\"extension\\/payment\\/amazon_login_pay\",\"extension\\/payment\\/authorizenet_aim\",\"extension\\/payment\\/authorizenet_sim\",\"extension\\/payment\\/bank_transfer\",\"extension\\/payment\\/bluepay_hosted\",\"extension\\/payment\\/bluepay_redirect\",\"extension\\/payment\\/cardconnect\",\"extension\\/payment\\/cardinity\",\"extension\\/payment\\/cheque\",\"extension\\/payment\\/cod\",\"extension\\/payment\\/divido\",\"extension\\/payment\\/eway\",\"extension\\/payment\\/firstdata\",\"extension\\/payment\\/firstdata_remote\",\"extension\\/payment\\/free_checkout\",\"extension\\/payment\\/g2apay\",\"extension\\/payment\\/globalpay\",\"extension\\/payment\\/globalpay_remote\",\"extension\\/payment\\/klarna_account\",\"extension\\/payment\\/klarna_checkout\",\"extension\\/payment\\/klarna_invoice\",\"extension\\/payment\\/laybuy\",\"extension\\/payment\\/liqpay\",\"extension\\/payment\\/nochex\",\"extension\\/payment\\/paymate\",\"extension\\/payment\\/paypoint\",\"extension\\/payment\\/payza\",\"extension\\/payment\\/perpetual_payments\",\"extension\\/payment\\/pilibaba\",\"extension\\/payment\\/pp_braintree\",\"extension\\/payment\\/pp_express\",\"extension\\/payment\\/pp_payflow\",\"extension\\/payment\\/pp_payflow_iframe\",\"extension\\/payment\\/pp_pro\",\"extension\\/payment\\/pp_pro_iframe\",\"extension\\/payment\\/pp_standard\",\"extension\\/payment\\/realex\",\"extension\\/payment\\/realex_remote\",\"extension\\/payment\\/sagepay_direct\",\"extension\\/payment\\/sagepay_server\",\"extension\\/payment\\/sagepay_us\",\"extension\\/payment\\/securetrading_pp\",\"extension\\/payment\\/securetrading_ws\",\"extension\\/payment\\/skrill\",\"extension\\/payment\\/twocheckout\",\"extension\\/payment\\/web_payment_software\",\"extension\\/payment\\/worldpay\",\"extension\\/report\\/customer_activity\",\"extension\\/report\\/customer_order\",\"extension\\/report\\/customer_reward\",\"extension\\/report\\/customer_search\",\"extension\\/report\\/customer_transaction\",\"extension\\/report\\/marketing\",\"extension\\/report\\/product_purchased\",\"extension\\/report\\/product_viewed\",\"extension\\/report\\/sale_coupon\",\"extension\\/report\\/sale_order\",\"extension\\/report\\/sale_return\",\"extension\\/report\\/sale_shipping\",\"extension\\/report\\/sale_tax\",\"extension\\/shipping\\/auspost\",\"extension\\/shipping\\/ec_ship\",\"extension\\/shipping\\/fedex\",\"extension\\/shipping\\/flat\",\"extension\\/shipping\\/free\",\"extension\\/shipping\\/item\",\"extension\\/shipping\\/parcelforce_48\",\"extension\\/shipping\\/pickup\",\"extension\\/shipping\\/royal_mail\",\"extension\\/shipping\\/ups\",\"extension\\/shipping\\/usps\",\"extension\\/shipping\\/weight\",\"extension\\/theme\\/default\",\"extension\\/total\\/coupon\",\"extension\\/total\\/credit\",\"extension\\/total\\/handling\",\"extension\\/total\\/klarna_fee\",\"extension\\/total\\/low_order_fee\",\"extension\\/total\\/reward\",\"extension\\/total\\/shipping\",\"extension\\/total\\/sub_total\",\"extension\\/total\\/tax\",\"extension\\/total\\/total\",\"extension\\/total\\/voucher\",\"localisation\\/country\",\"localisation\\/currency\",\"localisation\\/geo_zone\",\"localisation\\/language\",\"localisation\\/length_class\",\"localisation\\/location\",\"localisation\\/order_status\",\"localisation\\/return_action\",\"localisation\\/return_reason\",\"localisation\\/return_status\",\"localisation\\/stock_status\",\"localisation\\/tax_class\",\"localisation\\/tax_rate\",\"localisation\\/weight_class\",\"localisation\\/zone\",\"mail\\/affiliate\",\"mail\\/customer\",\"mail\\/forgotten\",\"mail\\/return\",\"mail\\/reward\",\"mail\\/transaction\",\"marketing\\/contact\",\"marketing\\/coupon\",\"marketing\\/marketing\",\"marketplace\\/api\",\"marketplace\\/event\",\"marketplace\\/extension\",\"marketplace\\/install\",\"marketplace\\/installer\",\"marketplace\\/marketplace\",\"marketplace\\/modification\",\"marketplace\\/openbay\",\"report\\/online\",\"report\\/report\",\"report\\/statistics\",\"sale\\/order\",\"sale\\/recurring\",\"sale\\/return\",\"sale\\/voucher\",\"sale\\/voucher_theme\",\"setting\\/setting\",\"setting\\/store\",\"startup\\/error\",\"startup\\/event\",\"startup\\/login\",\"startup\\/permission\",\"startup\\/router\",\"startup\\/sass\",\"startup\\/startup\",\"tool\\/backup\",\"tool\\/log\",\"tool\\/upload\",\"user\\/api\",\"user\\/user\",\"user\\/user_permission\",\"visites\\/visites\"],\"modify\":[\"catalog\\/attribute\",\"catalog\\/attribute_group\",\"catalog\\/category\",\"catalog\\/download\",\"catalog\\/filter\",\"catalog\\/information\",\"catalog\\/manufacturer\",\"catalog\\/option\",\"catalog\\/product\",\"catalog\\/recurring\",\"catalog\\/review\",\"common\\/column_left\",\"common\\/developer\",\"common\\/filemanager\",\"common\\/profile\",\"common\\/security\",\"customer\\/custom_field\",\"customer\\/customer\",\"customer\\/customer_approval\",\"customer\\/customer_group\",\"design\\/banner\",\"design\\/layout\",\"design\\/seo_url\",\"design\\/theme\",\"design\\/translation\",\"event\\/statistics\",\"event\\/theme\",\"extension\\/advertise\\/google\",\"extension\\/analytics\\/google\",\"extension\\/captcha\\/basic\",\"extension\\/captcha\\/google\",\"extension\\/dashboard\\/activity\",\"extension\\/dashboard\\/chart\",\"extension\\/dashboard\\/customer\",\"extension\\/dashboard\\/map\",\"extension\\/dashboard\\/online\",\"extension\\/dashboard\\/order\",\"extension\\/dashboard\\/recent\",\"extension\\/dashboard\\/sale\",\"extension\\/extension\\/advertise\",\"extension\\/extension\\/analytics\",\"extension\\/extension\\/captcha\",\"extension\\/extension\\/dashboard\",\"extension\\/extension\\/feed\",\"extension\\/extension\\/fraud\",\"extension\\/extension\\/menu\",\"extension\\/extension\\/module\",\"extension\\/extension\\/payment\",\"extension\\/extension\\/report\",\"extension\\/extension\\/shipping\",\"extension\\/extension\\/theme\",\"extension\\/extension\\/total\",\"extension\\/feed\\/google_base\",\"extension\\/feed\\/google_sitemap\",\"extension\\/feed\\/openbaypro\",\"extension\\/fraud\\/fraudlabspro\",\"extension\\/fraud\\/ip\",\"extension\\/fraud\\/maxmind\",\"extension\\/module\\/account\",\"extension\\/module\\/amazon_login\",\"extension\\/module\\/amazon_pay\",\"extension\\/module\\/banner\",\"extension\\/module\\/bestseller\",\"extension\\/module\\/carousel\",\"extension\\/module\\/category\",\"extension\\/module\\/divido_calculator\",\"extension\\/module\\/ebay_listing\",\"extension\\/module\\/featured\",\"extension\\/module\\/filter\",\"extension\\/module\\/google_hangouts\",\"extension\\/module\\/html\",\"extension\\/module\\/information\",\"extension\\/module\\/klarna_checkout_module\",\"extension\\/module\\/latest\",\"extension\\/module\\/laybuy_layout\",\"extension\\/module\\/pilibaba_button\",\"extension\\/module\\/pp_braintree_button\",\"extension\\/module\\/pp_button\",\"extension\\/module\\/pp_login\",\"extension\\/module\\/sagepay_direct_cards\",\"extension\\/module\\/sagepay_server_cards\",\"extension\\/module\\/slideshow\",\"extension\\/module\\/special\",\"extension\\/module\\/store\",\"extension\\/openbay\\/amazon\",\"extension\\/openbay\\/amazon_listing\",\"extension\\/openbay\\/amazon_product\",\"extension\\/openbay\\/amazonus\",\"extension\\/openbay\\/amazonus_listing\",\"extension\\/openbay\\/amazonus_product\",\"extension\\/openbay\\/ebay\",\"extension\\/openbay\\/ebay_profile\",\"extension\\/openbay\\/ebay_template\",\"extension\\/openbay\\/etsy\",\"extension\\/openbay\\/etsy_product\",\"extension\\/openbay\\/etsy_shipping\",\"extension\\/openbay\\/etsy_shop\",\"extension\\/openbay\\/fba\",\"extension\\/payment\\/amazon_login_pay\",\"extension\\/payment\\/authorizenet_aim\",\"extension\\/payment\\/authorizenet_sim\",\"extension\\/payment\\/bank_transfer\",\"extension\\/payment\\/bluepay_hosted\",\"extension\\/payment\\/bluepay_redirect\",\"extension\\/payment\\/cardconnect\",\"extension\\/payment\\/cardinity\",\"extension\\/payment\\/cheque\",\"extension\\/payment\\/cod\",\"extension\\/payment\\/divido\",\"extension\\/payment\\/eway\",\"extension\\/payment\\/firstdata\",\"extension\\/payment\\/firstdata_remote\",\"extension\\/payment\\/free_checkout\",\"extension\\/payment\\/g2apay\",\"extension\\/payment\\/globalpay\",\"extension\\/payment\\/globalpay_remote\",\"extension\\/payment\\/klarna_account\",\"extension\\/payment\\/klarna_checkout\",\"extension\\/payment\\/klarna_invoice\",\"extension\\/payment\\/laybuy\",\"extension\\/payment\\/liqpay\",\"extension\\/payment\\/nochex\",\"extension\\/payment\\/paymate\",\"extension\\/payment\\/paypoint\",\"extension\\/payment\\/payza\",\"extension\\/payment\\/perpetual_payments\",\"extension\\/payment\\/pilibaba\",\"extension\\/payment\\/pp_braintree\",\"extension\\/payment\\/pp_express\",\"extension\\/payment\\/pp_payflow\",\"extension\\/payment\\/pp_payflow_iframe\",\"extension\\/payment\\/pp_pro\",\"extension\\/payment\\/pp_pro_iframe\",\"extension\\/payment\\/pp_standard\",\"extension\\/payment\\/realex\",\"extension\\/payment\\/realex_remote\",\"extension\\/payment\\/sagepay_direct\",\"extension\\/payment\\/sagepay_server\",\"extension\\/payment\\/sagepay_us\",\"extension\\/payment\\/securetrading_pp\",\"extension\\/payment\\/securetrading_ws\",\"extension\\/payment\\/skrill\",\"extension\\/payment\\/twocheckout\",\"extension\\/payment\\/web_payment_software\",\"extension\\/payment\\/worldpay\",\"extension\\/report\\/customer_activity\",\"extension\\/report\\/customer_order\",\"extension\\/report\\/customer_reward\",\"extension\\/report\\/customer_search\",\"extension\\/report\\/customer_transaction\",\"extension\\/report\\/marketing\",\"extension\\/report\\/product_purchased\",\"extension\\/report\\/product_viewed\",\"extension\\/report\\/sale_coupon\",\"extension\\/report\\/sale_order\",\"extension\\/report\\/sale_return\",\"extension\\/report\\/sale_shipping\",\"extension\\/report\\/sale_tax\",\"extension\\/shipping\\/auspost\",\"extension\\/shipping\\/ec_ship\",\"extension\\/shipping\\/fedex\",\"extension\\/shipping\\/flat\",\"extension\\/shipping\\/free\",\"extension\\/shipping\\/item\",\"extension\\/shipping\\/parcelforce_48\",\"extension\\/shipping\\/pickup\",\"extension\\/shipping\\/royal_mail\",\"extension\\/shipping\\/ups\",\"extension\\/shipping\\/usps\",\"extension\\/shipping\\/weight\",\"extension\\/theme\\/default\",\"extension\\/total\\/coupon\",\"extension\\/total\\/credit\",\"extension\\/total\\/handling\",\"extension\\/total\\/klarna_fee\",\"extension\\/total\\/low_order_fee\",\"extension\\/total\\/reward\",\"extension\\/total\\/shipping\",\"extension\\/total\\/sub_total\",\"extension\\/total\\/tax\",\"extension\\/total\\/total\",\"extension\\/total\\/voucher\",\"localisation\\/country\",\"localisation\\/currency\",\"localisation\\/geo_zone\",\"localisation\\/language\",\"localisation\\/length_class\",\"localisation\\/location\",\"localisation\\/order_status\",\"localisation\\/return_action\",\"localisation\\/return_reason\",\"localisation\\/return_status\",\"localisation\\/stock_status\",\"localisation\\/tax_class\",\"localisation\\/tax_rate\",\"localisation\\/weight_class\",\"localisation\\/zone\",\"mail\\/affiliate\",\"mail\\/customer\",\"mail\\/forgotten\",\"mail\\/return\",\"mail\\/reward\",\"mail\\/transaction\",\"marketing\\/contact\",\"marketing\\/coupon\",\"marketing\\/marketing\",\"marketplace\\/api\",\"marketplace\\/event\",\"marketplace\\/extension\",\"marketplace\\/install\",\"marketplace\\/installer\",\"marketplace\\/marketplace\",\"marketplace\\/modification\",\"marketplace\\/openbay\",\"report\\/online\",\"report\\/report\",\"report\\/statistics\",\"sale\\/order\",\"sale\\/recurring\",\"sale\\/return\",\"sale\\/voucher\",\"sale\\/voucher_theme\",\"setting\\/setting\",\"setting\\/store\",\"startup\\/error\",\"startup\\/event\",\"startup\\/login\",\"startup\\/permission\",\"startup\\/router\",\"startup\\/sass\",\"startup\\/startup\",\"tool\\/backup\",\"tool\\/log\",\"tool\\/upload\",\"user\\/api\",\"user\\/user\",\"user\\/user_permission\",\"visites\\/visites\"]}'),
 (10, 'Demonstration', '');
 
 -- --------------------------------------------------------
@@ -3588,15 +4063,78 @@ INSERT INTO `tp2_user_group` (`user_group_id`, `name`, `permission`) VALUES
 -- Structure de la table `tp2_visites`
 --
 
-CREATE TABLE `tp2_visites` (
-  `id` int(10) UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `tp2_visites`;
+CREATE TABLE IF NOT EXISTS `tp2_visites` (
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `url_page` varchar(150) DEFAULT NULL,
   `titre` varchar(35) DEFAULT NULL,
-  `date_visite` DATETIME CURRENT_TIMESTAMP, NULL,
+  `date_visite` datetime DEFAULT CURRENT_TIMESTAMP,
   `adresse_ip` varchar(50) DEFAULT NULL,
-  `vues` int(5) NOT NULL DEFAULT '0',
-  `id_usager` int(11) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `id_usager` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=57 DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `tp2_visites`
+--
+
+INSERT INTO `tp2_visites` (`id`, `url_page`, `titre`, `date_visite`, `adresse_ip`, `id_usager`) VALUES
+(1, '/tp2_opencart/index.php?route=account/login', 'Account Login', '2019-12-16 22:44:37', '::1', 0),
+(2, '/tp2_opencart/index.php?route=common/home', 'Your Store', '2019-12-16 22:45:28', '::1', 0),
+(3, '/tp2_opencart/index.php?route=product/product&product_id=43', 'MacBook', '2019-12-16 22:45:35', '::1', 0),
+(4, '/tp2_opencart/index.php?route=product/product&product_id=43', 'MacBook', '2019-12-16 22:56:14', '::1', 0),
+(5, '/tp2_opencart/index.php?route=product/product&product_id=43', 'MacBook', '2019-12-16 22:56:24', '::1', 0),
+(6, '/tp2_opencart/index.php?route=account/login', 'Account Login', '2019-12-16 22:56:29', '::1', 0),
+(7, '/tp2_opencart/', 'Your Store', '2019-12-18 01:00:50', '::1', 0),
+(8, '/tp2_opencart/', 'Your Store', '2019-12-19 00:55:36', '::1', 0),
+(9, '/tp2_opencart/index.php?route=account/login', 'Account Login', '2019-12-20 13:23:46', '::1', 0),
+(10, '/tp2_opencart/', 'Your Store', '2019-12-22 18:08:02', '::1', 0),
+(11, '/tp2_opencart/index.php?route=product/category&path=20_26', 'PC', '2019-12-22 18:08:09', '::1', 0),
+(12, '/tp2_opencart/index.php?route=product/category&path=20_27', 'Mac', '2019-12-22 18:08:13', '::1', 0),
+(13, '/tp2_opencart/index.php?route=product/category&path=33', 'Cameras', '2019-12-22 18:08:16', '::1', 0),
+(14, '/tp2_opencart/index.php?route=product/product&path=33&product_id=31', 'Nikon D300', '2019-12-22 18:08:20', '::1', 0),
+(15, '/tp2_opencart/index.php?route=product/category&path=25_28', 'Monitors', '2019-12-22 18:08:27', '::1', 0),
+(16, '/tp2_opencart/index.php?route=product/product&path=25_28&product_id=42', 'Apple Cinema 30', '2019-12-22 18:08:31', '::1', 0),
+(17, '/tp2_opencart/index.php?route=product/category&path=57', 'Tablets', '2019-12-22 18:08:56', '::1', 0),
+(18, '/tp2_opencart/index.php?route=product/product&path=57&product_id=49', 'Samsung Galaxy Tab 10.1', '2019-12-22 18:09:01', '::1', 0),
+(19, '/tp2_opencart/index.php?route=product/category&path=24', 'Phones &amp; PDAs', '2019-12-22 18:09:05', '::1', 0),
+(20, '/tp2_opencart/index.php?route=product/category&path=20', 'Desktops', '2019-12-22 18:09:09', '::1', 0),
+(21, '/tp2_opencart/index.php?route=product/product&path=20&product_id=42', 'Apple Cinema 30', '2019-12-22 18:09:12', '::1', 0),
+(22, '/tp2_opencart/index.php?route=product/product&product_id=40', 'iPhone', '2019-12-22 18:09:22', '::1', 0),
+(23, '/tp2_opencart/index.php?route=product/category&path=33', 'Cameras', '2019-12-22 18:09:49', '::1', 0),
+(24, '/tp2_opencart/index.php?route=product/product&path=33&product_id=30', 'sdf', '2019-12-22 18:09:52', '::1', 0),
+(25, '/tp2_opencart/index.php?route=product/category&path=34_47', 'test 15', '2019-12-22 18:10:02', '::1', 0),
+(26, '/tp2_opencart/index.php?route=product/category&path=34_55', 'test 23', '2019-12-22 18:10:06', '::1', 0),
+(27, '/tp2_opencart/index.php?route=product/category&path=20', 'Desktops', '2019-12-22 18:10:09', '::1', 0),
+(28, '/tp2_opencart/index.php?route=product/product&path=20&product_id=29', 'Palm Treo Pro', '2019-12-22 18:10:13', '::1', 0),
+(29, '/tp2_opencart/index.php?route=product/category&path=20', 'Desktops', '2019-12-22 18:10:19', '::1', 0),
+(30, '/tp2_opencart/index.php?route=product/product&path=20&product_id=35', 'Product 8', '2019-12-22 18:10:25', '::1', 0),
+(31, '/tp2_opencart/index.php?route=product/category&path=20', 'Desktops', '2019-12-22 18:10:29', '::1', 0),
+(32, '/tp2_opencart/index.php?route=product/product&path=20&product_id=33', 'Samsung SyncMaster 941BW', '2019-12-22 18:10:34', '::1', 0),
+(33, '/tp2_opencart/index.php?route=checkout/checkout', 'Checkout', '2019-12-22 18:10:43', '::1', 0),
+(34, '/tp2_opencart/index.php?route=checkout/cart', 'Shopping Cart', '2019-12-22 18:10:47', '::1', 0),
+(35, '/tp2_opencart/index.php?route=common/home', 'Your Store', '2019-12-22 18:15:07', '::1', 0),
+(36, '/tp2_opencart/index.php?route=product/category&path=20_27', 'Mac', '2019-12-22 18:15:41', '::1', 0),
+(37, '/tp2_opencart/index.php?route=common/home', 'Your Store', '2019-12-22 18:17:55', '::1', 0),
+(38, '/tp2_opencart/index.php?route=common/home', 'Your Store', '2019-12-22 18:18:49', '::1', 0),
+(39, '/tp2_opencart/index.php?route=product/category&path=18_46', 'Macs', '2019-12-22 18:18:53', '::1', 0),
+(40, '/tp2_opencart/index.php?route=common/home', 'Your Store', '2019-12-22 18:18:55', '::1', 0),
+(41, '/tp2_opencart/index.php?route=product/category&path=57', 'Tablets', '2019-12-22 18:19:30', '::1', 0),
+(42, '/tp2_opencart/index.php?route=common/home', 'Your Store', '2019-12-22 18:19:36', '::1', 0),
+(43, '/tp2_opencart/index.php?route=product/category&path=20_27', 'Mac', '2019-12-22 18:19:39', '::1', 0),
+(44, '/tp2_opencart/index.php?route=common/home', 'Your Store', '2019-12-22 18:19:42', '::1', 0),
+(45, '/tp2_opencart/index.php?route=common/home', 'Your Store', '2019-12-22 18:19:44', '::1', 0),
+(46, '/tp2_opencart/index.php?route=product/category&path=20_26', 'PC', '2019-12-22 18:20:49', '::1', 0),
+(47, '/tp2_opencart/index.php?route=common/home', 'Your Store', '2019-12-22 18:20:58', '::1', 0),
+(48, '/tp2_opencart/index.php?route=product/category&path=20_27', 'Mac', '2019-12-22 18:22:29', '::1', 0),
+(49, '/tp2_opencart/index.php?route=product/category&path=20_26', 'PC', '2019-12-22 18:22:49', '::1', 0),
+(50, '/tp2_opencart/', 'Your Store', '2019-12-26 10:53:02', '::1', 0),
+(51, '/tp2_opencart/', 'Your Store', '2019-12-26 17:58:47', '::1', 0),
+(52, '/tp2_opencart/index.php?route=account/login', 'Account Login', '2019-12-27 12:02:46', '::1', 0),
+(53, '/tp2_opencart/index.php?route=account/login', 'Account Login', '2020-01-01 17:15:03', '::1', 0),
+(54, '/tp2_opencart/', 'Your Store', '2020-01-07 10:46:20', '::1', 0),
+(55, '/tp2_opencart/index', 'Your Store', '2020-01-07 10:47:40', '::1', 0),
+(56, '/tp2_opencart/', 'Your Store', '2020-01-08 11:36:29', '::1', 0);
 
 -- --------------------------------------------------------
 
@@ -3604,8 +4142,9 @@ CREATE TABLE `tp2_visites` (
 -- Structure de la table `tp2_voucher`
 --
 
-CREATE TABLE `tp2_voucher` (
-  `voucher_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_voucher`;
+CREATE TABLE IF NOT EXISTS `tp2_voucher` (
+  `voucher_id` int(11) NOT NULL AUTO_INCREMENT,
   `order_id` int(11) NOT NULL,
   `code` varchar(10) NOT NULL,
   `from_name` varchar(64) NOT NULL,
@@ -3616,7 +4155,8 @@ CREATE TABLE `tp2_voucher` (
   `message` text NOT NULL,
   `amount` decimal(15,4) NOT NULL,
   `status` tinyint(1) NOT NULL,
-  `date_added` datetime NOT NULL
+  `date_added` datetime NOT NULL,
+  PRIMARY KEY (`voucher_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -3625,12 +4165,14 @@ CREATE TABLE `tp2_voucher` (
 -- Structure de la table `tp2_voucher_history`
 --
 
-CREATE TABLE `tp2_voucher_history` (
-  `voucher_history_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_voucher_history`;
+CREATE TABLE IF NOT EXISTS `tp2_voucher_history` (
+  `voucher_history_id` int(11) NOT NULL AUTO_INCREMENT,
   `voucher_id` int(11) NOT NULL,
   `order_id` int(11) NOT NULL,
   `amount` decimal(15,4) NOT NULL,
-  `date_added` datetime NOT NULL
+  `date_added` datetime NOT NULL,
+  PRIMARY KEY (`voucher_history_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -3639,13 +4181,15 @@ CREATE TABLE `tp2_voucher_history` (
 -- Structure de la table `tp2_voucher_theme`
 --
 
-CREATE TABLE `tp2_voucher_theme` (
-  `voucher_theme_id` int(11) NOT NULL,
-  `image` varchar(255) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+DROP TABLE IF EXISTS `tp2_voucher_theme`;
+CREATE TABLE IF NOT EXISTS `tp2_voucher_theme` (
+  `voucher_theme_id` int(11) NOT NULL AUTO_INCREMENT,
+  `image` varchar(255) NOT NULL,
+  PRIMARY KEY (`voucher_theme_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_voucher_theme`
+-- Déchargement des données de la table `tp2_voucher_theme`
 --
 
 INSERT INTO `tp2_voucher_theme` (`voucher_theme_id`, `image`) VALUES
@@ -3659,20 +4203,25 @@ INSERT INTO `tp2_voucher_theme` (`voucher_theme_id`, `image`) VALUES
 -- Structure de la table `tp2_voucher_theme_description`
 --
 
-CREATE TABLE `tp2_voucher_theme_description` (
+DROP TABLE IF EXISTS `tp2_voucher_theme_description`;
+CREATE TABLE IF NOT EXISTS `tp2_voucher_theme_description` (
   `voucher_theme_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
-  `name` varchar(32) NOT NULL
+  `name` varchar(32) NOT NULL,
+  PRIMARY KEY (`voucher_theme_id`,`language_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_voucher_theme_description`
+-- Déchargement des données de la table `tp2_voucher_theme_description`
 --
 
 INSERT INTO `tp2_voucher_theme_description` (`voucher_theme_id`, `language_id`, `name`) VALUES
 (6, 1, 'Christmas'),
 (7, 1, 'Birthday'),
-(8, 1, 'General');
+(8, 1, 'General'),
+(6, 2, 'Christmas'),
+(7, 2, 'Birthday'),
+(8, 2, 'General');
 
 -- --------------------------------------------------------
 
@@ -3680,13 +4229,15 @@ INSERT INTO `tp2_voucher_theme_description` (`voucher_theme_id`, `language_id`, 
 -- Structure de la table `tp2_weight_class`
 --
 
-CREATE TABLE `tp2_weight_class` (
-  `weight_class_id` int(11) NOT NULL,
-  `value` decimal(15,8) NOT NULL DEFAULT '0.00000000'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+DROP TABLE IF EXISTS `tp2_weight_class`;
+CREATE TABLE IF NOT EXISTS `tp2_weight_class` (
+  `weight_class_id` int(11) NOT NULL AUTO_INCREMENT,
+  `value` decimal(15,8) NOT NULL DEFAULT '0.00000000',
+  PRIMARY KEY (`weight_class_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_weight_class`
+-- Déchargement des données de la table `tp2_weight_class`
 --
 
 INSERT INTO `tp2_weight_class` (`weight_class_id`, `value`) VALUES
@@ -3701,22 +4252,28 @@ INSERT INTO `tp2_weight_class` (`weight_class_id`, `value`) VALUES
 -- Structure de la table `tp2_weight_class_description`
 --
 
-CREATE TABLE `tp2_weight_class_description` (
+DROP TABLE IF EXISTS `tp2_weight_class_description`;
+CREATE TABLE IF NOT EXISTS `tp2_weight_class_description` (
   `weight_class_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
   `title` varchar(32) NOT NULL,
-  `unit` varchar(4) NOT NULL
+  `unit` varchar(4) NOT NULL,
+  PRIMARY KEY (`weight_class_id`,`language_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_weight_class_description`
+-- Déchargement des données de la table `tp2_weight_class_description`
 --
 
 INSERT INTO `tp2_weight_class_description` (`weight_class_id`, `language_id`, `title`, `unit`) VALUES
 (1, 1, 'Kilogram', 'kg'),
 (2, 1, 'Gram', 'g'),
 (5, 1, 'Pound ', 'lb'),
-(6, 1, 'Ounce', 'oz');
+(6, 1, 'Ounce', 'oz'),
+(1, 2, 'Kilogram', 'kg'),
+(2, 2, 'Gram', 'g'),
+(5, 2, 'Pound ', 'lb'),
+(6, 2, 'Ounce', 'oz');
 
 -- --------------------------------------------------------
 
@@ -3724,16 +4281,18 @@ INSERT INTO `tp2_weight_class_description` (`weight_class_id`, `language_id`, `t
 -- Structure de la table `tp2_zone`
 --
 
-CREATE TABLE `tp2_zone` (
-  `zone_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_zone`;
+CREATE TABLE IF NOT EXISTS `tp2_zone` (
+  `zone_id` int(11) NOT NULL AUTO_INCREMENT,
   `country_id` int(11) NOT NULL,
   `name` varchar(128) NOT NULL,
   `code` varchar(32) NOT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT '1'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `status` tinyint(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`zone_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4239 DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_zone`
+-- Déchargement des données de la table `tp2_zone`
 --
 
 INSERT INTO `tp2_zone` (`zone_id`, `country_id`, `name`, `code`, `status`) VALUES
@@ -7854,17 +8413,19 @@ INSERT INTO `tp2_zone` (`zone_id`, `country_id`, `name`, `code`, `status`) VALUE
 -- Structure de la table `tp2_zone_to_geo_zone`
 --
 
-CREATE TABLE `tp2_zone_to_geo_zone` (
-  `zone_to_geo_zone_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tp2_zone_to_geo_zone`;
+CREATE TABLE IF NOT EXISTS `tp2_zone_to_geo_zone` (
+  `zone_to_geo_zone_id` int(11) NOT NULL AUTO_INCREMENT,
   `country_id` int(11) NOT NULL,
   `zone_id` int(11) NOT NULL DEFAULT '0',
   `geo_zone_id` int(11) NOT NULL,
   `date_added` datetime NOT NULL,
-  `date_modified` datetime NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `date_modified` datetime NOT NULL,
+  PRIMARY KEY (`zone_to_geo_zone_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=110 DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tp2_zone_to_geo_zone`
+-- Déchargement des données de la table `tp2_zone_to_geo_zone`
 --
 
 INSERT INTO `tp2_zone_to_geo_zone` (`zone_to_geo_zone_id`, `country_id`, `zone_id`, `geo_zone_id`, `date_added`, `date_modified`) VALUES
@@ -7977,1324 +8538,8 @@ INSERT INTO `tp2_zone_to_geo_zone` (`zone_to_geo_zone_id`, `country_id`, `zone_i
 (107, 222, 3954, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (108, 222, 3955, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (109, 222, 3972, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+COMMIT;
 
---
--- Index pour les tables exportées
---
-
---
--- Index pour la table `tp2_address`
---
-ALTER TABLE `tp2_address`
-  ADD PRIMARY KEY (`address_id`),
-  ADD KEY `customer_id` (`customer_id`);
-
---
--- Index pour la table `tp2_api`
---
-ALTER TABLE `tp2_api`
-  ADD PRIMARY KEY (`api_id`);
-
---
--- Index pour la table `tp2_api_ip`
---
-ALTER TABLE `tp2_api_ip`
-  ADD PRIMARY KEY (`api_ip_id`);
-
---
--- Index pour la table `tp2_api_session`
---
-ALTER TABLE `tp2_api_session`
-  ADD PRIMARY KEY (`api_session_id`);
-
---
--- Index pour la table `tp2_attribute`
---
-ALTER TABLE `tp2_attribute`
-  ADD PRIMARY KEY (`attribute_id`);
-
---
--- Index pour la table `tp2_attribute_description`
---
-ALTER TABLE `tp2_attribute_description`
-  ADD PRIMARY KEY (`attribute_id`,`language_id`);
-
---
--- Index pour la table `tp2_attribute_group`
---
-ALTER TABLE `tp2_attribute_group`
-  ADD PRIMARY KEY (`attribute_group_id`);
-
---
--- Index pour la table `tp2_attribute_group_description`
---
-ALTER TABLE `tp2_attribute_group_description`
-  ADD PRIMARY KEY (`attribute_group_id`,`language_id`);
-
---
--- Index pour la table `tp2_banner`
---
-ALTER TABLE `tp2_banner`
-  ADD PRIMARY KEY (`banner_id`);
-
---
--- Index pour la table `tp2_banner_image`
---
-ALTER TABLE `tp2_banner_image`
-  ADD PRIMARY KEY (`banner_image_id`);
-
---
--- Index pour la table `tp2_cart`
---
-ALTER TABLE `tp2_cart`
-  ADD PRIMARY KEY (`cart_id`),
-  ADD KEY `cart_id` (`api_id`,`customer_id`,`session_id`,`product_id`,`recurring_id`);
-
---
--- Index pour la table `tp2_category`
---
-ALTER TABLE `tp2_category`
-  ADD PRIMARY KEY (`category_id`),
-  ADD KEY `parent_id` (`parent_id`);
-
---
--- Index pour la table `tp2_category_description`
---
-ALTER TABLE `tp2_category_description`
-  ADD PRIMARY KEY (`category_id`,`language_id`),
-  ADD KEY `name` (`name`);
-
---
--- Index pour la table `tp2_category_filter`
---
-ALTER TABLE `tp2_category_filter`
-  ADD PRIMARY KEY (`category_id`,`filter_id`);
-
---
--- Index pour la table `tp2_category_path`
---
-ALTER TABLE `tp2_category_path`
-  ADD PRIMARY KEY (`category_id`,`path_id`);
-
---
--- Index pour la table `tp2_category_to_layout`
---
-ALTER TABLE `tp2_category_to_layout`
-  ADD PRIMARY KEY (`category_id`,`store_id`);
-
---
--- Index pour la table `tp2_category_to_store`
---
-ALTER TABLE `tp2_category_to_store`
-  ADD PRIMARY KEY (`category_id`,`store_id`);
-
---
--- Index pour la table `tp2_country`
---
-ALTER TABLE `tp2_country`
-  ADD PRIMARY KEY (`country_id`);
-
---
--- Index pour la table `tp2_coupon`
---
-ALTER TABLE `tp2_coupon`
-  ADD PRIMARY KEY (`coupon_id`);
-
---
--- Index pour la table `tp2_coupon_category`
---
-ALTER TABLE `tp2_coupon_category`
-  ADD PRIMARY KEY (`coupon_id`,`category_id`);
-
---
--- Index pour la table `tp2_coupon_history`
---
-ALTER TABLE `tp2_coupon_history`
-  ADD PRIMARY KEY (`coupon_history_id`);
-
---
--- Index pour la table `tp2_coupon_product`
---
-ALTER TABLE `tp2_coupon_product`
-  ADD PRIMARY KEY (`coupon_product_id`);
-
---
--- Index pour la table `tp2_currency`
---
-ALTER TABLE `tp2_currency`
-  ADD PRIMARY KEY (`currency_id`);
-
---
--- Index pour la table `tp2_customer`
---
-ALTER TABLE `tp2_customer`
-  ADD PRIMARY KEY (`customer_id`);
-
---
--- Index pour la table `tp2_customer_activity`
---
-ALTER TABLE `tp2_customer_activity`
-  ADD PRIMARY KEY (`customer_activity_id`);
-
---
--- Index pour la table `tp2_customer_affiliate`
---
-ALTER TABLE `tp2_customer_affiliate`
-  ADD PRIMARY KEY (`customer_id`);
-
---
--- Index pour la table `tp2_customer_approval`
---
-ALTER TABLE `tp2_customer_approval`
-  ADD PRIMARY KEY (`customer_approval_id`);
-
---
--- Index pour la table `tp2_customer_group`
---
-ALTER TABLE `tp2_customer_group`
-  ADD PRIMARY KEY (`customer_group_id`);
-
---
--- Index pour la table `tp2_customer_group_description`
---
-ALTER TABLE `tp2_customer_group_description`
-  ADD PRIMARY KEY (`customer_group_id`,`language_id`);
-
---
--- Index pour la table `tp2_customer_history`
---
-ALTER TABLE `tp2_customer_history`
-  ADD PRIMARY KEY (`customer_history_id`);
-
---
--- Index pour la table `tp2_customer_ip`
---
-ALTER TABLE `tp2_customer_ip`
-  ADD PRIMARY KEY (`customer_ip_id`),
-  ADD KEY `ip` (`ip`);
-
---
--- Index pour la table `tp2_customer_login`
---
-ALTER TABLE `tp2_customer_login`
-  ADD PRIMARY KEY (`customer_login_id`),
-  ADD KEY `email` (`email`),
-  ADD KEY `ip` (`ip`);
-
---
--- Index pour la table `tp2_customer_online`
---
-ALTER TABLE `tp2_customer_online`
-  ADD PRIMARY KEY (`ip`);
-
---
--- Index pour la table `tp2_customer_reward`
---
-ALTER TABLE `tp2_customer_reward`
-  ADD PRIMARY KEY (`customer_reward_id`);
-
---
--- Index pour la table `tp2_customer_search`
---
-ALTER TABLE `tp2_customer_search`
-  ADD PRIMARY KEY (`customer_search_id`);
-
---
--- Index pour la table `tp2_customer_transaction`
---
-ALTER TABLE `tp2_customer_transaction`
-  ADD PRIMARY KEY (`customer_transaction_id`);
-
---
--- Index pour la table `tp2_customer_wishlist`
---
-ALTER TABLE `tp2_customer_wishlist`
-  ADD PRIMARY KEY (`customer_id`,`product_id`);
-
---
--- Index pour la table `tp2_custom_field`
---
-ALTER TABLE `tp2_custom_field`
-  ADD PRIMARY KEY (`custom_field_id`);
-
---
--- Index pour la table `tp2_custom_field_customer_group`
---
-ALTER TABLE `tp2_custom_field_customer_group`
-  ADD PRIMARY KEY (`custom_field_id`,`customer_group_id`);
-
---
--- Index pour la table `tp2_custom_field_description`
---
-ALTER TABLE `tp2_custom_field_description`
-  ADD PRIMARY KEY (`custom_field_id`,`language_id`);
-
---
--- Index pour la table `tp2_custom_field_value`
---
-ALTER TABLE `tp2_custom_field_value`
-  ADD PRIMARY KEY (`custom_field_value_id`);
-
---
--- Index pour la table `tp2_custom_field_value_description`
---
-ALTER TABLE `tp2_custom_field_value_description`
-  ADD PRIMARY KEY (`custom_field_value_id`,`language_id`);
-
---
--- Index pour la table `tp2_download`
---
-ALTER TABLE `tp2_download`
-  ADD PRIMARY KEY (`download_id`);
-
---
--- Index pour la table `tp2_download_description`
---
-ALTER TABLE `tp2_download_description`
-  ADD PRIMARY KEY (`download_id`,`language_id`);
-
---
--- Index pour la table `tp2_event`
---
-ALTER TABLE `tp2_event`
-  ADD PRIMARY KEY (`event_id`);
-
---
--- Index pour la table `tp2_extension`
---
-ALTER TABLE `tp2_extension`
-  ADD PRIMARY KEY (`extension_id`);
-
---
--- Index pour la table `tp2_extension_install`
---
-ALTER TABLE `tp2_extension_install`
-  ADD PRIMARY KEY (`extension_install_id`);
-
---
--- Index pour la table `tp2_extension_path`
---
-ALTER TABLE `tp2_extension_path`
-  ADD PRIMARY KEY (`extension_path_id`);
-
---
--- Index pour la table `tp2_filter`
---
-ALTER TABLE `tp2_filter`
-  ADD PRIMARY KEY (`filter_id`);
-
---
--- Index pour la table `tp2_filter_description`
---
-ALTER TABLE `tp2_filter_description`
-  ADD PRIMARY KEY (`filter_id`,`language_id`);
-
---
--- Index pour la table `tp2_filter_group`
---
-ALTER TABLE `tp2_filter_group`
-  ADD PRIMARY KEY (`filter_group_id`);
-
---
--- Index pour la table `tp2_filter_group_description`
---
-ALTER TABLE `tp2_filter_group_description`
-  ADD PRIMARY KEY (`filter_group_id`,`language_id`);
-
---
--- Index pour la table `tp2_geo_zone`
---
-ALTER TABLE `tp2_geo_zone`
-  ADD PRIMARY KEY (`geo_zone_id`);
-
---
--- Index pour la table `tp2_googleshopping_category`
---
-ALTER TABLE `tp2_googleshopping_category`
-  ADD PRIMARY KEY (`google_product_category`,`store_id`),
-  ADD KEY `category_id_store_id` (`category_id`,`store_id`);
-
---
--- Index pour la table `tp2_googleshopping_product`
---
-ALTER TABLE `tp2_googleshopping_product`
-  ADD PRIMARY KEY (`product_advertise_google_id`),
-  ADD UNIQUE KEY `product_id_store_id` (`product_id`,`store_id`);
-
---
--- Index pour la table `tp2_googleshopping_product_status`
---
-ALTER TABLE `tp2_googleshopping_product_status`
-  ADD PRIMARY KEY (`product_id`,`store_id`,`product_variation_id`);
-
---
--- Index pour la table `tp2_googleshopping_product_target`
---
-ALTER TABLE `tp2_googleshopping_product_target`
-  ADD PRIMARY KEY (`product_id`,`advertise_google_target_id`);
-
---
--- Index pour la table `tp2_googleshopping_target`
---
-ALTER TABLE `tp2_googleshopping_target`
-  ADD PRIMARY KEY (`advertise_google_target_id`),
-  ADD KEY `store_id` (`store_id`);
-
---
--- Index pour la table `tp2_information`
---
-ALTER TABLE `tp2_information`
-  ADD PRIMARY KEY (`information_id`);
-
---
--- Index pour la table `tp2_information_description`
---
-ALTER TABLE `tp2_information_description`
-  ADD PRIMARY KEY (`information_id`,`language_id`);
-
---
--- Index pour la table `tp2_information_to_layout`
---
-ALTER TABLE `tp2_information_to_layout`
-  ADD PRIMARY KEY (`information_id`,`store_id`);
-
---
--- Index pour la table `tp2_information_to_store`
---
-ALTER TABLE `tp2_information_to_store`
-  ADD PRIMARY KEY (`information_id`,`store_id`);
-
---
--- Index pour la table `tp2_language`
---
-ALTER TABLE `tp2_language`
-  ADD PRIMARY KEY (`language_id`),
-  ADD KEY `name` (`name`);
-
---
--- Index pour la table `tp2_layout`
---
-ALTER TABLE `tp2_layout`
-  ADD PRIMARY KEY (`layout_id`);
-
---
--- Index pour la table `tp2_layout_module`
---
-ALTER TABLE `tp2_layout_module`
-  ADD PRIMARY KEY (`layout_module_id`);
-
---
--- Index pour la table `tp2_layout_route`
---
-ALTER TABLE `tp2_layout_route`
-  ADD PRIMARY KEY (`layout_route_id`);
-
---
--- Index pour la table `tp2_length_class`
---
-ALTER TABLE `tp2_length_class`
-  ADD PRIMARY KEY (`length_class_id`);
-
---
--- Index pour la table `tp2_length_class_description`
---
-ALTER TABLE `tp2_length_class_description`
-  ADD PRIMARY KEY (`length_class_id`,`language_id`);
-
---
--- Index pour la table `tp2_location`
---
-ALTER TABLE `tp2_location`
-  ADD PRIMARY KEY (`location_id`),
-  ADD KEY `name` (`name`);
-
---
--- Index pour la table `tp2_manufacturer`
---
-ALTER TABLE `tp2_manufacturer`
-  ADD PRIMARY KEY (`manufacturer_id`);
-
---
--- Index pour la table `tp2_manufacturer_to_store`
---
-ALTER TABLE `tp2_manufacturer_to_store`
-  ADD PRIMARY KEY (`manufacturer_id`,`store_id`);
-
---
--- Index pour la table `tp2_marketing`
---
-ALTER TABLE `tp2_marketing`
-  ADD PRIMARY KEY (`marketing_id`);
-
---
--- Index pour la table `tp2_modification`
---
-ALTER TABLE `tp2_modification`
-  ADD PRIMARY KEY (`modification_id`);
-
---
--- Index pour la table `tp2_module`
---
-ALTER TABLE `tp2_module`
-  ADD PRIMARY KEY (`module_id`);
-
---
--- Index pour la table `tp2_option`
---
-ALTER TABLE `tp2_option`
-  ADD PRIMARY KEY (`option_id`);
-
---
--- Index pour la table `tp2_option_description`
---
-ALTER TABLE `tp2_option_description`
-  ADD PRIMARY KEY (`option_id`,`language_id`);
-
---
--- Index pour la table `tp2_option_value`
---
-ALTER TABLE `tp2_option_value`
-  ADD PRIMARY KEY (`option_value_id`);
-
---
--- Index pour la table `tp2_option_value_description`
---
-ALTER TABLE `tp2_option_value_description`
-  ADD PRIMARY KEY (`option_value_id`,`language_id`);
-
---
--- Index pour la table `tp2_order`
---
-ALTER TABLE `tp2_order`
-  ADD PRIMARY KEY (`order_id`);
-
---
--- Index pour la table `tp2_order_history`
---
-ALTER TABLE `tp2_order_history`
-  ADD PRIMARY KEY (`order_history_id`);
-
---
--- Index pour la table `tp2_order_option`
---
-ALTER TABLE `tp2_order_option`
-  ADD PRIMARY KEY (`order_option_id`);
-
---
--- Index pour la table `tp2_order_product`
---
-ALTER TABLE `tp2_order_product`
-  ADD PRIMARY KEY (`order_product_id`),
-  ADD KEY `order_id` (`order_id`);
-
---
--- Index pour la table `tp2_order_recurring`
---
-ALTER TABLE `tp2_order_recurring`
-  ADD PRIMARY KEY (`order_recurring_id`);
-
---
--- Index pour la table `tp2_order_recurring_transaction`
---
-ALTER TABLE `tp2_order_recurring_transaction`
-  ADD PRIMARY KEY (`order_recurring_transaction_id`);
-
---
--- Index pour la table `tp2_order_shipment`
---
-ALTER TABLE `tp2_order_shipment`
-  ADD PRIMARY KEY (`order_shipment_id`);
-
---
--- Index pour la table `tp2_order_status`
---
-ALTER TABLE `tp2_order_status`
-  ADD PRIMARY KEY (`order_status_id`,`language_id`);
-
---
--- Index pour la table `tp2_order_total`
---
-ALTER TABLE `tp2_order_total`
-  ADD PRIMARY KEY (`order_total_id`),
-  ADD KEY `order_id` (`order_id`);
-
---
--- Index pour la table `tp2_order_voucher`
---
-ALTER TABLE `tp2_order_voucher`
-  ADD PRIMARY KEY (`order_voucher_id`);
-
---
--- Index pour la table `tp2_product`
---
-ALTER TABLE `tp2_product`
-  ADD PRIMARY KEY (`product_id`);
-
---
--- Index pour la table `tp2_product_attribute`
---
-ALTER TABLE `tp2_product_attribute`
-  ADD PRIMARY KEY (`product_id`,`attribute_id`,`language_id`);
-
---
--- Index pour la table `tp2_product_description`
---
-ALTER TABLE `tp2_product_description`
-  ADD PRIMARY KEY (`product_id`,`language_id`),
-  ADD KEY `name` (`name`);
-
---
--- Index pour la table `tp2_product_discount`
---
-ALTER TABLE `tp2_product_discount`
-  ADD PRIMARY KEY (`product_discount_id`),
-  ADD KEY `product_id` (`product_id`);
-
---
--- Index pour la table `tp2_product_filter`
---
-ALTER TABLE `tp2_product_filter`
-  ADD PRIMARY KEY (`product_id`,`filter_id`);
-
---
--- Index pour la table `tp2_product_image`
---
-ALTER TABLE `tp2_product_image`
-  ADD PRIMARY KEY (`product_image_id`),
-  ADD KEY `product_id` (`product_id`);
-
---
--- Index pour la table `tp2_product_option`
---
-ALTER TABLE `tp2_product_option`
-  ADD PRIMARY KEY (`product_option_id`);
-
---
--- Index pour la table `tp2_product_option_value`
---
-ALTER TABLE `tp2_product_option_value`
-  ADD PRIMARY KEY (`product_option_value_id`);
-
---
--- Index pour la table `tp2_product_recurring`
---
-ALTER TABLE `tp2_product_recurring`
-  ADD PRIMARY KEY (`product_id`,`recurring_id`,`customer_group_id`);
-
---
--- Index pour la table `tp2_product_related`
---
-ALTER TABLE `tp2_product_related`
-  ADD PRIMARY KEY (`product_id`,`related_id`);
-
---
--- Index pour la table `tp2_product_reward`
---
-ALTER TABLE `tp2_product_reward`
-  ADD PRIMARY KEY (`product_reward_id`);
-
---
--- Index pour la table `tp2_product_special`
---
-ALTER TABLE `tp2_product_special`
-  ADD PRIMARY KEY (`product_special_id`),
-  ADD KEY `product_id` (`product_id`);
-
---
--- Index pour la table `tp2_product_to_category`
---
-ALTER TABLE `tp2_product_to_category`
-  ADD PRIMARY KEY (`product_id`,`category_id`),
-  ADD KEY `category_id` (`category_id`);
-
---
--- Index pour la table `tp2_product_to_download`
---
-ALTER TABLE `tp2_product_to_download`
-  ADD PRIMARY KEY (`product_id`,`download_id`);
-
---
--- Index pour la table `tp2_product_to_layout`
---
-ALTER TABLE `tp2_product_to_layout`
-  ADD PRIMARY KEY (`product_id`,`store_id`);
-
---
--- Index pour la table `tp2_product_to_store`
---
-ALTER TABLE `tp2_product_to_store`
-  ADD PRIMARY KEY (`product_id`,`store_id`);
-
---
--- Index pour la table `tp2_recurring`
---
-ALTER TABLE `tp2_recurring`
-  ADD PRIMARY KEY (`recurring_id`);
-
---
--- Index pour la table `tp2_recurring_description`
---
-ALTER TABLE `tp2_recurring_description`
-  ADD PRIMARY KEY (`recurring_id`,`language_id`);
-
---
--- Index pour la table `tp2_return`
---
-ALTER TABLE `tp2_return`
-  ADD PRIMARY KEY (`return_id`);
-
---
--- Index pour la table `tp2_return_action`
---
-ALTER TABLE `tp2_return_action`
-  ADD PRIMARY KEY (`return_action_id`,`language_id`);
-
---
--- Index pour la table `tp2_return_history`
---
-ALTER TABLE `tp2_return_history`
-  ADD PRIMARY KEY (`return_history_id`);
-
---
--- Index pour la table `tp2_return_reason`
---
-ALTER TABLE `tp2_return_reason`
-  ADD PRIMARY KEY (`return_reason_id`,`language_id`);
-
---
--- Index pour la table `tp2_return_status`
---
-ALTER TABLE `tp2_return_status`
-  ADD PRIMARY KEY (`return_status_id`,`language_id`);
-
---
--- Index pour la table `tp2_review`
---
-ALTER TABLE `tp2_review`
-  ADD PRIMARY KEY (`review_id`),
-  ADD KEY `product_id` (`product_id`);
-
---
--- Index pour la table `tp2_seo_url`
---
-ALTER TABLE `tp2_seo_url`
-  ADD PRIMARY KEY (`seo_url_id`),
-  ADD KEY `query` (`query`),
-  ADD KEY `keyword` (`keyword`);
-
---
--- Index pour la table `tp2_session`
---
-ALTER TABLE `tp2_session`
-  ADD PRIMARY KEY (`session_id`);
-
---
--- Index pour la table `tp2_setting`
---
-ALTER TABLE `tp2_setting`
-  ADD PRIMARY KEY (`setting_id`);
-
---
--- Index pour la table `tp2_shipping_courier`
---
-ALTER TABLE `tp2_shipping_courier`
-  ADD PRIMARY KEY (`shipping_courier_id`);
-
---
--- Index pour la table `tp2_statistics`
---
-ALTER TABLE `tp2_statistics`
-  ADD PRIMARY KEY (`statistics_id`);
-
---
--- Index pour la table `tp2_stock_status`
---
-ALTER TABLE `tp2_stock_status`
-  ADD PRIMARY KEY (`stock_status_id`,`language_id`);
-
---
--- Index pour la table `tp2_store`
---
-ALTER TABLE `tp2_store`
-  ADD PRIMARY KEY (`store_id`);
-
---
--- Index pour la table `tp2_tax_class`
---
-ALTER TABLE `tp2_tax_class`
-  ADD PRIMARY KEY (`tax_class_id`);
-
---
--- Index pour la table `tp2_tax_rate`
---
-ALTER TABLE `tp2_tax_rate`
-  ADD PRIMARY KEY (`tax_rate_id`);
-
---
--- Index pour la table `tp2_tax_rate_to_customer_group`
---
-ALTER TABLE `tp2_tax_rate_to_customer_group`
-  ADD PRIMARY KEY (`tax_rate_id`,`customer_group_id`);
-
---
--- Index pour la table `tp2_tax_rule`
---
-ALTER TABLE `tp2_tax_rule`
-  ADD PRIMARY KEY (`tax_rule_id`);
-
---
--- Index pour la table `tp2_theme`
---
-ALTER TABLE `tp2_theme`
-  ADD PRIMARY KEY (`theme_id`);
-
---
--- Index pour la table `tp2_translation`
---
-ALTER TABLE `tp2_translation`
-  ADD PRIMARY KEY (`translation_id`);
-
---
--- Index pour la table `tp2_upload`
---
-ALTER TABLE `tp2_upload`
-  ADD PRIMARY KEY (`upload_id`);
-
---
--- Index pour la table `tp2_user`
---
-ALTER TABLE `tp2_user`
-  ADD PRIMARY KEY (`user_id`);
-
---
--- Index pour la table `tp2_user_group`
---
-ALTER TABLE `tp2_user_group`
-  ADD PRIMARY KEY (`user_group_id`);
-
---
--- Index pour la table `tp2_visites`
---
-ALTER TABLE `tp2_visites`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `tp2_voucher`
---
-ALTER TABLE `tp2_voucher`
-  ADD PRIMARY KEY (`voucher_id`);
-
---
--- Index pour la table `tp2_voucher_history`
---
-ALTER TABLE `tp2_voucher_history`
-  ADD PRIMARY KEY (`voucher_history_id`);
-
---
--- Index pour la table `tp2_voucher_theme`
---
-ALTER TABLE `tp2_voucher_theme`
-  ADD PRIMARY KEY (`voucher_theme_id`);
-
---
--- Index pour la table `tp2_voucher_theme_description`
---
-ALTER TABLE `tp2_voucher_theme_description`
-  ADD PRIMARY KEY (`voucher_theme_id`,`language_id`);
-
---
--- Index pour la table `tp2_weight_class`
---
-ALTER TABLE `tp2_weight_class`
-  ADD PRIMARY KEY (`weight_class_id`);
-
---
--- Index pour la table `tp2_weight_class_description`
---
-ALTER TABLE `tp2_weight_class_description`
-  ADD PRIMARY KEY (`weight_class_id`,`language_id`);
-
---
--- Index pour la table `tp2_zone`
---
-ALTER TABLE `tp2_zone`
-  ADD PRIMARY KEY (`zone_id`);
-
---
--- Index pour la table `tp2_zone_to_geo_zone`
---
-ALTER TABLE `tp2_zone_to_geo_zone`
-  ADD PRIMARY KEY (`zone_to_geo_zone_id`);
-
---
--- AUTO_INCREMENT pour les tables exportées
---
-
---
--- AUTO_INCREMENT pour la table `tp2_address`
---
-ALTER TABLE `tp2_address`
-  MODIFY `address_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `tp2_api`
---
-ALTER TABLE `tp2_api`
-  MODIFY `api_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
---
--- AUTO_INCREMENT pour la table `tp2_api_ip`
---
-ALTER TABLE `tp2_api_ip`
-  MODIFY `api_ip_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `tp2_api_session`
---
-ALTER TABLE `tp2_api_session`
-  MODIFY `api_session_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `tp2_attribute`
---
-ALTER TABLE `tp2_attribute`
-  MODIFY `attribute_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
---
--- AUTO_INCREMENT pour la table `tp2_attribute_group`
---
-ALTER TABLE `tp2_attribute_group`
-  MODIFY `attribute_group_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
---
--- AUTO_INCREMENT pour la table `tp2_banner`
---
-ALTER TABLE `tp2_banner`
-  MODIFY `banner_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
---
--- AUTO_INCREMENT pour la table `tp2_banner_image`
---
-ALTER TABLE `tp2_banner_image`
-  MODIFY `banner_image_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
---
--- AUTO_INCREMENT pour la table `tp2_cart`
---
-ALTER TABLE `tp2_cart`
-  MODIFY `cart_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `tp2_category`
---
-ALTER TABLE `tp2_category`
-  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
---
--- AUTO_INCREMENT pour la table `tp2_country`
---
-ALTER TABLE `tp2_country`
-  MODIFY `country_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=258;
---
--- AUTO_INCREMENT pour la table `tp2_coupon`
---
-ALTER TABLE `tp2_coupon`
-  MODIFY `coupon_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
---
--- AUTO_INCREMENT pour la table `tp2_coupon_history`
---
-ALTER TABLE `tp2_coupon_history`
-  MODIFY `coupon_history_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `tp2_coupon_product`
---
-ALTER TABLE `tp2_coupon_product`
-  MODIFY `coupon_product_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `tp2_currency`
---
-ALTER TABLE `tp2_currency`
-  MODIFY `currency_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
---
--- AUTO_INCREMENT pour la table `tp2_customer`
---
-ALTER TABLE `tp2_customer`
-  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `tp2_customer_activity`
---
-ALTER TABLE `tp2_customer_activity`
-  MODIFY `customer_activity_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `tp2_customer_approval`
---
-ALTER TABLE `tp2_customer_approval`
-  MODIFY `customer_approval_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `tp2_customer_group`
---
-ALTER TABLE `tp2_customer_group`
-  MODIFY `customer_group_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
---
--- AUTO_INCREMENT pour la table `tp2_customer_history`
---
-ALTER TABLE `tp2_customer_history`
-  MODIFY `customer_history_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `tp2_customer_ip`
---
-ALTER TABLE `tp2_customer_ip`
-  MODIFY `customer_ip_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `tp2_customer_login`
---
-ALTER TABLE `tp2_customer_login`
-  MODIFY `customer_login_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `tp2_customer_reward`
---
-ALTER TABLE `tp2_customer_reward`
-  MODIFY `customer_reward_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `tp2_customer_search`
---
-ALTER TABLE `tp2_customer_search`
-  MODIFY `customer_search_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `tp2_customer_transaction`
---
-ALTER TABLE `tp2_customer_transaction`
-  MODIFY `customer_transaction_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `tp2_custom_field`
---
-ALTER TABLE `tp2_custom_field`
-  MODIFY `custom_field_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `tp2_custom_field_value`
---
-ALTER TABLE `tp2_custom_field_value`
-  MODIFY `custom_field_value_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `tp2_download`
---
-ALTER TABLE `tp2_download`
-  MODIFY `download_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `tp2_event`
---
-ALTER TABLE `tp2_event`
-  MODIFY `event_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
---
--- AUTO_INCREMENT pour la table `tp2_extension`
---
-ALTER TABLE `tp2_extension`
-  MODIFY `extension_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
---
--- AUTO_INCREMENT pour la table `tp2_extension_install`
---
-ALTER TABLE `tp2_extension_install`
-  MODIFY `extension_install_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `tp2_extension_path`
---
-ALTER TABLE `tp2_extension_path`
-  MODIFY `extension_path_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `tp2_filter`
---
-ALTER TABLE `tp2_filter`
-  MODIFY `filter_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `tp2_filter_group`
---
-ALTER TABLE `tp2_filter_group`
-  MODIFY `filter_group_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `tp2_geo_zone`
---
-ALTER TABLE `tp2_geo_zone`
-  MODIFY `geo_zone_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
---
--- AUTO_INCREMENT pour la table `tp2_googleshopping_product`
---
-ALTER TABLE `tp2_googleshopping_product`
-  MODIFY `product_advertise_google_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `tp2_information`
---
-ALTER TABLE `tp2_information`
-  MODIFY `information_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
---
--- AUTO_INCREMENT pour la table `tp2_language`
---
-ALTER TABLE `tp2_language`
-  MODIFY `language_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
---
--- AUTO_INCREMENT pour la table `tp2_layout`
---
-ALTER TABLE `tp2_layout`
-  MODIFY `layout_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
---
--- AUTO_INCREMENT pour la table `tp2_layout_module`
---
-ALTER TABLE `tp2_layout_module`
-  MODIFY `layout_module_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
---
--- AUTO_INCREMENT pour la table `tp2_layout_route`
---
-ALTER TABLE `tp2_layout_route`
-  MODIFY `layout_route_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
---
--- AUTO_INCREMENT pour la table `tp2_length_class`
---
-ALTER TABLE `tp2_length_class`
-  MODIFY `length_class_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
---
--- AUTO_INCREMENT pour la table `tp2_location`
---
-ALTER TABLE `tp2_location`
-  MODIFY `location_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `tp2_manufacturer`
---
-ALTER TABLE `tp2_manufacturer`
-  MODIFY `manufacturer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
---
--- AUTO_INCREMENT pour la table `tp2_marketing`
---
-ALTER TABLE `tp2_marketing`
-  MODIFY `marketing_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `tp2_modification`
---
-ALTER TABLE `tp2_modification`
-  MODIFY `modification_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `tp2_module`
---
-ALTER TABLE `tp2_module`
-  MODIFY `module_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
---
--- AUTO_INCREMENT pour la table `tp2_option`
---
-ALTER TABLE `tp2_option`
-  MODIFY `option_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
---
--- AUTO_INCREMENT pour la table `tp2_option_value`
---
-ALTER TABLE `tp2_option_value`
-  MODIFY `option_value_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
---
--- AUTO_INCREMENT pour la table `tp2_order`
---
-ALTER TABLE `tp2_order`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `tp2_order_history`
---
-ALTER TABLE `tp2_order_history`
-  MODIFY `order_history_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `tp2_order_option`
---
-ALTER TABLE `tp2_order_option`
-  MODIFY `order_option_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `tp2_order_product`
---
-ALTER TABLE `tp2_order_product`
-  MODIFY `order_product_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `tp2_order_recurring`
---
-ALTER TABLE `tp2_order_recurring`
-  MODIFY `order_recurring_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `tp2_order_recurring_transaction`
---
-ALTER TABLE `tp2_order_recurring_transaction`
-  MODIFY `order_recurring_transaction_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `tp2_order_shipment`
---
-ALTER TABLE `tp2_order_shipment`
-  MODIFY `order_shipment_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `tp2_order_status`
---
-ALTER TABLE `tp2_order_status`
-  MODIFY `order_status_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
---
--- AUTO_INCREMENT pour la table `tp2_order_total`
---
-ALTER TABLE `tp2_order_total`
-  MODIFY `order_total_id` int(10) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `tp2_order_voucher`
---
-ALTER TABLE `tp2_order_voucher`
-  MODIFY `order_voucher_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `tp2_product`
---
-ALTER TABLE `tp2_product`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
---
--- AUTO_INCREMENT pour la table `tp2_product_discount`
---
-ALTER TABLE `tp2_product_discount`
-  MODIFY `product_discount_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=441;
---
--- AUTO_INCREMENT pour la table `tp2_product_image`
---
-ALTER TABLE `tp2_product_image`
-  MODIFY `product_image_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2352;
---
--- AUTO_INCREMENT pour la table `tp2_product_option`
---
-ALTER TABLE `tp2_product_option`
-  MODIFY `product_option_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=227;
---
--- AUTO_INCREMENT pour la table `tp2_product_option_value`
---
-ALTER TABLE `tp2_product_option_value`
-  MODIFY `product_option_value_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
---
--- AUTO_INCREMENT pour la table `tp2_product_reward`
---
-ALTER TABLE `tp2_product_reward`
-  MODIFY `product_reward_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=546;
---
--- AUTO_INCREMENT pour la table `tp2_product_special`
---
-ALTER TABLE `tp2_product_special`
-  MODIFY `product_special_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=440;
---
--- AUTO_INCREMENT pour la table `tp2_recurring`
---
-ALTER TABLE `tp2_recurring`
-  MODIFY `recurring_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `tp2_return`
---
-ALTER TABLE `tp2_return`
-  MODIFY `return_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `tp2_return_action`
---
-ALTER TABLE `tp2_return_action`
-  MODIFY `return_action_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
---
--- AUTO_INCREMENT pour la table `tp2_return_history`
---
-ALTER TABLE `tp2_return_history`
-  MODIFY `return_history_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `tp2_return_reason`
---
-ALTER TABLE `tp2_return_reason`
-  MODIFY `return_reason_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
---
--- AUTO_INCREMENT pour la table `tp2_return_status`
---
-ALTER TABLE `tp2_return_status`
-  MODIFY `return_status_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
---
--- AUTO_INCREMENT pour la table `tp2_review`
---
-ALTER TABLE `tp2_review`
-  MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `tp2_seo_url`
---
-ALTER TABLE `tp2_seo_url`
-  MODIFY `seo_url_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=844;
---
--- AUTO_INCREMENT pour la table `tp2_setting`
---
-ALTER TABLE `tp2_setting`
-  MODIFY `setting_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=204;
---
--- AUTO_INCREMENT pour la table `tp2_statistics`
---
-ALTER TABLE `tp2_statistics`
-  MODIFY `statistics_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
---
--- AUTO_INCREMENT pour la table `tp2_stock_status`
---
-ALTER TABLE `tp2_stock_status`
-  MODIFY `stock_status_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
---
--- AUTO_INCREMENT pour la table `tp2_store`
---
-ALTER TABLE `tp2_store`
-  MODIFY `store_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `tp2_tax_class`
---
-ALTER TABLE `tp2_tax_class`
-  MODIFY `tax_class_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
---
--- AUTO_INCREMENT pour la table `tp2_tax_rate`
---
-ALTER TABLE `tp2_tax_rate`
-  MODIFY `tax_rate_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
---
--- AUTO_INCREMENT pour la table `tp2_tax_rule`
---
-ALTER TABLE `tp2_tax_rule`
-  MODIFY `tax_rule_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=129;
---
--- AUTO_INCREMENT pour la table `tp2_theme`
---
-ALTER TABLE `tp2_theme`
-  MODIFY `theme_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `tp2_translation`
---
-ALTER TABLE `tp2_translation`
-  MODIFY `translation_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `tp2_upload`
---
-ALTER TABLE `tp2_upload`
-  MODIFY `upload_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `tp2_user`
---
-ALTER TABLE `tp2_user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
---
--- AUTO_INCREMENT pour la table `tp2_user_group`
---
-ALTER TABLE `tp2_user_group`
-  MODIFY `user_group_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
---
--- AUTO_INCREMENT pour la table `tp2_visites`
---
-ALTER TABLE `tp2_visites`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `tp2_voucher`
---
-ALTER TABLE `tp2_voucher`
-  MODIFY `voucher_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `tp2_voucher_history`
---
-ALTER TABLE `tp2_voucher_history`
-  MODIFY `voucher_history_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `tp2_voucher_theme`
---
-ALTER TABLE `tp2_voucher_theme`
-  MODIFY `voucher_theme_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
---
--- AUTO_INCREMENT pour la table `tp2_weight_class`
---
-ALTER TABLE `tp2_weight_class`
-  MODIFY `weight_class_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
---
--- AUTO_INCREMENT pour la table `tp2_zone`
---
-ALTER TABLE `tp2_zone`
-  MODIFY `zone_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4239;
---
--- AUTO_INCREMENT pour la table `tp2_zone_to_geo_zone`
---
-ALTER TABLE `tp2_zone_to_geo_zone`
-  MODIFY `zone_to_geo_zone_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=110;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

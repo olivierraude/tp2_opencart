@@ -19,7 +19,7 @@ $_['text_uk']							= 'Angleterre';
 $_['text_de']							= 'Allemagne';
 $_['text_fr']							= 'France';
 $_['text_it']							= 'Italie';
-$_['text_es']							= 'Espagne'
+$_['text_es']							= 'Espagne';
 
 // Column
 $_['column_asin']						= 'ASIN';

@@ -75,7 +75,7 @@ $_['text_failed_title']             = 'L&#8217;annonce de votre article a &eacut
 $_['text_failed_msg1']              = 'Il y a plusieurs raisons pour cela.';
 $_['text_failed_li1']               = 'Si vous &ecirc;tes un nouveau vendeur eBay (ou n&#8217;avez pas vendu beaucoup dans le pass&eacute;) - vous aurez besoin de contacter eBay afin de retirer vos restrictions vendeur';
 $_['text_failed_li2']               = 'Vous n&#8217;&ecirc;tes pas abonn&eacute; au Gestionnaire de ventes Pro sur eBay - ce qui est une obligation.';
-$_['text_failed_li3']               = 'Votre compte Pro OpenBay est suspendu, v&eacute;rifier via votre espace d&#8217;administration du module sous l'onglet "Mon compte"';
+$_['text_failed_li3']               = 'Votre compte Pro OpenBay est suspendu, v&eacute;rifier via votre espace d&#8217;administration du module sous l\'onglet "Mon compte"';
 $_['text_failed_contact']           = 'Si cette erreur persiste, veuillez contacter le support apr&egrave;s vous &ecirc;tre assu&eacute; de ne trouver aucune r&eacute;ponse ci-dessous.';
 $_['text_template_images']          = 'Th&egrave;me images';
 $_['text_ebay_images']              = 'Images eBay';
@@ -145,7 +145,7 @@ $_['tab_payment']              		= 'Paiement';
 $_['tab_returns']              		= 'Retours';
 
 // Help
-$_['help_quantity_reserve']         = 'Entrez un montant infé&eacute;rieur si vous voulez maintenir un niveau de stock inf&eacute;rieur sur eBay';
+$_['help_quantity_reserve']         = 'Entrez un montant infï¿½&eacute;rieur si vous voulez maintenir un niveau de stock inf&eacute;rieur sur eBay';
 $_['help_price_ex_tax']        		= 'Votre prix d&#8217;article standard excluant les taxes. Cette valeur n&#8217;est pas envoy&eacute; &agrave; eBay.';
 $_['help_price_inc_tax']       		= 'Cette valeur est envoy&eacute; &agrave; eBay et sera le prix &agrave; payer par l&#8217;acheteur.';
 $_['help_private']             		= 'Masquer le nom d&#8217;utilisateur de l&#8217;acheteur';

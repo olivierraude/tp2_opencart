@@ -42,7 +42,8 @@ class ModelExtensionReportVisites extends Model {
 
         $sql = "SELECT titre, url_page, COUNT(*) AS nombreURL FROM " . DB_PREFIX . "visites 
         GROUP BY url_page 
-        ORDER BY nombreURL DESC";
+        ORDER BY nombreURL DESC
+        LIMIT 15";
         
         if (isset($data['start']) || isset($data['limit'])) {
             if ($data['start'] < 0) {

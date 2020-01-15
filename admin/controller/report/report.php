@@ -25,31 +25,8 @@ class ControllerReportReport extends Controller {
 			$data['code'] = '';
 		}
 
-//À intégrer dans le fichier language
 		// Reports
 		$data['reports'] = array();
-
-		// ajout des rapports du tp2 dans la barre de sélection des rapports
-		$code = 'pages_visitees';
-		$this->load->language('extension/report/' . $code, 'extension');
-		$data['reports'][] = array(
-			'text'       => $this->language->get('extension')->get('heading_title'),
-			'code'       => $code,
-			//'sort_order' => $this->config->get('report_' . $code . '_sort_order'),
-			'sort_order' => null,
-			'href'       => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'] . '&code=' . $code, true)
-			//'href'       => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'], true)
-		);
-		
-		$code = 'visites';
-		$this->load->language('extension/report/' . $code, 'extension');
-		$data['reports'][] = array(
-			'text'       => $this->language->get('extension')->get('heading_title'),
-			'code'       => $code,
-			//'sort_order' => $this->config->get('report_' . $code . '_sort_order'),
-			'sort_order' => null,
-			'href'       => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'] . '&code=' . $code, true)
-		);
 
 		$this->load->model('setting/extension');
 

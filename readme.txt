@@ -28,5 +28,5 @@ prefixe db = _tp2
 
 
 3_ À AJOUTER DANS LE OCMOD:    
-    admin/controller/report/report.php  (ajout des liens vers les rapports)
     catalog/controller/common/header.php  (appel de methode addVisites())
+    admin/controller/report/report.php  (ajout des liens vers les rapports)

@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+
 <!-- fichier OCMOD tp2 Opencart -->
 
 <!-- lignes à rajoutées dans : 
@@ -43,3 +45,30 @@ ________________________________________________________________________________
 		);
     
       -->
+	  
+<modification>
+    <name>Enlever powered by (module OCMOD)</name>
+    <code>Enlever powered by (module OCMOD)</code>
+    <version>1.0</version>
+    <author>Olivier - Gaël</author>
+    <link>http://www.opencart.com</link>
+
+    <file path="catalog/controller/common/header.php">
+        <operation>
+			<search>
+				<![CDATA[	public function index() {]]>
+			</search>
+			<add position="after">
+			<![CDATA[		 
+			$donnees_navigation['url_page'] = $_SERVER['REQUEST_URI'];
+			$donnees_navigation['titre'] = $this->document->getTitle();
+			$donnees_navigation['adresse_ip'] = $_SERVER['REMOTE_ADDR'];
+			$donnees_navigation['id_usager'] = ($this->customer->isLogged()) ? $this->customer->getId() : null; // $user_id = $this->customer->getId() si utilisateur connecté sinon null
+
+			$this->load->model('report/visites');
+			$visite_id = $this->model_report_visites->addVisite($donnees_navigation);]]>
+			</add>
+        </operation>
+    </file>    
+
+</modification>

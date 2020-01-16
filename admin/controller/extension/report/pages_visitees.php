@@ -9,10 +9,6 @@ class ControllerExtensionReportPagesVisitees extends Controller {
 
 		$results = $this->model_extension_report_visites->getAllVisites();
 
-		// $this->load->model('visites/visites');
-
-		// $results = $this->model_visites_visites->getAllVisites();
-
 		foreach ($results as $result) {
 			$data['pages'][] = array(
 				'titre'         => $result['titre'],

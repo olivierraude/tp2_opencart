@@ -1,8 +1,8 @@
 #TP2 OPENCART
-###ajout d'un module OCMOD surveillant les visites sur le site
+##ajout d'un module OCMOD surveillant les visites sur le site
 
 
-####Procédure installation:
+###Procédure installation:
 
 1 - installer OPENCART
     nom de la base de données = tp2 
@@ -14,17 +14,17 @@
 
 
 
-####Fichiers Créés
-    ######modèle : 
+###Fichiers Créés
+    #####modèle : 
         * catalog/model/reports/visites.php
         * admin/model/extension/report/visites.php
-    ######controleur:
+    #####controleur:
         * admin/controller/extension/report/pages_visitees.php
         * admin/controller/extension/report/visites.php
-    ######vue:
+    #####vue:
         * admin/view/template/extension/report/pages_visitees.twig
         * admin/view/template/extension/report/visites_info.twig
-    #####langage:
+    ####langage:
         * admin/langage/en-gb/extension/report/pages_visitees.php
         * admin/langage/en-gb/extension/report/visites.php
         * admin/langage/fr-fr/extension/report/pages_visitees.php   

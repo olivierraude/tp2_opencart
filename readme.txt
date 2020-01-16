@@ -17,7 +17,7 @@ prefixe db = _tp2
 2_ CRÉATION DE FICHIER 
     modèle : 
         catalog/model/reports/visites.php
-        admin/model/visites.php (emplacement correcte ?)
+        admin/model/extension/report/visites.php
     controleur:
         admin/controller/extension/report/pages_visitees.php
     vue:

@@ -33,6 +33,6 @@
 
 
 
-#### Fichiers ajoutées dans le OCMOD:    
+### Fichiers ajoutées dans le OCMOD:    
     * catalog/controller/common/header.php  (appel de methode addVisites())
     * admin/controller/report/report.php  (ajout des liens vers les rapports)

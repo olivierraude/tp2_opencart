@@ -7,8 +7,10 @@
 1. installer OPENCART
     * nom de la base de données = tp2 
     * prefixe db = _tp2
+    * username = master
+    * password = master
 2. installer le pack fr
-3. installer la pack bd 'visites'
+3. installer la pack BD 'visites'
 4. copier les fichiers visites
 5. installer le OCMOD visites
 

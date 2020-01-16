@@ -1,14 +1,8 @@
-_____________________
-
-    TP2 OPENCART
-
-    branche gael_v2
-_____________________
-
-ajout d'un module OCMOD surveillant les visites sur le site
+#TP2 OPENCART
+###ajout d'un module OCMOD surveillant les visites sur le site
 
 
-Procédure installation:
+####Procédure installation:
 
 1 - installer OPENCART
     nom de la base de données = tp2 
@@ -20,25 +14,23 @@ Procédure installation:
 
 
 
-1_ BD
-
-2_ CRÉATION DE FICHIER 
-    modèle : 
-        catalog/model/reports/visites.php
-        admin/model/extension/report/visites.php
-    controleur:
-        admin/controller/extension/report/pages_visitees.php
-        admin/controller/extension/report/visites.php
-    vue:
-        admin/view/template/extension/report/pages_visitees.twig
-        admin/view/template/extension/report/visites_info.twig
-    langage:
-        admin/langage/en-gb/extension/report/pages_visitees.php
-        admin/langage/en-gb/extension/report/visites.php
-        admin/langage/fr-fr/extension/report/pages_visitees.php   
-        admin/langage/fr-fr/extension/report/visites.php   
+####Fichiers Créés
+    ######modèle : 
+        * catalog/model/reports/visites.php
+        * admin/model/extension/report/visites.php
+    ######controleur:
+        * admin/controller/extension/report/pages_visitees.php
+        * admin/controller/extension/report/visites.php
+    ######vue:
+        * admin/view/template/extension/report/pages_visitees.twig
+        * admin/view/template/extension/report/visites_info.twig
+    #####langage:
+        * admin/langage/en-gb/extension/report/pages_visitees.php
+        * admin/langage/en-gb/extension/report/visites.php
+        * admin/langage/fr-fr/extension/report/pages_visitees.php   
+        * admin/langage/fr-fr/extension/report/visites.php   
 
 
-3_ À AJOUTER DANS LE OCMOD:    
-    catalog/controller/common/header.php  (appel de methode addVisites())
-    admin/controller/report/report.php  (ajout des liens vers les rapports)
+####Fichiers ajoutées dans le OCMOD:    
+    * catalog/controller/common/header.php  (appel de methode addVisites())
+    * admin/controller/report/report.php  (ajout des liens vers les rapports)

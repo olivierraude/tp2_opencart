@@ -1,42 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<!-- fichier OCMOD tp2 Opencart -->
-
-<!-- lignes à rajoutées dans : 
-    - fichier catalog/controller/common/header.php (Gaël)
-    (à rajouter a partir de la ligne 5)
-		
-		 $donnees_navigation['url_page'] = $_SERVER['REQUEST_URI'];
-		 $donnees_navigation['titre'] = $this->document->getTitle();
-		 $donnees_navigation['adresse_ip'] = $_SERVER['REMOTE_ADDR'];
-		 $donnees_navigation['id_usager'] = ($this->customer->isLogged()) ? $this->customer->getId() : null; // $user_id = $this->customer->getId() si utilisateur connecté sinon null
-		 $this->load->model('report/visites');
-		 $visite_id = $this->model_report_visites->addVisite($donnees_navigation);
-________________________________________________________________________________________________________
-    - fichier admin/controller/report/report.php (Olivier)
-    (à rajouter à partir de la ligne 30)
-		$code = 'pages_visitees';
-		$this->load->language('extension/report/' . $code, 'extension');
-		$data['reports'][] = array(
-			'text'       => $this->language->get('extension')->get('heading_title'),
-			'code'       => $code,
-			//'sort_order' => $this->config->get('report_' . $code . '_sort_order'),
-			'sort_order' => null,
-			'href'       => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'] . '&code=' . $code, true)
-			//'href'       => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'], true)
-		);
-		
-		$code = 'visites';
-		$this->load->language('extension/report/' . $code, 'extension');
-		$data['reports'][] = array(
-			'text'       => $this->language->get('extension')->get('heading_title'),
-			'code'       => $code,
-			//'sort_order' => $this->config->get('report_' . $code . '_sort_order'),
-			'sort_order' => null,
-			'href'       => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'] . '&code=' . $code, true)
-		);
-    
-      -->
 	  
 <modification>
     <name>ajout enregistrement visites</name>

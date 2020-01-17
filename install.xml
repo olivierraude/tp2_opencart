@@ -60,6 +60,35 @@ ________________________________________________________________________________
 			$visite_id = $this->model_report_visites->addVisite($donnees_navigation);]]>
 			</add>
         </operation>
-    </file>    
+    </file>
+	<file path="admin/controller/report/report.php">
+    <operation>
+    <search>
+    <![CDATA[$data['reports'] = array();]]>
+    </search>
+    <add position="after" offset="1">
+    <![CDATA[$code = 'pages_visitees';
+		$this->load->language('extension/report/' . $code, 'extension');
+		$data['reports'][] = array(
+			'text'       => $this->language->get('extension')->get('heading_title'),
+			'code'       => $code,
+			//'sort_order' => $this->config->get('report_' . $code . '_sort_order'),
+			'sort_order' => null,
+			'href'       => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'] . '&code=' . $code, true)
+			//'href'       => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'], true)
+		);
+		
+		$code = 'visites';
+		$this->load->language('extension/report/' . $code, 'extension');
+		$data['reports'][] = array(
+			'text'       => $this->language->get('extension')->get('heading_title'),
+			'code'       => $code,
+			//'sort_order' => $this->config->get('report_' . $code . '_sort_order'),
+			'sort_order' => null,
+			'href'       => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'] . '&code=' . $code, true)
+		);]]>
+    </add>
+    </operation>
+    </file>
 
 </modification>

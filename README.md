@@ -13,31 +13,28 @@
 3. copier les fichiers visites
 4. installer la pack BD 'visites'
 5. installer le OCMOD visites
-
-### A rajouter pour le module DB
-   * admin/controller/extension/module/visites.php
-   * admin/model/extension/module/visites.php
-   * admin/language/en-gb/extension/module/visites.php
-   * admin/language/fr-fr/extension/module/visites.php
-   * admin/view/template/extension/module/visites.php
    
-### Fichiers Créés
+### Fichiers créés
 
 ##### modèle : 
     * catalog/model/reports/visites.php
     * admin/model/extension/report/visites.php
+    * admin/model/extension/module/visites.php
 ##### controleur:
     * admin/controller/extension/report/pages_visitees.php
     * admin/controller/extension/report/visites.php
+    * admin/controller/extension/module/visites.php
 ##### vue:
     * admin/view/template/extension/report/pages_visitees.twig
     * admin/view/template/extension/report/visites_info.twig
+    * admin/view/template/extension/module/visites.twig
 #### langage:
     * admin/langage/en-gb/extension/report/pages_visitees.php
     * admin/langage/en-gb/extension/report/visites.php
+    * admin/language/en-gb/extension/module/visites.php
     * admin/langage/fr-fr/extension/report/pages_visitees.php   
-    * admin/langage/fr-fr/extension/report/visites.php   
-
+    * admin/langage/fr-fr/extension/report/visites.php
+    * admin/language/fr-fr/extension/module/visites.php
 
 
 ### Fichiers ajoutées dans le OCMOD:    

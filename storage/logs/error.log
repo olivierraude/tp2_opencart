@@ -33,3 +33,4 @@
 2020-01-08 18:52:35 - PHP Warning:  mysqli::__construct(): (HY000/2006): MySQL server has gone away in /Applications/MAMP/htdocs/tp2_opencart/system/library/db/mysqli.php on line 7
 2020-01-08 18:52:35 - PHP Warning:  DB\MySQLi::__construct(): Couldn't fetch mysqli in /Applications/MAMP/htdocs/tp2_opencart/system/library/db/mysqli.php on line 10
 2020-01-08 18:52:35 - PHP Warning:  DB\MySQLi::__construct(): Couldn't fetch mysqli in /Applications/MAMP/htdocs/tp2_opencart/system/library/db/mysqli.php on line 10
+2020-01-17 0:19:13 - PHP Warning:  Invalid argument supplied for foreach() in C:\wamp64\www\tp2_opencart\system\engine\loader.php on line 83

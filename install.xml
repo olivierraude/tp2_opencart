@@ -39,8 +39,8 @@ ________________________________________________________________________________
       -->
 	  
 <modification>
-    <name>Enlever powered by (module OCMOD)</name>
-    <code>Enlever powered by (module OCMOD)</code>
+    <name>ajout enregistrement visites</name>
+    <code>ajout enregistrement visites</code>
     <version>1.0</version>
     <author>Olivier - Gaël</author>
     <link>http://www.opencart.com</link>

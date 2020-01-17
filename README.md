@@ -15,7 +15,9 @@
    * sur le site opencart admin, ouvrir extensions / extensions
    * sélectionner modules
    * sur Visites , cliquez sur '+'
-5. installer le OCMOD visites
+5. installer le OCMOD visites:
+   * sur le site opencart admin, ouvrir extensions / installer
+   * cliquez upload / choisir le visites.ocmod.zip
    
 ### Fichiers créés
 

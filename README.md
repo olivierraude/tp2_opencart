@@ -12,9 +12,9 @@
 2. installer le pack fr
 3. copier les fichiers visites dans le repertoire opencart
 4. installer le module 'visites' (installation de la table visite)
- * sur le site opencart admin, ouvrir extensions / extensions
- * sélectionner modules
- * sur Visites , cliquez sur '+'
+   * sur le site opencart admin, ouvrir extensions / extensions
+   * sélectionner modules
+   * sur Visites , cliquez sur '+'
 5. installer le OCMOD visites
    
 ### Fichiers créés

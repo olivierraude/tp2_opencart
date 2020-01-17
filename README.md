@@ -1,4 +1,4 @@
-# TP2 OPENCART
+ # TP2 OPENCART
 ## ajout d'un module OCMOD surveillant les visites sur le site
 
 
@@ -10,12 +10,17 @@
     * username = master
     * password = master
 2. installer le pack fr
-3. installer la pack BD 'visites'
-4. copier les fichiers visites
+3. copier les fichiers visites
+4. installer la pack BD 'visites'
 5. installer le OCMOD visites
 
-
-
+### A rajouter pour le module DB
+   * admin/controller/extension/module/visites.php
+   * admin/model/extension/module/visites.php
+   * admin/language/en-gb/extension/module/visites.php
+   * admin/language/fr-fr/extension/module/visites.php
+   * admin/view/template/extension/module/visites.php
+   
 ### Fichiers Créés
 
 ##### modèle : 

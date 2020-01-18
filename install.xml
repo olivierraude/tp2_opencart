@@ -24,7 +24,7 @@
         </operation>
     </file>
 
-<file path="admin/controller/report/report.php">
+	<file path="admin/controller/report/report.php">
     	<operation>
     		<search>	
     		<![CDATA[$data['reports'] = array();]]>
@@ -45,7 +45,6 @@
 		$data['reports'][] = array(
 			'text'       => $this->language->get('extension')->get('heading_title'),
 			'code'       => $code,
-			//'sort_order' => $this->config->get('report_' . $code . '_sort_order'),
 			'sort_order' => null,
 			'href'       => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'] . '&code=' . $code, true)
 		);]]>

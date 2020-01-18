@@ -1,5 +1,5 @@
  # TP2 OPENCART
-## ajout d'un module OCMOD surveillant les visites sur le site
+## Rapport de visites sur le site
 
 ### Auteur
 `Olivier Raude` et `Gaël Comeau`

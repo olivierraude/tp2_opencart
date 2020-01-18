@@ -1,8 +1,10 @@
  # TP2 OPENCART
 ## Rapport de visites sur le site
 
-### Auteur
 `Olivier Raude` et `Gaël Comeau`
+
+### Note
+Les rapports sont visibles sous Reports/Reports, puis sélectionner le rapport `15 pages les plus visités` ou `02 - Rapport pages visitées`
 
 ### lien vers webdev:
 https://e1895410.webdev.cmaisonneuve.qc.ca/session_4/solution_web/tp2/
@@ -16,7 +18,7 @@ ___
     * prefixe db = _tp2
     * username = master
     * password = master
-2. installer le pack fr
+2. copier le pack frenchpacktranslation_v2.2
 3. copier les fichiers visites dans le repertoire opencart
 4. installer le module 'visites' (installation de la table visite)
    * sur le site opencart admin, ouvrir extensions / extensions

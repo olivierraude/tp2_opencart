@@ -1,5 +1,5 @@
  # TP2 OPENCART
-## ajout d'un module OCMOD surveillant les visites sur le site
+## Rapport de visites sur le site
 
 `Olivier Raude` et `Gaël Comeau`
 
@@ -18,8 +18,8 @@ ___
     * prefixe db = _tp2
     * username = master
     * password = master
-2. installer le pack frenchpacktranslation_v2.2
-3. copier les fichiers visites dans le repertoire opencart
+2. copier le pack frenchpacktranslation_v2.2
+3. copier les fichiers présent dans le répertoire 'fichier_a_copier' dans le repertoire opencart
 4. installer le module 'visites' (installation de la table visite)
    * sur le site opencart admin, ouvrir extensions / extensions
    * sélectionner modules

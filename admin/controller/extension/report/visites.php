@@ -3,14 +3,12 @@
         
         public function index() {
 
-            //À commenter
             $this->load->language('extension/report/most_visited');
     
             $this->document->setTitle($this->language->get('heading_title'));
     
             $this->load->model('setting/setting');
     
-            //À commenter
             if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
                 $this->model_setting_setting->editSetting('report_product_viewed', $this->request->post);
     

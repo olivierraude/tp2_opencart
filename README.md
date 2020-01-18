@@ -6,7 +6,7 @@
 ### Note
 Les rapports sont visibles sous Reports/Reports, puis sélectionner le rapport `15 pages les plus visités` ou `02 - Rapport pages visitées`
 
-[lien vers webdev] (https://e1895410.webdev.cmaisonneuve.qc.ca/session_4/solution_web/tp2/)
+[lien vers le site en ligne (webdev)](https://e1895410.webdev.cmaisonneuve.qc.ca/session_4/solution_web/tp2/)
 
 ___
 
@@ -57,6 +57,7 @@ ___
     * admin/langage/fr-fr/extension/report/pages_visitees.php   
     * admin/langage/fr-fr/extension/report/visites.php
     * admin/language/fr-fr/extension/module/visites.php
+    
 ___
 
 ### Fichiers ajoutées dans le OCMOD:    

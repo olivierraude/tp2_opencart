@@ -1,12 +1,11 @@
-### Olivier Raude et Gaël Comeau
-## Rapport de visites sur le site
+Olivier Raude et Gaël Comeau
 
-`Olivier Raude` et `Gaël Comeau`
+## Rapport de visites
 
 ### Note
 Les rapports sont visibles sous Reports/Reports, puis sélectionner le rapport `15 pages les plus visités` ou `02 - Rapport pages visitées`
 
-[lien vers le site en ligne (webdev)](https://e1895410.webdev.cmaisonneuve.qc.ca/session_4/solution_web/tp2/)
+### [lien vers le site en ligne (webdev)](https://e1895410.webdev.cmaisonneuve.qc.ca/session_4/solution_web/tp2/)
 
 ___
 

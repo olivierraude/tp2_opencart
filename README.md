@@ -1,4 +1,4 @@
- # TP2 OPENCART
+### Olivier Raude et Gaël Comeau
 ## Rapport de visites sur le site
 
 `Olivier Raude` et `Gaël Comeau`

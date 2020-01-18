@@ -1,6 +1,9 @@
  # TP2 OPENCART
 ## ajout d'un module OCMOD surveillant les visites sur le site
 
+### Auteur
+`Olivier Raude` et `Gaël Comeau`
+
 ### lien vers webdev:
 https://e1895410.webdev.cmaisonneuve.qc.ca/session_4/solution_web/tp2/
 
